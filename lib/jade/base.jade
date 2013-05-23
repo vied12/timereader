@@ -1,0 +1,33 @@
+!!! 5
+html
+
+	head
+		title
+			block title
+				|Titre
+
+		block meta 
+			meta(name='Description', content="")
+			meta(name="og:description", content="")
+			meta(property='og:title', content="")
+			meta(property='og:type',  content='website')
+			meta(property='og:url',   content='')
+			meta(property='og:image', content="")
+
+		link(rel="stylesheet",href="{{url_for('static', filename='css/bootstrap.min.css')}}",type="text/css",charset="utf-8")
+		link(rel="stylesheet",href="{{url_for('static', filename='css/base.css')}}",type="text/css",charset="utf-8")
+		link(rel="stylesheet",href="{{url_for('static', filename='css/style.css')}}",type="text/css",charset="utf-8")
+		block extracss
+
+	body
+		#Content
+			block content
+
+		script(type="text/javascript", src="{{url_for('static', filename='js/jquery172-mini.js') }}")
+		script(type="text/javascript", src="{{url_for('static', filename='js/bootstrap.min.js') }}")
+		script(type="text/javascript", src="{{url_for('static', filename='js/hashchange.js') }}")
+		script(type="text/javascript", src="{{url_for('static', filename='js/widget.js') }}")
+		script(type="text/javascript", src="{{url_for('static', filename='js/script.js') }}")
+		block extrajs
+
+//- EOF
