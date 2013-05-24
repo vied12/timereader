@@ -24,6 +24,19 @@ from base64         import b64decode
 app       = Flask(__name__)
 app.config.from_pyfile("settings.cfg")
 
+def get_collection(collection):
+	client = MongoClient(app.config['MONGO_HOST'])
+	db     = client[app.config['MONGO_DB']]
+	return db[collection]
+
+def get_referer():
+	if 'referer' in session:
+		referer = session['referer']
+	else:
+		referer = str(uuid.uuid4())
+		session['referer'] = referer
+	return referer
+
 # -----------------------------------------------------------------------------
 #
 # API
