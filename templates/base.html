@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %}Titre
+{% endblock %}
+    </title>{% block meta %}
+    <meta name="Description" content="">
+    <meta name="og:description" content="">
+    <meta property="og:title" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">{% endblock %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}" type="text/css" charset="utf-8">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/base.css')}}" type="text/css" charset="utf-8">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" type="text/css" charset="utf-8">{% block extracss %}{% endblock %}
+  </head>
+  <body>
+    <div id="Content">{% block content %}{% endblock %}
+    </div>
+    <script type="text/javascript" src="{{url_for('static', filename='js/jquery172-mini.js') }}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/hashchange.js') }}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/widget.js') }}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/script.js') }}"></script>{% block extrajs %}{% endblock %}
+  </body>
+</html>

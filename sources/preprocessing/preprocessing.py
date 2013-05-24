@@ -20,7 +20,7 @@ def preprocess(app, request):
 			# _render_shpaml(app)
 			_render_coffee(app)
 			_render_coverCSS(app)
-			_render_jade(app)
+			# _render_jade(app)
 
 def _scan(folder, dest, action, extension, new_extension=None):
 	paths = []
@@ -121,5 +121,5 @@ def _collect_static(app):
 	# _render_shpaml(app)
 	_render_coffee(app)
 	_render_coverCSS(app)
-	_render_jade(app)
+	# _render_jade(app)
 # EOF
