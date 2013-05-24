@@ -76,9 +76,10 @@ def itineraire(src, tgt):
 		"destination"    : None,
 		"begin_date_time": None,
 		"end_date_time"  : None,
-		"stations"       : []
+		"stations"       : [],
+		"delta"          : None
 	}
-	# ensure we have stop_point uri
+	# ensure we have coord uri
 	if not src.startswith('coord:'):
 		src = get_coord(src)
 	if not tgt.startswith('coord:'):
@@ -92,18 +93,26 @@ def itineraire(src, tgt):
 	for journey in data['journeys']:
 		for section in journey['sections']:
 			if section['type'] == "PUBLIC_TRANSPORT":
+				# TODO: check if Métro
 				pp(section)
 				# itineraire informations
 				response["origin"]          = section['origin']['name']
 				response["destination"]     = section['destination']['name']
 				response["begin_date_time"] = section['begin_date_time']
 				response["end_date_time"]   = section['end_date_time']
+				response["delta"]           = (datetime.datetime.strptime(section['end_date_time'], '%Y%m%dT%H%M%f') - datetime.datetime.strptime(section['begin_date_time'], '%Y%m%dT%H%M%f')).total_seconds()
 				# stations
 				for station in section['stop_date_times']:
+					if len(response['stations']) > 0:
+						delta = datetime.datetime.strptime(station['departure_date_time'], '%Y%m%dT%H%M%f') - datetime.datetime.strptime(response['stations'][-1]['arrival_date_time'], '%Y%m%dT%H%M%f')
+						delta = delta.total_seconds()
+					else:
+						delta = 0
 					response['stations'].append({
-						"name": station['stop_point']['name'],
-						"departure_date_time": station['departure_date_time'],
-						"arrival_date_time": station['arrival_date_time']
+						"name"                : station['stop_point']['name'],
+						"departure_date_time" : station['departure_date_time'],
+						"arrival_date_time"   : station['arrival_date_time'],
+						"timedelta"           : delta
 					})
 	return json.dumps(response)
 # -----------------------------------------------------------------------------

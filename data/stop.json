@@ -1,0 +1,1011 @@
+{
+  "stop_points": [
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92000",
+          "uri": "admin:85799",
+          "coord": {
+            "lat": 48.8924273,
+            "lon": 2.2071266999999968
+          },
+          "name": "Nanterre"
+        }
+      ],
+      "name": "UNIVERSITE PARIS X",
+      "coord": {
+        "lat": 48.905550755388155,
+        "lon": 2.210263532234275
+      },
+      "uri": "stop_point:4023615"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92600",
+          "uri": "admin:91641",
+          "coord": {
+            "lat": 48.91058160000001,
+            "lon": 2.2890199000000027
+          },
+          "name": "Asnières-sur-Seine"
+        }
+      ],
+      "name": "ABBE LEMIRE",
+      "coord": {
+        "lat": 48.92927697817656,
+        "lon": 2.281306624278163
+      },
+      "uri": "stop_point:4023650"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92000",
+          "uri": "admin:85799",
+          "coord": {
+            "lat": 48.8924273,
+            "lon": 2.2071266999999968
+          },
+          "name": "Nanterre"
+        }
+      ],
+      "name": "FAIDHERBE",
+      "coord": {
+        "lat": 48.89775295959573,
+        "lon": 2.196924323777246
+      },
+      "uri": "stop_point:4023656"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92000",
+          "uri": "admin:85799",
+          "coord": {
+            "lat": 48.8924273,
+            "lon": 2.2071266999999968
+          },
+          "name": "Nanterre"
+        }
+      ],
+      "name": "PONT DE ROUEN",
+      "coord": {
+        "lat": 48.90761214571866,
+        "lon": 2.2134487251549726
+      },
+      "uri": "stop_point:4023617"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92600",
+          "uri": "admin:91641",
+          "coord": {
+            "lat": 48.91058160000001,
+            "lon": 2.2890199000000027
+          },
+          "name": "Asnières-sur-Seine"
+        }
+      ],
+      "name": "LES COURTILLES",
+      "coord": {
+        "lat": 48.92991611850711,
+        "lon": 2.2836382686665035
+      },
+      "uri": "stop_point:4023652"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92000",
+          "uri": "admin:85799",
+          "coord": {
+            "lat": 48.8924273,
+            "lon": 2.2071266999999968
+          },
+          "name": "Nanterre"
+        }
+      ],
+      "name": "UNIVERSITE PARIS X",
+      "coord": {
+        "lat": 48.9059186864975,
+        "lon": 2.2097582064089254
+      },
+      "uri": "stop_point:4023616"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92600",
+          "uri": "admin:91641",
+          "coord": {
+            "lat": 48.91058160000001,
+            "lon": 2.2890199000000027
+          },
+          "name": "Asnières-sur-Seine"
+        }
+      ],
+      "name": "LES COURTILLES",
+      "coord": {
+        "lat": 48.93018563914972,
+        "lon": 2.2834470372474254
+      },
+      "uri": "stop_point:4023653"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92600",
+          "uri": "admin:91641",
+          "coord": {
+            "lat": 48.91058160000001,
+            "lon": 2.2890199000000027
+          },
+          "name": "Asnières-sur-Seine"
+        }
+      ],
+      "name": "QUATRE ROUTES - LA REDOUTE",
+      "coord": {
+        "lat": 48.92728729275542,
+        "lon": 2.274134820908049
+      },
+      "uri": "stop_point:4023654"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92000",
+          "uri": "admin:85799",
+          "coord": {
+            "lat": 48.8924273,
+            "lon": 2.2071266999999968
+          },
+          "name": "Nanterre"
+        }
+      ],
+      "name": "LES SAULES",
+      "coord": {
+        "lat": 48.909016979537306,
+        "lon": 2.2162266830020974
+      },
+      "uri": "stop_point:4023619"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92000",
+          "uri": "admin:85799",
+          "coord": {
+            "lat": 48.8924273,
+            "lon": 2.2071266999999968
+          },
+          "name": "Nanterre"
+        }
+      ],
+      "name": "PONT DE ROUEN",
+      "coord": {
+        "lat": 48.908241097127586,
+        "lon": 2.213310885302151
+      },
+      "uri": "stop_point:4023618"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92000",
+          "uri": "admin:85799",
+          "coord": {
+            "lat": 48.8924273,
+            "lon": 2.2071266999999968
+          },
+          "name": "Nanterre"
+        }
+      ],
+      "name": "LES GRANDS PRES",
+      "coord": {
+        "lat": 48.90967140319975,
+        "lon": 2.214629968247919
+      },
+      "uri": "stop_point:4023655"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92000",
+          "uri": "admin:85799",
+          "coord": {
+            "lat": 48.8924273,
+            "lon": 2.2071266999999968
+          },
+          "name": "Nanterre"
+        }
+      ],
+      "name": "JEAN BAILLET",
+      "coord": {
+        "lat": 48.90332728565032,
+        "lon": 2.2068745136991184
+      },
+      "uri": "stop_point:4023613"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92000",
+          "uri": "admin:85799",
+          "coord": {
+            "lat": 48.8924273,
+            "lon": 2.2071266999999968
+          },
+          "name": "Nanterre"
+        }
+      ],
+      "name": "HOCHE",
+      "coord": {
+        "lat": 48.898814908437636,
+        "lon": 2.1981755199983994
+      },
+      "uri": "stop_point:4023612"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92600",
+          "uri": "admin:91641",
+          "coord": {
+            "lat": 48.91058160000001,
+            "lon": 2.2890199000000027
+          },
+          "name": "Asnières-sur-Seine"
+        }
+      ],
+      "name": "ABBE LEMIRE",
+      "coord": {
+        "lat": 48.929474567981394,
+        "lon": 2.281047264708782
+      },
+      "uri": "stop_point:4023651"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92000",
+          "uri": "admin:85799",
+          "coord": {
+            "lat": 48.8924273,
+            "lon": 2.2071266999999968
+          },
+          "name": "Nanterre"
+        }
+      ],
+      "name": "JEAN BAILLET",
+      "coord": {
+        "lat": 48.9034148118238,
+        "lon": 2.204747635195345
+      },
+      "uri": "stop_point:4023614"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92000",
+          "uri": "admin:85799",
+          "coord": {
+            "lat": 48.8924273,
+            "lon": 2.2071266999999968
+          },
+          "name": "Nanterre"
+        }
+      ],
+      "name": "HOCHE",
+      "coord": {
+        "lat": 48.898916040431814,
+        "lon": 2.200138147604566
+      },
+      "uri": "stop_point:4023611"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92000",
+          "uri": "admin:85799",
+          "coord": {
+            "lat": 48.8924273,
+            "lon": 2.2071266999999968
+          },
+          "name": "Nanterre"
+        }
+      ],
+      "name": "NANTERRE-VILLE RER - FAIDHERBE",
+      "coord": {
+        "lat": 48.89522445171325,
+        "lon": 2.1943005277321346
+      },
+      "uri": "stop_point:4023610"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "94700",
+          "uri": "admin:105404",
+          "coord": {
+            "lat": 48.80103630000001,
+            "lon": 2.4305232999999964
+          },
+          "name": "Maisons-Alfort"
+        }
+      ],
+      "name": "REPUBLIQUE - BLUM",
+      "coord": {
+        "lat": 48.80259233185019,
+        "lon": 2.4334214355511814
+      },
+      "uri": "stop_point:3619959"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "94700",
+          "uri": "admin:105404",
+          "coord": {
+            "lat": 48.80103630000001,
+            "lon": 2.4305232999999964
+          },
+          "name": "Maisons-Alfort"
+        }
+      ],
+      "name": "PLANETES",
+      "coord": {
+        "lat": 48.808296339137414,
+        "lon": 2.456836799625507
+      },
+      "uri": "stop_point:3619955"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "94700",
+          "uri": "admin:105404",
+          "coord": {
+            "lat": 48.80103630000001,
+            "lon": 2.4305232999999964
+          },
+          "name": "Maisons-Alfort"
+        }
+      ],
+      "name": "PLANETES",
+      "coord": {
+        "lat": 48.808942621482075,
+        "lon": 2.457668352733885
+      },
+      "uri": "stop_point:3619956"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "94700",
+          "uri": "admin:105404",
+          "coord": {
+            "lat": 48.80103630000001,
+            "lon": 2.4305232999999964
+          },
+          "name": "Maisons-Alfort"
+        }
+      ],
+      "name": "LOUIS FLICHE",
+      "coord": {
+        "lat": 48.80764356796923,
+        "lon": 2.4623326343241865
+      },
+      "uri": "stop_point:3619957"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "94700",
+          "uri": "admin:105404",
+          "coord": {
+            "lat": 48.80103630000001,
+            "lon": 2.4305232999999964
+          },
+          "name": "Maisons-Alfort"
+        }
+      ],
+      "name": "LOUIS FLICHE",
+      "coord": {
+        "lat": 48.80764356796923,
+        "lon": 2.4623326343241865
+      },
+      "uri": "stop_point:3619958"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "94700",
+          "uri": "admin:105404",
+          "coord": {
+            "lat": 48.80103630000001,
+            "lon": 2.4305232999999964
+          },
+          "name": "Maisons-Alfort"
+        }
+      ],
+      "name": "RUE DE MARSEILLE",
+      "coord": {
+        "lat": 48.8085087940974,
+        "lon": 2.4509860647156647
+      },
+      "uri": "stop_point:3619951"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "94700",
+          "uri": "admin:105404",
+          "coord": {
+            "lat": 48.80103630000001,
+            "lon": 2.4305232999999964
+          },
+          "name": "Maisons-Alfort"
+        }
+      ],
+      "name": "RUE DE MARSEILLE",
+      "coord": {
+        "lat": 48.808670703946234,
+        "lon": 2.450850344027082
+      },
+      "uri": "stop_point:3619952"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "94700",
+          "uri": "admin:105404",
+          "coord": {
+            "lat": 48.80103630000001,
+            "lon": 2.4305232999999964
+          },
+          "name": "Maisons-Alfort"
+        }
+      ],
+      "name": "PONT DE MAISONS-ALFORT",
+      "coord": {
+        "lat": 48.809081950256626,
+        "lon": 2.453123721150605
+      },
+      "uri": "stop_point:3619953"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "94700",
+          "uri": "admin:105404",
+          "coord": {
+            "lat": 48.80103630000001,
+            "lon": 2.4305232999999964
+          },
+          "name": "Maisons-Alfort"
+        }
+      ],
+      "name": "PONT DE MAISONS-ALFORT",
+      "coord": {
+        "lat": 48.80961950738675,
+        "lon": 2.454866718046615
+      },
+      "uri": "stop_point:3619954"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92700",
+          "uri": "admin:91738",
+          "coord": {
+            "lat": 48.922788000000025,
+            "lon": 2.2543576999999955
+          },
+          "name": "Colombes"
+        }
+      ],
+      "name": "MAIRIE DE COLOMBES",
+      "coord": {
+        "lat": 48.92286264800931,
+        "lon": 2.2544203440680004
+      },
+      "uri": "stop_point:4023637"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92600",
+          "uri": "admin:91641",
+          "coord": {
+            "lat": 48.91058160000001,
+            "lon": 2.2890199000000027
+          },
+          "name": "Asnières-sur-Seine"
+        }
+      ],
+      "name": "FREYCINET",
+      "coord": {
+        "lat": 48.92825985835548,
+        "lon": 2.2779934583711285
+      },
+      "uri": "stop_point:4023648"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92270",
+          "uri": "admin:91746",
+          "coord": {
+            "lat": 48.914826899999994,
+            "lon": 2.2674891999999964
+          },
+          "name": "Bois-Colombes"
+        }
+      ],
+      "name": "GRAMME",
+      "coord": {
+        "lat": 48.925217275166055,
+        "lon": 2.2686548076317994
+      },
+      "uri": "stop_point:4023645"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92700",
+          "uri": "admin:91738",
+          "coord": {
+            "lat": 48.922788000000025,
+            "lon": 2.2543576999999955
+          },
+          "name": "Colombes"
+        }
+      ],
+      "name": "GRAMME",
+      "coord": {
+        "lat": 48.925045683449675,
+        "lon": 2.2672093958228308
+      },
+      "uri": "stop_point:4023646"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92000",
+          "uri": "admin:85799",
+          "coord": {
+            "lat": 48.8924273,
+            "lon": 2.2071266999999968
+          },
+          "name": "Nanterre"
+        }
+      ],
+      "name": "JULES QUENTIN",
+      "coord": {
+        "lat": 48.89496293986389,
+        "lon": 2.1935652180158973
+      },
+      "uri": "stop_point:4023609"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92600",
+          "uri": "admin:91641",
+          "coord": {
+            "lat": 48.91058160000001,
+            "lon": 2.2890199000000027
+          },
+          "name": "Asnières-sur-Seine"
+        }
+      ],
+      "name": "FREYCINET",
+      "coord": {
+        "lat": 48.92807041337803,
+        "lon": 2.2765615906723573
+      },
+      "uri": "stop_point:4023649"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92700",
+          "uri": "admin:91738",
+          "coord": {
+            "lat": 48.922788000000025,
+            "lon": 2.2543576999999955
+          },
+          "name": "Colombes"
+        }
+      ],
+      "name": "ECOLES DU PETIT COLOMBES",
+      "coord": {
+        "lat": 48.917636904939,
+        "lon": 2.2370835076690034
+      },
+      "uri": "stop_point:4023630"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92700",
+          "uri": "admin:91738",
+          "coord": {
+            "lat": 48.922788000000025,
+            "lon": 2.2543576999999955
+          },
+          "name": "Colombes"
+        }
+      ],
+      "name": "EGALITE",
+      "coord": {
+        "lat": 48.920275329111256,
+        "lon": 2.243528637039897
+      },
+      "uri": "stop_point:4023631"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92700",
+          "uri": "admin:91738",
+          "coord": {
+            "lat": 48.922788000000025,
+            "lon": 2.2543576999999955
+          },
+          "name": "Colombes"
+        }
+      ],
+      "name": "EGALITE",
+      "coord": {
+        "lat": 48.919906023218026,
+        "lon": 2.2424656383228103
+      },
+      "uri": "stop_point:4023632"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92700",
+          "uri": "admin:91738",
+          "coord": {
+            "lat": 48.922788000000025,
+            "lon": 2.2543576999999955
+          },
+          "name": "Colombes"
+        }
+      ],
+      "name": "CIMETIERE DE COLOMBES",
+      "coord": {
+        "lat": 48.92234554390623,
+        "lon": 2.2477115719889413
+      },
+      "uri": "stop_point:4023633"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92700",
+          "uri": "admin:91738",
+          "coord": {
+            "lat": 48.922788000000025,
+            "lon": 2.2543576999999955
+          },
+          "name": "Colombes"
+        }
+      ],
+      "name": "CIMETIERE DE COLOMBES",
+      "coord": {
+        "lat": 48.92243515687141,
+        "lon": 2.2473704815516977
+      },
+      "uri": "stop_point:4023634"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92700",
+          "uri": "admin:91738",
+          "coord": {
+            "lat": 48.922788000000025,
+            "lon": 2.2543576999999955
+          },
+          "name": "Colombes"
+        }
+      ],
+      "name": "EGLISE DE COLOMBES",
+      "coord": {
+        "lat": 48.92299546791915,
+        "lon": 2.2516107928123716
+      },
+      "uri": "stop_point:4023635"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92700",
+          "uri": "admin:91738",
+          "coord": {
+            "lat": 48.922788000000025,
+            "lon": 2.2543576999999955
+          },
+          "name": "Colombes"
+        }
+      ],
+      "name": "EGLISE DE COLOMBES",
+      "coord": {
+        "lat": 48.92331887998427,
+        "lon": 2.2514466062158305
+      },
+      "uri": "stop_point:4023636"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "94700",
+          "uri": "admin:105404",
+          "coord": {
+            "lat": 48.80103630000001,
+            "lon": 2.4305232999999964
+          },
+          "name": "Maisons-Alfort"
+        }
+      ],
+      "name": "JOUET",
+      "coord": {
+        "lat": 48.80408159015529,
+        "lon": 2.4367305331414872
+      },
+      "uri": "stop_point:3619908"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92700",
+          "uri": "admin:91738",
+          "coord": {
+            "lat": 48.922788000000025,
+            "lon": 2.2543576999999955
+          },
+          "name": "Colombes"
+        }
+      ],
+      "name": "MAIRIE DE COLOMBES",
+      "coord": {
+        "lat": 48.92323097967307,
+        "lon": 2.254228828203309
+      },
+      "uri": "stop_point:4023638"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92700",
+          "uri": "admin:91738",
+          "coord": {
+            "lat": 48.922788000000025,
+            "lon": 2.2543576999999955
+          },
+          "name": "Colombes"
+        }
+      ],
+      "name": "RHIN ET DANUBE",
+      "coord": {
+        "lat": 48.9233232281649,
+        "lon": 2.2577199194902486
+      },
+      "uri": "stop_point:4023639"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92700",
+          "uri": "admin:91738",
+          "coord": {
+            "lat": 48.922788000000025,
+            "lon": 2.2543576999999955
+          },
+          "name": "Colombes"
+        }
+      ],
+      "name": "ECOLES DU PETIT COLOMBES",
+      "coord": {
+        "lat": 48.91770042998111,
+        "lon": 2.2378197383468628
+      },
+      "uri": "stop_point:4023629"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92700",
+          "uri": "admin:91738",
+          "coord": {
+            "lat": 48.922788000000025,
+            "lon": 2.2543576999999955
+          },
+          "name": "Colombes"
+        }
+      ],
+      "name": "COLBERT",
+      "coord": {
+        "lat": 48.91563722160135,
+        "lon": 2.2317831128577867
+      },
+      "uri": "stop_point:4023628"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92700",
+          "uri": "admin:91738",
+          "coord": {
+            "lat": 48.922788000000025,
+            "lon": 2.2543576999999955
+          },
+          "name": "Colombes"
+        }
+      ],
+      "name": "COLBERT",
+      "coord": {
+        "lat": 48.91577292651904,
+        "lon": 2.23280551181708
+      },
+      "uri": "stop_point:4023627"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92700",
+          "uri": "admin:91738",
+          "coord": {
+            "lat": 48.922788000000025,
+            "lon": 2.2543576999999955
+          },
+          "name": "Colombes"
+        }
+      ],
+      "name": "VICTOR BASCH",
+      "coord": {
+        "lat": 48.913340385698675,
+        "lon": 2.2261156162905245
+      },
+      "uri": "stop_point:4023626"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92700",
+          "uri": "admin:91738",
+          "coord": {
+            "lat": 48.922788000000025,
+            "lon": 2.2543576999999955
+          },
+          "name": "Colombes"
+        }
+      ],
+      "name": "VICTOR BASCH",
+      "coord": {
+        "lat": 48.913205783732266,
+        "lon": 2.226334064986146
+      },
+      "uri": "stop_point:4023625"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92000",
+          "uri": "admin:85799",
+          "coord": {
+            "lat": 48.8924273,
+            "lon": 2.2071266999999968
+          },
+          "name": "Nanterre"
+        }
+      ],
+      "name": "HOPITAL DE NANTERRE",
+      "coord": {
+        "lat": 48.912277593016725,
+        "lon": 2.223650006178399
+      },
+      "uri": "stop_point:4023624"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92000",
+          "uri": "admin:85799",
+          "coord": {
+            "lat": 48.8924273,
+            "lon": 2.2071266999999968
+          },
+          "name": "Nanterre"
+        }
+      ],
+      "name": "HOPITAL DE NANTERRE",
+      "coord": {
+        "lat": 48.912206021163,
+        "lon": 2.22399103145728
+      },
+      "uri": "stop_point:4023623"
+    },
+    {
+      "administrative_regions": [
+        {
+          "level": 8,
+          "zip_code": "92000",
+          "uri": "admin:85799",
+          "coord": {
+            "lat": 48.8924273,
+            "lon": 2.2071266999999968
+          },
+          "name": "Nanterre"
+        }
+      ],
+      "name": "LES ORMES",
+      "coord": {
+        "lat": 48.91106151693222,
+        "lon": 2.2207212698138035
+      },
+      "uri": "stop_point:4023622"
+    }
+  ],
+  "pagination": {
+    "itemsPerPage": 50,
+    "totalResult": 26622,
+    "startPage": 0,
+    "nextPage": "filter=&count=50&depth=1&startPage=0&startPage=1",
+    "itemsOnPage": 50
+  }
+}
