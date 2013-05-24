@@ -13,12 +13,12 @@
 
 from flask import Flask, render_template, request, send_file, \
 	send_from_directory, Response, abort, session, redirect, url_for, make_response
-import os, json, uuid, pymongo
+import os, json, uuid, pymongo, requests, datetime
 from pymongo        import MongoClient
 from bson.json_util import dumps
-# from httplib2       import Http
 from werkzeug       import secure_filename
 from base64         import b64decode
+from pprint import pprint as pp
 # import flask_s3
 
 app       = Flask(__name__)
@@ -42,16 +42,75 @@ def get_referer():
 # API
 #
 # -----------------------------------------------------------------------------
-@app.route('/api/', methods=['get'])
-def test_api():
-	return "coucou"
+@app.route('/api/coord/<keyword>')
+def get_coord(keyword):
+	# TODO
+	res = requests.get("http://api.navitia.io/v0/paris/places.json?q={keyword}&type%5B%5D=stop_point&depth=0"\
+		.format(keyword=keyword))
+	data = res.json()
+	return res.text
+	# return "coord:2.3266505956562136:48.82738294324015"
 
+@app.route('/api/stations/autocomplete/<keywords>', methods=['get'])
+def station_autocomplete(keywords):
+	# TODO
+	return json.dumps([
+		{
+			"name": "Alésia",
+			"uri": "coord:2.3266505956562136:48.82738294324015",
+		},
+		{
+			"name": "Pouet pouet les bains",
+			"uri": "coord:2.3266505956562136:48.82738294324015"
+		},
+		{
+			"name": "Staligniouf",
+			"uri": "coord:2.3266505956562136:48.82738294324015"
+		}
+	])
+
+@app.route('/api/itineraire/<src>/<tgt>', methods=['get'])
+def itineraire(src, tgt):
+	response = {
+		"origin"         : None,
+		"destination"    : None,
+		"begin_date_time": None,
+		"end_date_time"  : None,
+		"stations"       : []
+	}
+	# ensure we have stop_point uri
+	if not src.startswith('coord:'):
+		src = get_coord(src)
+	if not tgt.startswith('coord:'):
+		tgt = get_coord(tgt)
+	# request nativia
+	dt = datetime.datetime.now().strftime("%Y%m%dT%H%M")
+	res = requests.get("http://api.navitia.io/v0/paris/journeys.json?origin={origin}&destination={destination}&datetime={datetime}&depth=0"\
+		.format(origin=src, destination=tgt, datetime=dt))
+	data = res.json()
+	# fill response
+	for journey in data['journeys']:
+		for section in journey['sections']:
+			if section['type'] == "PUBLIC_TRANSPORT":
+				pp(section)
+				# itineraire informations
+				response["origin"]          = section['origin']['name']
+				response["destination"]     = section['destination']['name']
+				response["begin_date_time"] = section['begin_date_time']
+				response["end_date_time"]   = section['end_date_time']
+				# stations
+				for station in section['stop_date_times']:
+					response['stations'].append({
+						"name": station['stop_point']['name'],
+						"departure_date_time": station['departure_date_time'],
+						"arrival_date_time": station['arrival_date_time']
+					})
+	return json.dumps(response)
 # -----------------------------------------------------------------------------
 #
 # Site pages
 #
 # -----------------------------------------------------------------------------
-
 @app.route('/')
 def index():
 	return render_template('home.html')
@@ -61,15 +120,15 @@ def index():
 # Utils
 #
 # -----------------------------------------------------------------------------
-# @app.route('/uploaded/<filename>')
-# def uploaded_file(filename):
-# 	return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+@app.after_request
+def after_request(response):
+	response.headers.add('Access-Control-Allow-Origin', '*')
+	return response
 # -----------------------------------------------------------------------------
 #
 # Main
 #
 # -----------------------------------------------------------------------------
-
 if __name__ == '__main__':
 	import preprocessing.preprocessing as preprocessing
 	import sys
@@ -83,5 +142,5 @@ if __name__ == '__main__':
 		# set FileSystemCache instead of Memcache for development
 		# cache = werkzeug.contrib.cache.FileSystemCache(os.path.join(app.root_path, "cache"))
 		# run application
-		app.run()
+		app.run(host='0.0.0.0')
 # EOF
