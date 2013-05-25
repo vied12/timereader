@@ -71,7 +71,6 @@ def get_closest(count_words, user=None, thema=None, limit=1):
 	return results[:limit]
 
 def get_articles(user=None, thema=None, duration=None):
-	print "bla"
 	articles = get_collection('articles')
 	words    = (duration/60) * 300
 	one      = get_closest(user=user, thema=thema, count_words=words, limit=3)
@@ -144,13 +143,14 @@ def itineraire(src, tgt):
 		for section in journey['sections']:
 			if section['type'] == "PUBLIC_TRANSPORT" and section['pt_display_informations']['physical_mode'] == "Metro":
 				# itineraire informations
+				# response["delta"]           = (datetime.datetime.strptime(section['end_date_time'], '%Y%m%dT%H%M%f') - datetime.datetime.strptime(section['begin_date_time'], '%Y%m%dT%H%M%f')).total_seconds()
+				response["delta"]           = journey['duration']
 				response["origin"]          = section['origin']['name']
 				response["destination"]     = section['destination']['name']
 				response["begin_date_time"] = section['begin_date_time']
 				response["end_date_time"]   = section['end_date_time']
 				response["line"]            = section['pt_display_informations']['code']
 				response["color"]           = "#"+section['pt_display_informations']['color']
-				response["delta"]           = (datetime.datetime.strptime(section['end_date_time'], '%Y%m%dT%H%M%f') - datetime.datetime.strptime(section['begin_date_time'], '%Y%m%dT%H%M%f')).total_seconds()
 				response["articles"]        = get_articles(duration=response["delta"])
 				# stations
 				for station in section['stop_date_times']:
@@ -178,7 +178,7 @@ def itineraire(src, tgt):
 
 @app.route('/api/testarticles/')
 def api_testarticles(user=None):
-	articles = get_articles(duration=200)
+	articles = get_articles(duration=500)
 	return dumps(articles)
 
 @app.route('/api/content/<id>')
