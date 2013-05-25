@@ -5,9 +5,10 @@
         <title>Timely</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <!-- Bootstrap -->
-        <link href="%%url_for('static', filename='css/bootstrap.min.css')%%" rel="stylesheet" media="screen">
+		<link href="%%url_for('static', filename='css/bootstrap.min.css')%%" rel="stylesheet" media="screen">
         <link href="%%url_for('static', filename='css/bootstrap-responsive.min.css')%%" rel="stylesheet">
         <link href="%%url_for('static', filename='css/style.css')%%" rel="stylesheet">
+		<link href="%%url_for('static', filename='css/slider.css')%%" rel="stylesheet">
     </head>
     <body>
         <div id="container">
@@ -16,7 +17,7 @@
             <div id="home" class="page">
                 <img src="%%url_for('static', filename='img/LogoROUGETimereaderFond.png')%%" class="logo" alt="logo" />
                 
-                <h2>Des contenus personnalisés adaptés à votre temps de trajet.</h2>
+                <h2>Des contenus personnalisés et adaptés à votre temps de trajet.</h2>
                     
                 <a class="btn btn-large btn-block btn-primary" onclick="goToPage('main');">Let's go!</a>
             </div>
@@ -25,7 +26,7 @@
             <!-- settings -->
             <div id="settings" class="page">
                 <div id="netSettings">
-                    <h2>Liez vos comptes</h1>
+                    <h2>Synchronisez Time Reader avec vos applications</h1>
                     <ul>
                         <li><img src="%%url_for('static', filename='img/BoutonDelicious.png')%%" alt=""></li>
                         <li><img src="%%url_for('static', filename='img/BoutonEvernote.png')%%" alt=""></li>
@@ -62,16 +63,24 @@
                 <input type="text" id="end" placeholder="Station d'arrivée..." autocomplete="off" onfocus="selectedInput = 2;">
                 <input type="hidden" id="endcoord" >
                 <br />
-                <div id="searchAlert" class="hidden">
-                  <button type="button" class="close" data-dismiss="alert">&times;</button>
-                  <strong>Attention!</strong> Merci de bien spécifier les stations.
-                </div>                
-                <a class="btn btn-primary btn-large" onclick="startSearch();" >
-                    <i class="icon-inbox icon-white"></i>&nbsp;Recommendations
-                </a>
-                <a class="btn btn-primary btn-large" onclick="startSearch();">
-                    <i class="icon-bookmark icon-white"></i>&nbsp;Vos favoris
-                </a>
+                Ou
+                <br /><br />
+                Entrez la durée de votre choix:
+                <br />
+                0min&nbsp;&nbsp;<input type="text" class="span2" value="5" id="sl1" >&nbsp;&nbsp;100min
+                <br /><br />
+                <div style="margin-top: 20px">
+                    <div id="searchAlert" class="hidden">
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                      <strong>Attention!</strong> Merci de bien spécifier les stations.
+                    </div>                
+                    <a class="btn btn-primary btn-large" onclick="startSearch();" >
+                        <i class="icon-inbox icon-white"></i>&nbsp;Recommendations
+                    </a>
+                    <a class="btn btn-primary btn-large" onclick="startSearch();">
+                        <i class="icon-bookmark icon-white"></i>&nbsp;Vos favoris
+                    </a>
+                </div>
             </div>
             <!-- /main -->
                 
@@ -84,7 +93,6 @@
                 
             <!-- reader -->
             <div id="reader" class="page">
-                <h1>Reader</h1>
                 <div id="content"></div>
                 <div id="visu">
                     <ul></ul>
@@ -103,15 +111,25 @@
 
         <!-- templates -->
         <script id="template-results" type="text/x-handlebars-template">
-            | {{#each results}}
+            {{#each results}}
             <li data-id="{{@index}}">
+                <img src="%%url_for('static', filename='img/pictolivre.png')%%" />
                 <h3>{{title}}</h3>
-                <span>{{source}}</span>
-                <img src="img/pictolivre.png" />
+                <span>{{source}}</span> 
+                <div class="spacer"></div>
             </li>
-            | {{/each}}
+            {{/each}}
         </script>
-
+        
+        <script id="template-audio" type="text/x-handlebars-template">
+            <li data-id="5">
+                <img src="%%url_for('static', filename='img/pictoson.png')%%" />
+                <h3>Chronique de Chris Esquerre</h3>
+                <span>Radio France</span> 
+                <div class="spacer"></div>
+            </li>
+        </script>        
+        
         <script id="template-detailsresults" type="text/x-handlebars-template">
             Trajet : <span>{{origin}}</span> - <span>{{destination}}</span>
             <br />
@@ -121,7 +139,7 @@
         <script id="template-cerclestation" type="text/x-handlebars-template">
             <li>
                 <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-                    <circle cx="5" cy="5" r="5" fill="#{{couleur}}" />
+                    <circle id="circle-{{id}}" cx="10" cy="10" r="10" stroke="#{{couleur}}" fill="#fff" />
                 </svg>
             </li>
         </script>
@@ -138,6 +156,7 @@
         <!-- jquery -->
         <script src="http://code.jquery.com/jquery.js"></script>
         <script src="%%url_for('static', filename='js/bootstrap.min.js')%%"></script>
+        <script src="%%url_for('static', filename='js/bootstrap-slider.js')%%"></script>
         <script src="%%url_for('static', filename='js/handlebars.js')%%"></script>
         <script src="%%url_for('static', filename='js/underscore-min.js')%%"></script>
         <script src="%%url_for('static', filename='js/main.js')%%"></script>

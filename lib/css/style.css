@@ -6,6 +6,11 @@ body{
     background-color: #f5f5f5;
 }
 
+div.spacer{
+    clear: both;
+    height: 0;
+}
+
 div#container{
     width: 100%;
     /*padding: 0 2.5%;*/
@@ -43,6 +48,10 @@ div#home a.btn{
 }
 
 /* settings */
+div#settings h2{
+    font-size: 20px;
+}
+
 div#netSettings ul, div#intSettings ul{
     padding: 0;
     margin: 0;
@@ -82,16 +91,17 @@ div#intSettings{
 
 /* main / search */
 div#main input{
-    width: 99%;
+    width: 98%;
 }
 div#main header{
     text-align: right;
-    margin-top: 20px;
+    padding-top: 20px;
 }
 
 /* results */
 div#detailsResults{
-    margin: 20px 0;
+    padding: 20px 0;
+    margin: 0;
     background: #fff;
 }
 
@@ -102,26 +112,42 @@ div#results ul{
 }
 
 div#results ul li{
-    height: 40px;
     cursor: pointer;
-    width: 100%;
+    width: 90%;
     display: block;
+    text-align: left;
+    background: #fff;
+    padding: 10px 5%;
+    margin-bottom: 10px;
 }
 
+div#results ul li h3{
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
+    line-height: 20px;
+}
+div#results ul li img{
+    float: right;
+    height: 60px;
+    display: block;
+}
 
 /* reader */
 div#reader div#content{
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 95%;
+    padding: 2.5%;
     z-index: 200;
+    text-align: left;
 }
 div#reader div#visu{
-    position: absolute;
+    position: fixed;
     top: 0;
-    right: -2.5%;
-    width: 10px;
+    right: 0;
+    width: 15px;
     height: auto;
     z-index: 100;
     text-align: left;
@@ -130,11 +156,10 @@ div#reader div#visu{
 
 div#reader div#ligne{
     width: 5px;
-    background: #0044cc;
-    position: absolute;
+    background: #b40000;
+    position: fixed;
     top: 0;
-    right: -2.5%;
-    width: 5px;
+    right: 0;
     height: auto;
     z-index: 300;
     text-align: left;
@@ -142,8 +167,8 @@ div#reader div#ligne{
 }
 
 div#reader div#visu svg{
-    height: 10px;
-    width: 10px;
+    height: 20px;
+    width: 20px;
 }
 
 div#reader div#visu ul{
@@ -155,7 +180,12 @@ div#reader div#visu ul{
 div#reader div#visu ul li{
     margin: 0;
     padding: 0;
-    height: 10px;
+    height: 20px;
+}
+
+div#content .txt15_140{
+    font-size: 16px;
+    line-height: 20px;
 }
 
 /******************/
