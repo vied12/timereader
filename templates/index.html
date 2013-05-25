@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf8">
+        <title>Timely</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <!-- Bootstrap -->
+        <link href="%%url_for('static', filename='css/bootstrap.min.css')%%" rel="stylesheet" media="screen">
+        <link href="%%url_for('static', filename='css/bootstrap-responsive.min.css')%%" rel="stylesheet">
+        <link href="%%url_for('static', filename='css/style.css')%%" rel="stylesheet">
+    </head>
+    <body>
+        <div id="container">
+
+            <!-- home -->
+            <div id="home" class="page">
+                <img src="%%url_for('static', filename='img/LogoROUGETimereaderFond.png')%%" class="logo" alt="logo" />
+                
+                <h2>Des contenus personnalisés adaptés à votre temps de trajet.</h2>
+                    
+                <a class="btn btn-large btn-block btn-primary" onclick="goToPage('main');">Let's go!</a>
+            </div>
+            <!-- /home -->
+                
+            <!-- settings -->
+            <div id="settings" class="page">
+                <div id="netSettings">
+                    <h2>Liez vos comptes</h1>
+                    <ul>
+                        <li><img src="%%url_for('static', filename='img/BoutonDelicious.png')%%" alt=""></li>
+                        <li><img src="%%url_for('static', filename='img/BoutonEvernote.png')%%" alt=""></li>
+                        <li><img src="%%url_for('static', filename='img/BoutonPocket.png')%%" alt=""></li>
+                        <li><img src="%%url_for('static', filename='img/BoutonSoundcloud.png')%%" alt=""></li>
+                    </ul>
+                </div>
+                <div id="intSettings">
+                    <h2>Indiquez vos centres d'intéret</h2>
+                    <ul>
+                        <li>Sport<input type="checkbox" value=""></li>
+                        <li>Actus<input type="checkbox" value=""></li>
+                        <li>Culture<input type="checkbox" value=""></li>
+                        <li>Politique<input type="checkbox" value=""></li>
+                        <li>Sciences<input type="checkbox" value=""></li>
+                        <li>Musique<input type="checkbox" value=""></li>
+                    </ul>
+                </div>
+                <a class="btn btn-large btn-block btn-primary" onclick="goToPage('main');">Sauvegarder</a>
+            </div>
+            <!-- /settings -->
+                
+            <!-- main search -->
+            <div id="main" class="page">
+                <header>
+                    <button class="btn btn-small btn-primary" type="button" onclick="goToPage('settings')">
+                        <i class="icon-wrench icon-white"></i>
+                    </button>
+                </header>                    
+                <label>Station de départ</label>
+                <input type="text" id="start" placeholder="Station de départ..." autocomplete="off" onfocus="selectedInput = 1;">
+                <input type="hidden" id="startcoord" >
+                <label>Station d'arrivée</label>
+                <input type="text" id="end" placeholder="Station d'arrivée..." autocomplete="off" onfocus="selectedInput = 2;">
+                <input type="hidden" id="endcoord" >
+                <br />
+                <div id="searchAlert" class="hidden">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                  <strong>Attention!</strong> Merci de bien spécifier les stations.
+                </div>                
+                <a class="btn btn-primary btn-large" onclick="startSearch();" >
+                    <i class="icon-inbox icon-white"></i>&nbsp;Recommendations
+                </a>
+                <a class="btn btn-primary btn-large" onclick="startSearch();">
+                    <i class="icon-bookmark icon-white"></i>&nbsp;Vos favoris
+                </a>
+            </div>
+            <!-- /main -->
+                
+            <!-- search result -->
+            <div id="results" class="page">
+                <div id="detailsResults"></div>
+                <ul></ul>
+            </div>
+            <!-- /search result -->
+                
+            <!-- reader -->
+            <div id="reader" class="page">
+                <h1>Reader</h1>
+                <div id="content"></div>
+                <div id="visu">
+                    <ul></ul>
+                </div>
+                <div id="ligne">&nbsp;</div>
+            </div>
+            <!-- /reader -->
+                
+            <!-- reader -->
+            <div id="warning" class="page">
+                Disponible uniquement sur mobile...
+            </div>
+            <!-- /reader -->
+
+        </div>
+
+        <!-- templates -->
+        <script id="template-results" type="text/x-handlebars-template">
+            | {{#each results}}
+            <li data-id="{{@index}}">
+                <h3>{{title}}</h3>
+                <span>{{source}}</span>
+                <img src="img/pictolivre.png" />
+            </li>
+            | {{/each}}
+        </script>
+
+        <script id="template-detailsresults" type="text/x-handlebars-template">
+            Trajet : <span>{{origin}}</span> - <span>{{destination}}</span>
+            <br />
+            Durée : environ {{duree}}min ({{nbStations}} stations)
+        </script>
+        
+        <script id="template-cerclestation" type="text/x-handlebars-template">
+            <li>
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+                    <circle cx="5" cy="5" r="5" fill="#{{couleur}}" />
+                </svg>
+            </li>
+        </script>
+
+        <script id="template-article" type="text/x-handlebars-template">
+            <h1>{{title}}</h1>
+            <div class="contentArticle">
+                {{content}}
+            </div>
+        </script>
+        
+        <!-- /templates -->
+
+        <!-- jquery -->
+        <script src="http://code.jquery.com/jquery.js"></script>
+        <script src="%%url_for('static', filename='js/bootstrap.min.js')%%"></script>
+        <script src="%%url_for('static', filename='js/handlebars.js')%%"></script>
+        <script src="%%url_for('static', filename='js/underscore-min.js')%%"></script>
+        <script src="%%url_for('static', filename='js/main.js')%%"></script>
+    </body>
+</html>

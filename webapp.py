@@ -11,7 +11,7 @@
 # Last mod : 
 # -----------------------------------------------------------------------------
 
-from flask import Flask, render_template, request, send_file, \
+from flask import Flask, render_template, request, send_file, render_template_string, \
 	send_from_directory, Response, abort, session, redirect, url_for, make_response, jsonify
 import os, json, uuid, pymongo, requests, datetime, bson, operator
 from pymongo        import MongoClient
@@ -20,8 +20,19 @@ from werkzeug       import secure_filename
 from base64         import b64decode
 from pprint import pprint as pp
 # import flask_s3
-
-app       = Flask(__name__)
+ 
+class CustomFlask(Flask):
+	jinja_options = Flask.jinja_options.copy()
+	jinja_options.update(dict(
+		block_start_string='<%',
+		block_end_string='%>',
+		variable_start_string='%%',
+		variable_end_string='%%',
+		comment_start_string='<#',
+		comment_end_string='#>',
+	))
+ 
+app = CustomFlask(__name__)
 app.config.from_pyfile("settings.cfg")
 
 def get_collection(collection):
@@ -63,7 +74,7 @@ def get_articles(user=None, thema=None, duration=None):
 	print "bla"
 	articles = get_collection('articles')
 	words    = (duration/60) * 300
-	one      = get_closest(user=user, thema=thema, count_words=words)
+	one      = get_closest(user=user, thema=thema, count_words=words, limit=3)
 	two      = get_closest(user=user, thema=thema, count_words=words/2, limit=2)
 	three    = get_closest(user=user, thema=thema, count_words=words/3, limit=3)
 	return {
@@ -182,7 +193,7 @@ def api_content(id):
 # -----------------------------------------------------------------------------
 @app.route('/')
 def index():
-	return render_template('home.html')
+	return render_template('index.html')
 
 # -----------------------------------------------------------------------------
 #

@@ -109,7 +109,7 @@ def _render_coverCSS(app):
 def _collect_static(app):
 	static_dir = app.static_folder
 	lib        = app.config['LIB_DIR']
-	dir_to_collect = ['css', 'images', 'js', 'videos']
+	dir_to_collect = ['css', 'img', 'js', 'videos']
 	for d in dir_to_collect:
 		for path, subdirs, filenames in os.walk(os.path.join(lib, d)):
 			for f in [os.path.join(path, filename) for filename in filenames]:

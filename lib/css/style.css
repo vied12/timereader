@@ -1,0 +1,171 @@
+/* style.css */
+
+html,body { width: 100%; height: 100%; margin: 0px; padding: 0px; }
+
+body{
+    background-color: #f5f5f5;
+}
+
+div#container{
+    width: 100%;
+    /*padding: 0 2.5%;*/
+}
+
+div.page { 
+    display: none;
+    width: 95%;
+    padding: 0 2.5%;
+    text-align: center;
+    position: relative;
+}
+
+
+/* home */
+div#home{
+    display: block;
+    background: url('../img/photofond960x1440.png');
+    background-size: 100%;
+}
+
+div#home img.logo{
+    max-width: 100%;
+    margin-top: 30px;
+}
+
+div#home h2{
+    font-size: 16px;
+    background-color: rgba(255,255,255,0.4);    
+    margin-top: 120px;
+}
+
+div#home a.btn{
+    margin-top: 20px;
+}
+
+/* settings */
+div#netSettings ul, div#intSettings ul{
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+div#netSettings ul li{
+    width: 49%;
+    display: inline-block;
+    margin-bottom: 4px;
+    background: white;
+}
+div#netSettings ul li img{
+    max-width: 100%;
+    cursor: pointer;
+}
+    
+div#intSettings ul li{
+    width: 39%;
+    display: inline-block;
+    margin-bottom: 4px;    
+    text-align: left;
+    background: white;
+    padding: 10px 5%;
+}
+
+div#intSettings ul li input{
+    float: right;
+    margin-right: 10px;
+}
+
+div#intSettings{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
+/* main / search */
+div#main input{
+    width: 99%;
+}
+div#main header{
+    text-align: right;
+    margin-top: 20px;
+}
+
+/* results */
+div#detailsResults{
+    margin: 20px 0;
+    background: #fff;
+}
+
+div#results ul{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+div#results ul li{
+    height: 40px;
+    cursor: pointer;
+    width: 100%;
+    display: block;
+}
+
+
+/* reader */
+div#reader div#content{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 200;
+}
+div#reader div#visu{
+    position: absolute;
+    top: 0;
+    right: -2.5%;
+    width: 10px;
+    height: auto;
+    z-index: 100;
+    text-align: left;
+    overflow: hidden;
+}
+
+div#reader div#ligne{
+    width: 5px;
+    background: #0044cc;
+    position: absolute;
+    top: 0;
+    right: -2.5%;
+    width: 5px;
+    height: auto;
+    z-index: 300;
+    text-align: left;
+    overflow: hidden;
+}
+
+div#reader div#visu svg{
+    height: 10px;
+    width: 10px;
+}
+
+div#reader div#visu ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+div#reader div#visu ul li{
+    margin: 0;
+    padding: 0;
+    height: 10px;
+}
+
+/******************/
+/* media queries */
+
+@media all and (min-width: 960px){
+    /*body{
+        width: 640px;
+        margin: 0 auto;
+    }*/
+    div#main input{
+    }    
+}
