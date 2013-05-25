@@ -5,6 +5,7 @@ A reading companion for traveling by subway.
 
 Paris 2013 - Developed during the Open-data Hackathon for RATP. 
 
+Demo: http://timereader.herokuapp.com
 
 ## Pitch
 
@@ -26,9 +27,6 @@ This application run with:
 * Python 2.7
 * Flask 0.9
 * Mongodb
-* CoffeeScript
-* CleverCSS
-* PyJade (with the jinja2 templating engine)
 
 ## Installation
 
