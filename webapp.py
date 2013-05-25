@@ -130,6 +130,7 @@ def itineraire(src, tgt):
 	# if not tgt.startswith('coord:'):
 	# 	tgt = get_coord(tgt)
 	# request nativia
+
 	dt = datetime.datetime.now().strftime("%Y%m%dT%H%M")
 	res = requests.get("http://api.navitia.io/v0/paris/journeys.json?origin={origin}&destination={destination}&datetime={datetime}&depth=0"\
 		.format(origin=src, destination=tgt, datetime=dt))
