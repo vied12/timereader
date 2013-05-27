@@ -11,7 +11,7 @@ Demo: http://timereader.herokuapp.com
 
 Time Reader est une liseuse sur mobile, qui propose des contenus personnalisés et adaptés à vos temps de trajets. 
 
-Pourquoi utiliser Time.li ?Lorsque vous entrez un parcours, Time.li calcule précisement la durée de votre trajets pour vous proposez des contenus qui correspondent votre temps de parcours. 
+Pourquoi utiliser Time Reader ? Lorsque vous entrez un parcours, Time Reader calcule précisement la durée de votre trajets pour vous proposez des contenus qui correspondent votre temps de parcours. 
 
 Profitez de vos déplacement en bus et en métro pour lire confortablement  : 
 
