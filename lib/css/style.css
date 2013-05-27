@@ -26,8 +26,37 @@ div.page {
 
 
 /* home */
-div#home{
+div#homeTmp{
     display: block;
+    background: url('../img/photofull.jpg');
+    background-size: 100%;
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+div#homeTmp div.cont{
+	width: 700px;
+    font-size: 16px;       
+	height: 100%;
+	margin: 0 auto;	
+}
+
+div#homeTmp img.logo{
+    max-width: 100%;    
+	display: block;
+	margin-bottom: 30px;
+}
+
+div#homeTmp div.txt{
+	background-color: rgba(255,255,255,0.4); 
+	padding: 20px;
+	text-align: left;
+}
+
+div#home{
+    display: none;/*tmp*/
     background: url('../img/photofond960x1440.png');
     background-size: 100%;
 }
