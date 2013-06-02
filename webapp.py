@@ -24,12 +24,12 @@ from pprint import pprint as pp
 class CustomFlask(Flask):
 	jinja_options = Flask.jinja_options.copy()
 	jinja_options.update(dict(
-		block_start_string='<%',
-		block_end_string='%>',
-		variable_start_string='%%',
-		variable_end_string='%%',
-		comment_start_string='<#',
-		comment_end_string='#>',
+		block_start_string    ='<%',
+		block_end_string      ='%>',
+		variable_start_string ='%%',
+		variable_end_string   ='%%',
+		comment_start_string  ='<#',
+		comment_end_string    ='#>',
 	))
  
 app = CustomFlask(__name__)
@@ -118,18 +118,10 @@ def itineraire(src, tgt):
 		"destination"    : None,
 		"begin_date_time": None,
 		"end_date_time"  : None,
-		"stations"       : [],
-		"line"           : None,
-		"color"          : None,
+		"sections"       : [],
 		"delta"          : None,
 		"articles"       : []
 	}
-	# ensure we have coord uri
-	# if not src.startswith('coord:'):
-	# 	src = get_coord(src)
-	# if not tgt.startswith('coord:'):
-	# 	tgt = get_coord(tgt)
-	# request nativia
 
 	dt = datetime.datetime.now().strftime("%Y%m%dT%H%M")
 	res = requests.get("http://api.navitia.io/v0/paris/journeys.json?origin={origin}&destination={destination}&datetime={datetime}&depth=0"\
@@ -140,42 +132,50 @@ def itineraire(src, tgt):
 	if not data["response_type"] == "ITINERARY_FOUND":
 		return res.text
 	# fill response
+
 	for journey in data['journeys']:
 		for section in journey['sections']:
 			if section['type'] == "PUBLIC_TRANSPORT" and section['pt_display_informations']['physical_mode'] == "Metro":
-				# itineraire informations
-				# response["delta"]           = (datetime.datetime.strptime(section['end_date_time'], '%Y%m%dT%H%M%f') - datetime.datetime.strptime(section['begin_date_time'], '%Y%m%dT%H%M%f')).total_seconds()
-				response["delta"]           = journey['duration']
-				response["origin"]          = section['origin']['name']
-				response["destination"]     = section['destination']['name']
-				response["begin_date_time"] = section['begin_date_time']
-				response["end_date_time"]   = section['end_date_time']
-				response["line"]            = section['pt_display_informations']['code']
-				response["color"]           = "#"+section['pt_display_informations']['color']
-				response["articles"]        = get_articles(duration=response["delta"])
-				# stations
+				# we found a journeys which contains a metro section
+				# we save the global informations about travel ONCE
+				if not response['origin']:
+					response['origin'] = section['origin']['name']
+					# destination will be filled later
+					response["delta"]           = journey['duration']
+					response["begin_date_time"] = section['begin_date_time']
+					response["end_date_time"]   = section['end_date_time']
+					response["articles"]        = get_articles(duration=response["delta"])
+				# we save all sections
+				stations = []
 				for station in section['stop_date_times']:
-					if len(response['stations']) > 0:
-						delta = datetime.datetime.strptime(station['departure_date_time'], '%Y%m%dT%H%M%f') - datetime.datetime.strptime(response['stations'][-1]['arrival_date_time'], '%Y%m%dT%H%M%f')
+					if len(stations) > 0:
+						delta = datetime.datetime.strptime(station['departure_date_time'], '%Y%m%dT%H%M%f') - datetime.datetime.strptime(stations[-1]['arrival_date_time'], '%Y%m%dT%H%M%f')
+						delta = delta.total_seconds()
+					elif response['sections']:
+						# delta of correspondance
+						delta = datetime.datetime.strptime(station['departure_date_time'], '%Y%m%dT%H%M%f') - datetime.datetime.strptime(response['sections'][-1]['stations'][-1]['arrival_date_time'], '%Y%m%dT%H%M%f')
 						delta = delta.total_seconds()
 					else:
 						delta = 0
-					response['stations'].append({
+					stations.append({
 						"name"                : station['stop_point']['name'],
 						"departure_date_time" : station['departure_date_time'],
 						"arrival_date_time"   : station['arrival_date_time'],
 						"timedelta"           : delta
 					})
+				response['sections'].append({
+					"stations" : stations,
+					"line"     : section['pt_display_informations']['code'],
+					"color"    : "#"+section['pt_display_informations']['color'],
+					"origin"          : section['origin']['name'],
+					"destination"     : section['destination']['name'],
+					"begin_date_time" : section['begin_date_time'],
+					"end_date_time"   : section['end_date_time'],
+				})
+				response['destination'] = section['destination']['name']
+		if response['origin']:
+			break
 	return dumps(response)
-
-# @app.route('/api/articles/')
-# def api_articles(user=None):
-# 	articles = get_articles(duration=200)
-# 	return dumps(articles)
-	# text= r'''[{"thematic": "life-style", "title": "A Perpignan, l'Afrique prend la parole", "summary": "Filda Adoch, Ougandaise, commente les images de Martina Bacigalupo et sort des clich\u00e9s.", "content": "Filda Adoch, Ougandaise, commente les images de Martina Bacigalupo et sort des clich\u00e9s.", "source": "http://www.lemonde.fr/rss/tag/ete.xml", "link": "", "_id": {"$oid": "51a077eb3062721886fafe33"}}, {"thematic": "life-style", "title": "Li Chengpeng, le sport sans tabou en Chine", "summary": "Ancien commentateur sportif, Li Chengpeng a choisi de se consacrer \u00e0 l'\u00e9criture apr\u00e8s avoir re\u00e7u des menaces de mort. Par le biais de son blog, mais aussi de fictions, il aborde sans fard les sujets qui d\u00e9rangent.", "content": "Ancien commentateur sportif, Li Chengpeng a choisi de se consacrer \u00e0 l'\u00e9criture apr\u00e8s avoir re\u00e7u des menaces de mort. Par le biais de son blog, mais aussi de fictions, il aborde sans fard les sujets qui d\u00e9rangent.", "source": "http://www.lemonde.fr/rss/tag/ete.xml", "link": "", "_id": {"$oid": "51a077eb3062721886fafe34"}}, {"thematic": "life-style", "title": "Christian Portal, soigner par les plantes", "summary": "D\u00e9non\u00e7ant une d\u00e9marche de soin\u00a0\"tourn\u00e9e essentiellement sur l'augmentation des profits\", Christian Portal plaide, \u00e0 travers son blog, pour une m\u00e9decine \u00e9cologique.", "content": "D\u00e9non\u00e7ant une d\u00e9marche de soin\u00a0\"tourn\u00e9e essentiellement sur l'augmentation des profits\", Christian Portal plaide, \u00e0 travers son blog, pour une m\u00e9decine \u00e9cologique.", "source": "http://www.lemonde.fr/rss/tag/ete.xml", "link": "", "_id": {"$oid": "51a077eb3062721886fafe35"}}, {"thematic": "life-style", "title": "Anne Lataillade, du beau et du bon au menu", "summary": "Fuyant les plats compliqu\u00e9s, Anne Lataillade propose, via son blog, \"Papilles et pupilles\", des recettes inspir\u00e9es par une cuisine familiale, \u00e0 la port\u00e9e de tous.", "content": "Fuyant les plats compliqu\u00e9s, Anne Lataillade propose, via son blog, \"Papilles et pupilles\", des recettes inspir\u00e9es par une cuisine familiale, \u00e0 la port\u00e9e de tous.", "source": "http://www.lemonde.fr/rss/tag/ete.xml", "link": "", "_id": {"$oid": "51a077eb3062721886fafe36"}}, {"thematic": "life-style", "title": "\"La prestesse du mal est inou\u00efe\"", "summary": "", "content": "", "source": "http://www.lemonde.fr/rss/tag/ete.xml", "link": "", "_id": {"$oid": "51a077eb3062721886fafe37"}}]'''
-	# return Response(response=text,
-	# 	status=200,
-	# 	mimetype="application/json")
 
 @app.route('/api/testarticles/')
 def api_testarticles(user=None):
