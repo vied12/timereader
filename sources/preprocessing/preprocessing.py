@@ -17,9 +17,10 @@ def preprocess(app, request):
 	@app.before_request
 	def render():
 		if request.base_url.find("static") == -1:
+			_collect_static(app)
 			# _render_shpaml(app)
-			_render_coffee(app)
-			_render_coverCSS(app)
+			# _render_coffee(app)
+			# _render_coverCSS(app)
 			# _render_jade(app)
 
 def _scan(folder, dest, action, extension, new_extension=None):
