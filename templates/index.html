@@ -165,7 +165,7 @@
         <script id="template-detailsresults" type="text/x-handlebars-template">
             Trajet : <span>{{origin}}</span> - <span>{{destination}}</span>
             <br />
-            Durée : environ {{duree}}min ({{nbStations}} stations)
+            Durée : environ {{duree}}min ({{nbStations}} stations {{#if nbSections}} et {{nbSections}} changements{{/if}})
         </script>
         
         <script id="template-cerclestation" type="text/x-handlebars-template">

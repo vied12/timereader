@@ -130,7 +130,7 @@ div#main header{
 /* results */
 div#detailsResults{
     padding: 20px 0;
-    margin: 0;
+    margin: 0 0 10px 0;
     background: #fff;
 }
 
