@@ -56,7 +56,7 @@ Add the virtualenv to your python path with
 
 Download and install python dependances
 
-	$ virtualenv install -r requirements.txt
+	$ pip install -r requirements.txt
 
 #### No Python dependances
 
