@@ -196,6 +196,16 @@ def api_content(id):
 def index():
 	return render_template('index.html')
 
+@app.route('/reset-content')
+def reset_content():
+	from content_maker import ContentMaker
+	articles_collection = get_collection('articles')
+	ContentMaker(articles_collection, "https://docs.google.com/spreadsheet/ccc?key=0AsZFwL3WjsakdFpOVGIwYS1iMlRHZGNkT0hvck9aeFE&usp=sharing&output=csv"
+	articles_collection.remove()
+	ContentMaker.start()
+	return render_template('ok')
+
+
 # -----------------------------------------------------------------------------
 #
 # Utils
