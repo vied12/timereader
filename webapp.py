@@ -44,6 +44,9 @@ def get_referer():
 		session['referer'] = referer
 	return referer
 
+def how_many_words(duration):
+	return (duration/60) * 300
+
 # -----------------------------------------------------------------------------
 #
 # API
@@ -127,17 +130,24 @@ def get_itineraire(src, tgt):
 def get_content_from_itineraire(src, tgt):
 	itineraire = get_itineraire(src, tgt)
 	duration   =  itineraire['delta']
-	words      = (duration/60) * 300
-	one        = Article.get_closest(count_words=words,   limit=3) # FIXME
-	two        = Article.get_closest(count_words=words/2, limit=2)
-	three      = Article.get_closest(count_words=words/3, limit=3)
+	words      = how_many_words(duration)
 	articles   = {
-		"one"   : one,
-		"two"   : two,
-		"three" : three,
+		"one"   : Article.get_closest(count_words=words,   limit=3), # FIXME
+		"two"   : Article.get_closest(count_words=words/2, limit=2),
+		"three" : Article.get_closest(count_words=words/3, limit=3),
 	}
 	itineraire["articles"] = articles
 	return dumps(itineraire)
+
+@app.route('/api/duration/<duration>', methods=['get'])
+def get_content_from_duration(duration):
+	words    = how_many_words(int(duration))
+	articles = {
+		"one"   : Article.get_closest(count_words=words,   limit=3), # FIXME
+		"two"   : Article.get_closest(count_words=words/2, limit=2),
+		"three" : Article.get_closest(count_words=words/3, limit=3),
+	}
+	return dumps(articles)
 
 @app.route('/api/testarticles/')
 def api_testarticles(user=None):
