@@ -24,12 +24,13 @@ import requests
 CSV_SEPARATOR = ","
 
 class Article:
-	def __init__(self, title=None, date=None, content=None, summary=None, link=None):
-		self.title   = title
-		self.date    = date
-		self.content = content
-		self.summary = summary
-		self.link    = link
+	def __init__(self, title=None, date=None, content=None, summary=None, link=None, thematic=None):
+		self.title    = title
+		self.date     = date
+		self.content  = content
+		self.summary  = summary
+		self.link     = link
+		self.thematic = thematic
 
 class ContentMaker:
 	
@@ -66,11 +67,12 @@ class ContentMaker:
 		for article in document['entries']:
 			try:
 				entry = Article(
-					title   = article['title'],
-					date    = datetime.fromtimestamp(mktime(article['published_parsed'])),
-					content = article['content'][0]['value'],
-					summary = article['summary'],
-					link    = article['link'])
+					title    = article['title'],
+					date     = datetime.fromtimestamp(mktime(article['published_parsed'])),
+					content  = article['content'][0]['value'],
+					summary  = article['summary'],
+					link     = article['link'],
+					thematic = source['thematic'])
 				result.append(entry)
 			except KeyError as e:
 				# TODO: Logs
