@@ -13,12 +13,13 @@
 
 from flask import Flask, render_template, request, send_file, render_template_string, \
 	send_from_directory, Response, abort, session, redirect, url_for, make_response, jsonify
-import os, json, uuid, pymongo, requests, datetime, bson, operator
-from pymongo        import MongoClient
+import os, json, uuid, requests, datetime, bson, operator
+
 from bson.json_util import dumps
 from werkzeug       import secure_filename
 from base64         import b64decode
 from pprint import pprint as pp
+from storage import Station, Article
 # import flask_s3
  
 class CustomFlask(Flask):
@@ -35,57 +36,6 @@ class CustomFlask(Flask):
 app = CustomFlask(__name__)
 app.config.from_pyfile("settings.cfg")
 
-def get_collection(collection):
-	client = MongoClient(app.config['MONGO_HOST'])
-	db     = client[app.config['MONGO_DB']]
-	return db[collection]
-
-def get_stations(name=None):
-	stations = get_collection('stations')
-	if not name:
-		return stations.find()
-	return stations.find({"name":{'$regex':"^%s" % name, "$options": "-i"}})
-
-def get_closest(count_words, user=None, thema=None, limit=1):
-	articles = get_collection('articles')
-	words = count_words
-	loc = {
-		"user"       : user,
-		"thematic"   : thema,
-		"count_words": {"$lte": words},
-	}
-	criteria     = {k:loc[k] for k in loc if loc[k] != None}
-	closestBelow = list(articles.find(criteria, limit=limit).sort("count_words", -1))
-	criteria["count_words"] = {"$gt": words}
-	closestAbove = list(articles.find(criteria, limit=limit).sort("count_words", 1))
-
-	results = closestAbove + closestBelow
-	# add delta parameter
-	for i, result in enumerate(results):
-		result['delta'] = abs(count_words - result['count_words'])
-		# hack: remove content
-		del result['content']
-		results[i] = result
-	# sorting
-	results = sorted(results, key=lambda k: k['delta']) 
-	return results[:limit]
-
-def get_articles(user=None, thema=None, duration=None):
-	articles = get_collection('articles')
-	words    = (duration/60) * 300
-	one      = get_closest(user=user, thema=thema, count_words=words, limit=3)
-	two      = get_closest(user=user, thema=thema, count_words=words/2, limit=2)
-	three    = get_closest(user=user, thema=thema, count_words=words/3, limit=3)
-	return {
-		"one"   : one,
-		"two"   : two,
-		"three" : three,
-	}
-
-def get_content(id):
-	articles = get_collection('articles')
-	return articles.find_one({"_id": bson.ObjectId(oid=str(id))})['content']
-
 def get_referer():
 	if 'referer' in session:
 		referer = session['referer']
@@ -93,6 +43,9 @@ def get_referer():
 		referer = str(uuid.uuid4())
 		session['referer'] = referer
 	return referer
+
+def how_many_words(duration):
+	return (duration/60) * 300
 
 # -----------------------------------------------------------------------------
 #
@@ -103,7 +56,7 @@ def get_referer():
 def station_autocomplete(keywords):
 	# TODO
 	res = []
-	stations = get_stations(keywords)
+	stations = Station.get(keywords)
 	for station in stations:
 		res.append({
 			"name" : station['name'],
@@ -111,8 +64,7 @@ def station_autocomplete(keywords):
 		})
 	return json.dumps(res)
 
-@app.route('/api/itineraire/<src>/<tgt>', methods=['get'])
-def itineraire(src, tgt):
+def get_itineraire(src, tgt):
 	response = {
 		"origin"         : None,
 		"destination"    : None,
@@ -127,12 +79,10 @@ def itineraire(src, tgt):
 	res = requests.get("http://api.navitia.io/v0/paris/journeys.json?origin={origin}&destination={destination}&datetime={datetime}&depth=0"\
 		.format(origin=src, destination=tgt, datetime=dt))
 	data = res.json()
-	# return res.text
 	# on error
 	if not data["response_type"] == "ITINERARY_FOUND":
 		return res.text
 	# fill response
-
 	for journey in data['journeys']:
 		for section in journey['sections']:
 			if section['type'] == "PUBLIC_TRANSPORT" and section['pt_display_informations']['physical_mode'] == "Metro":
@@ -144,7 +94,6 @@ def itineraire(src, tgt):
 					response["delta"]           = journey['duration']
 					response["begin_date_time"] = section['begin_date_time']
 					response["end_date_time"]   = section['end_date_time']
-					response["articles"]        = get_articles(duration=response["delta"])
 				# we save all sections
 				stations = []
 				for station in section['stop_date_times']:
@@ -175,17 +124,43 @@ def itineraire(src, tgt):
 				response['destination'] = section['destination']['name']
 		if response['origin']:
 			break
-	return dumps(response)
+	return response
+
+@app.route('/api/itineraire/<src>/<tgt>', methods=['get'])
+def get_content_from_itineraire(src, tgt):
+	itineraire = get_itineraire(src, tgt)
+	duration   =  itineraire['delta']
+	words      = how_many_words(duration)
+	articles   = {
+		"one"   : Article.get_closest(count_words=words,   limit=3), # FIXME
+		"two"   : Article.get_closest(count_words=words/2, limit=2),
+		"three" : Article.get_closest(count_words=words/3, limit=3),
+	}
+	itineraire["articles"] = articles
+	return dumps(itineraire)
+
+@app.route('/api/duration/<duration>', methods=['get'])
+def get_content_from_duration(duration):
+	words    = how_many_words(int(duration))
+	articles = {
+		"one"   : Article.get_closest(count_words=words,   limit=3), # FIXME
+		"two"   : Article.get_closest(count_words=words/2, limit=2),
+		"three" : Article.get_closest(count_words=words/3, limit=3),
+	}
+	return dumps(articles)
 
 @app.route('/api/testarticles/')
 def api_testarticles(user=None):
+	Article.get()
 	articles = get_articles(duration=500)
 	return dumps(articles)
 
 @app.route('/api/content/<id>')
 def api_content(id):
-	content = get_content(id)
-	return content
+	article  = Article.get(id=id)
+	if article:
+		return article['content']
+	return "false"
 
 # -----------------------------------------------------------------------------
 #
@@ -195,6 +170,16 @@ def api_content(id):
 @app.route('/')
 def index():
 	return render_template('index.html')
+
+@app.route('/reset-content')
+def reset_content():
+	from content_maker import ContentMaker
+	articles_collection = get_collection('articles')
+	cm = ContentMaker(articles_collection, "https://docs.google.com/spreadsheet/ccc?key=0AsZFwL3WjsakdFpOVGIwYS1iMlRHZGNkT0hvck9aeFE&usp=sharing&output=csv")
+	articles_collection.remove()
+	cm.start()
+	return "ok"
+
 
 # -----------------------------------------------------------------------------
 #
