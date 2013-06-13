@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf8">
+        <meta charset="utf-8">
         <title>Time Reader</title>
 		
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -48,7 +48,7 @@
 						   <li>Les articles partagés par les usagers de vos lignes de transport. </li>
 						</ul>
 
-						<p>Dans le métro ou dans le bus, vous accédez d'un simple geste toutes les informations relatives à votre trajet (localisation, nombre de stations parcourues, temps de parcours, changements de lignes etc.).</ul>
+						<p>Dans le métro ou dans le bus, vous accédez d'un simple geste toutes les informations relatives à votre trajet (localisation, nombre de stations parcourues, temps de parcours, changements de lignes etc.).</p>
 										
 						<p><strong>Merci d'accéder à Timereader.fr sur un mobile ou de redimensionner votre fenêtre pour accéder au prototype.</strong></p>		
 					</div>
@@ -70,7 +70,7 @@
             <!-- settings -->
             <div id="settings" class="page">
                 <div id="netSettings">
-                    <h2>Synchronisez Time Reader avec vos applications</h1>
+                    <h2>Synchronisez Time Reader avec vos applications</h2>
                     <ul>
                         <li><img src="%%url_for('static', filename='img/BoutonDelicious.png')%%" alt=""></li>
                         <li><img src="%%url_for('static', filename='img/BoutonEvernote.png')%%" alt=""></li>
@@ -108,8 +108,8 @@
 						<label>Arrivée</label>
 						<input type="text" id="end" placeholder="Station d'arrivée..." autocomplete="off" onfocus="selectedInput = 2;">
 						<label class="long">Heure de départ</label>
-						<input class="short" type="text" id="hour" placeholder="" autocomplete="off" type="number" name="hour" min="0" max="24">
-						<input class="short" type="text" id="minute" placeholder="" autocomplete="off" type="number" name="minute" min="0" max="59" >
+						<input class="short" id="hour" placeholder="" autocomplete="off" type="number" name="hour" min="0" max="24">
+						<input class="short" id="minute" placeholder="" autocomplete="off" type="number" name="minute" min="0" max="59" >
 						<img src="%%url_for('static', filename='img/trajet_cal.png')%%" alt="cal" style="height: 30px; vertical-align: top;"/>
 						<input type="hidden" id="startcoord" value="coord:2.39594992268219:48.8483471797456">
 						<input type="hidden" id="endcoord" value="coord:2.3377861287237:48.882561788738">
@@ -122,7 +122,7 @@
 					<div class="separator">&nbsp;</div>
 					
 					<div class="sliderContainer">
-						<input type="text" class="span2" value="5" id="timeSlider" value="30">
+						<input type="text" class="span2" value="5" id="timeSlider">
 					</div>
 					<div class="gradSlider">
 						<ul>
