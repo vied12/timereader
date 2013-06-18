@@ -8,7 +8,7 @@
 # License : proprietary journalism++
 # -----------------------------------------------------------------------------
 # Creation : 12-Jun-2013
-# Last mod : 12-Jun-2013
+# Last mod : 18-Jun-2013
 # -----------------------------------------------------------------------------
 
 from pymongo import MongoClient
@@ -36,36 +36,40 @@ class Station:
 class Article:
 
 	@classmethod
-	def get(self, limit=0, **karg):
+	def get(self, limit=0, sort=True, **karg):
+		if 'thematics' in karg and type(karg['thematics']) == list:
+			karg['thematic'] = {"$in" : karg['thematics']}
+			del karg['thematics']
 		if "id" in karg:
 			return get_collection("articles").find_one({"_id": bson.ObjectId(oid=str(karg['id']))})
 		articles = get_collection('articles')
 		criteria = {k:karg[k] for k in karg if karg[k] != None}
-		return articles.find(criteria, limit=limit).sort("count_words", 1)
+		if sort:
+			return articles.find(criteria, limit=limit).sort("count_words", 1)
+		else:
+			return articles.find(criteria, limit=limit)
 
 	@classmethod
-	def get_closest(self, count_words, user=None, thematic=None, limit=1, silent=True):
-		articles = get_collection('articles')
-		words    = count_words
-		loc = {
-			"user"       : user,
-			"thematic"   : thematic,
-			"count_words": {"$lte": words},
-		}
-		criteria     = {k:loc[k] for k in loc if loc[k] != None}
-		closestBelow = list(articles.find(criteria, limit=limit).sort("count_words", -1))
-		criteria["count_words"] = {"$gt": words}
-		closestAbove = list(articles.find(criteria, limit=limit).sort("count_words", 1))
-		results = closestAbove + closestBelow
+	def get_closest(self, count_words, limit=1, silent=True, **karg):
+		articles     = get_collection('articles')
+		words        = count_words
+		karg['sort'] = False
+		# below
+		karg['count_words'] = {"$lte": count_words}
+		closestBelow        = list(self.get(limit=limit, **karg).sort("count_words", -1))
+		karg['count_words'] = {"$gt": count_words}
+		# above
+		closestAbove        = list(self.get(limit=limit, **karg).sort("count_words", 1))
+		results             = closestAbove + closestBelow
 		# add delta parameter
 		for i, result in enumerate(results):
 			result['delta'] = abs(count_words - result['count_words'])
 			if silent:
 				del result['content']
-			results[i] = result
 		# sorting
-		results = sorted(results, key=lambda k: k['delta']) 
+		results = sorted(results, key=lambda k: k['delta'])
 		return results[:limit]
 
 if __name__ == "__main__":
-	pp(list(Article.get_closest(100, limit=2)))
+	pp(list(Article.get_closest(400, limit=10,)))
+	# pp([_['delta'] for _ in list(Article.get_closest(400, limit=10,))])
