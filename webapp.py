@@ -47,23 +47,6 @@ def get_referer():
 def how_many_words(duration):
 	return (duration/60) * 300
 
-# -----------------------------------------------------------------------------
-#
-# API
-#
-# -----------------------------------------------------------------------------
-@app.route('/api/stations/autocomplete/<keywords>', methods=['get'])
-def station_autocomplete(keywords):
-	# TODO
-	res = []
-	stations = Station.get(keywords)
-	for station in stations:
-		res.append({
-			"name" : station['name'],
-			"uri"  : "coord:%s:%s" % (station['lat'], station['lon'])
-		})
-	return json.dumps(res)
-
 def get_itineraire(src, tgt):
 	response = {
 		"origin"         : None,
@@ -125,6 +108,23 @@ def get_itineraire(src, tgt):
 		if response['origin']:
 			break
 	return response
+
+# -----------------------------------------------------------------------------
+#
+# API
+#
+# -----------------------------------------------------------------------------
+@app.route('/api/stations/autocomplete/<keywords>', methods=['get'])
+def station_autocomplete(keywords):
+	# TODO
+	res = []
+	stations = Station.get(keywords)
+	for station in stations:
+		res.append({
+			"name" : station['name'],
+			"uri"  : "coord:%s:%s" % (station['lat'], station['lon'])
+		})
+	return json.dumps(res)
 
 @app.route('/api/itineraire/<src>/<tgt>', methods=['get'])
 def get_content_from_itineraire(src, tgt):
