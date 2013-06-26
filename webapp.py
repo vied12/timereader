@@ -20,6 +20,7 @@ from werkzeug       import secure_filename
 from base64         import b64decode
 from pprint import pprint as pp
 from storage import Station, Article
+import readability
 # import flask_s3
  
 class CustomFlask(Flask):
@@ -155,6 +156,15 @@ def api_content(id):
 	if article:
 		return article['content']
 	return "false"
+
+@app.route('/api/readability/<username>/<password>', methods=['get'])
+def api_readability_get_token(username, password):
+	token = readability.xauth(
+		app.config['READABILITY_CONSUMER_KEY'], 
+		app.config['READABILITY_CONSUMER_SECRET'], 
+		username, 
+		password)
+	return dumps(token)
 
 # -----------------------------------------------------------------------------
 #
