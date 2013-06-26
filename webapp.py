@@ -149,12 +149,6 @@ def get_content_from_duration(duration):
 	}
 	return dumps(articles)
 
-@app.route('/api/testarticles/')
-def api_testarticles(user=None):
-	Article.get()
-	articles = get_articles(duration=500)
-	return dumps(articles)
-
 @app.route('/api/content/<id>')
 def api_content(id):
 	article  = Article.get(id=id)
