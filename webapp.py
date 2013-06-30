@@ -179,7 +179,7 @@ def index():
 def reset_content():
 	from content_maker import ContentMaker
 	articles_collection = get_collection('articles')
-	cm = ContentMaker(articles_collection, "https://docs.google.com/spreadsheet/ccc?key=0AsZFwL3WjsakdFpOVGIwYS1iMlRHZGNkT0hvck9aeFE&usp=sharing&output=csv")
+	cm = ContentMaker(articles_collection, app.config['SOURCE_CONTENT'])
 	articles_collection.remove()
 	cm.start()
 	return "ok"

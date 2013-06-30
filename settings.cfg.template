@@ -12,6 +12,9 @@ else:
 	MONGO_HOST = 'localhost'
 	MONGO_DB   = 'libreway'
 
+# -- Source Content ----------------------
+SOURCE_CONTENT = "https://docs.google.com/spreadsheet/ccc?key=0AsZFwL3WjsakdFpOVGIwYS1iMlRHZGNkT0hvck9aeFE&usp=sharing&output=csv"
+
 # -- Readabality -------------------------
 READABILITY_CONSUMER_KEY     = ""
 READABILITY_CONSUMER_SECRET  = ""

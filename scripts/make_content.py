@@ -33,7 +33,7 @@ if __name__ == "__main__":
 	# FIXME: remove it
 	collection.remove()
 
-	content_maker = ContentMaker(collection, "https://docs.google.com/spreadsheet/ccc?key=0AsZFwL3WjsakdFpOVGIwYS1iMlRHZGNkT0hvck9aeFE&usp=sharing&output=csv")
+	content_maker = ContentMaker(collection, app.config['SOURCE_CONTENT'])
 
 	content_maker.start()
 
