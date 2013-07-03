@@ -20,6 +20,7 @@ from werkzeug       import secure_filename
 from base64         import b64decode
 from pprint import pprint as pp
 from storage import Station, Article
+import readability
 # import flask_s3
  
 class CustomFlask(Flask):
@@ -46,23 +47,6 @@ def get_referer():
 
 def how_many_words(duration):
 	return (duration/60) * 300
-
-# -----------------------------------------------------------------------------
-#
-# API
-#
-# -----------------------------------------------------------------------------
-@app.route('/api/stations/autocomplete/<keywords>', methods=['get'])
-def station_autocomplete(keywords):
-	# TODO
-	res = []
-	stations = Station.get(keywords)
-	for station in stations:
-		res.append({
-			"name" : station['name'],
-			"uri"  : "coord:%s:%s" % (station['lat'], station['lon'])
-		})
-	return json.dumps(res)
 
 def get_itineraire(src, tgt):
 	response = {
@@ -126,6 +110,23 @@ def get_itineraire(src, tgt):
 			break
 	return response
 
+# -----------------------------------------------------------------------------
+#
+# API
+#
+# -----------------------------------------------------------------------------
+@app.route('/api/stations/autocomplete/<keywords>', methods=['get'])
+def station_autocomplete(keywords):
+	# TODO
+	res = []
+	stations = Station.get(keywords)
+	for station in stations:
+		res.append({
+			"name" : station['name'],
+			"uri"  : "coord:%s:%s" % (station['lat'], station['lon'])
+		})
+	return json.dumps(res)
+
 @app.route('/api/itineraire/<src>/<tgt>', methods=['get'])
 def get_content_from_itineraire(src, tgt):
 	itineraire = get_itineraire(src, tgt)
@@ -149,18 +150,21 @@ def get_content_from_duration(duration):
 	}
 	return dumps(articles)
 
-@app.route('/api/testarticles/')
-def api_testarticles(user=None):
-	Article.get()
-	articles = get_articles(duration=500)
-	return dumps(articles)
-
 @app.route('/api/content/<id>')
 def api_content(id):
 	article  = Article.get(id=id)
 	if article:
 		return article['content']
 	return "false"
+
+@app.route('/api/readability/<username>/<password>', methods=['get'])
+def api_readability_get_token(username, password):
+	token = readability.xauth(
+		app.config['READABILITY_CONSUMER_KEY'], 
+		app.config['READABILITY_CONSUMER_SECRET'], 
+		username, 
+		password)
+	return dumps(token)
 
 # -----------------------------------------------------------------------------
 #
@@ -179,7 +183,6 @@ def reset_content():
 	articles_collection.remove()
 	cm.start()
 	return "ok"
-
 
 # -----------------------------------------------------------------------------
 #

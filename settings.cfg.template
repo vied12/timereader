@@ -1,0 +1,19 @@
+import os
+
+DEBUG          = True
+LIB_DIR        = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'lib')
+SECRET_KEY     = "sS7NtyJsD2PjE"
+
+# -- Storage -----------------------------
+if 'MONGOLAB_URI' in os.environ:
+	MONGO_HOST = os.environ['MONGOLAB_URI']
+	MONGO_DB   = os.environ['MONGOLAB_URI'].split('/')[-1]
+else:
+	MONGO_HOST = 'localhost'
+	MONGO_DB   = 'libreway'
+
+# -- Readabality -------------------------
+READABILITY_CONSUMER_KEY     = ""
+READABILITY_CONSUMER_SECRET  = ""
+
+# EOF
