@@ -37,9 +37,17 @@ class Article:
 
 	@classmethod
 	def get(self, limit=0, sort=True, **karg):
-		if 'thematics' in karg and type(karg['thematics']) == list:
+		# support for thematics filter
+		if 'thematics' in karg and karg['thematics']:
+			assert type(karg['thematics']) == list, "thematics must be a list"
 			karg['thematic'] = {"$in" : karg['thematics']}
-			del karg['thematics']
+		if 'thematics' in karg: del karg['thematics']
+		# support for user's articles
+		if 'user' in karg and karg['user']:
+			# delete the filter by thematic
+			# NOTE: sould be optionable
+			if 'thematic' in karg:
+				del karg['thematic']
 		if "id" in karg:
 			return get_collection("articles").find_one({"_id": bson.ObjectId(oid=str(karg['id']))})
 		articles = get_collection('articles')

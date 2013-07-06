@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Encoding: utf-8
 # -----------------------------------------------------------------------------
-# Project : 
+# Project : Time Reader
 # -----------------------------------------------------------------------------
 # Author : Edouard Richard                                  <edou4rd@gmail.com>
 # -----------------------------------------------------------------------------
@@ -128,14 +128,17 @@ def station_autocomplete(keywords):
 	return json.dumps(res)
 
 @app.route('/api/itineraire/<src>/<tgt>', methods=['get'])
-def get_content_from_itineraire(src, tgt):
+@app.route('/api/itineraire/<src>/<tgt>/thematics/<thematics>', methods=['get'])
+@app.route('/api/itineraire/<src>/<tgt>/user_content/<user_id>', methods=['get'])
+def get_content_from_itineraire(src, tgt, thematics=None, user_id=None):
 	itineraire = get_itineraire(src, tgt)
-	duration   =  itineraire['delta']
+	duration   = itineraire['delta']
 	words      = how_many_words(duration)
+	thematics  = thematics.split(',') if thematics else None
 	articles   = {
-		"one"   : Article.get_closest(count_words=words,   limit=3), # FIXME
-		"two"   : Article.get_closest(count_words=words/2, limit=2),
-		"three" : Article.get_closest(count_words=words/3, limit=3),
+		"one"   : Article.get_closest(count_words=words,   limit=3, thematics=thematics, user=user_id), # FIXME
+		"two"   : Article.get_closest(count_words=words/2, limit=2, thematics=thematics, user=user_id),
+		"three" : Article.get_closest(count_words=words/3, limit=3, thematics=thematics, user=user_id),
 	}
 	itineraire["articles"] = articles
 	return dumps(itineraire)
@@ -164,6 +167,7 @@ def api_readability_get_token(username, password):
 		app.config['READABILITY_CONSUMER_SECRET'], 
 		username, 
 		password)
+	# oauth_token, oauth_secret = token
 	return dumps(token)
 
 # -----------------------------------------------------------------------------
@@ -175,6 +179,7 @@ def api_readability_get_token(username, password):
 def index():
 	return render_template('index.html')
 
+# FIXME: needs authentication
 @app.route('/reset-content')
 def reset_content():
 	from content_maker import ContentMaker
