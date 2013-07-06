@@ -10,16 +10,32 @@
 # Creation : 06-Jul-2013
 # Last mod : 06-Jul-2013
 # -----------------------------------------------------------------------------
+import jobs
 
-import os
-import redis
-from rq import Worker, Queue, Connection
+class Worker:
 
-listen    = ['high', 'default', 'low']
-redis_url = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
-conn      = redis.from_url(redis_url)
+	def __init__(self, async=False):
+		self.async = async
+		if self.async:
+			from redis import Redis
+			from rq import Queue
+			self.queue = Queue(connection=Redis())
 
-if __name__ == '__main__':
-	with Connection(conn):
-		worker = Worker(map(Queue, listen))
-		worker.work()
+	def run(self, job, *arg, **kwargs):
+		__import__('jobs.'+job)
+		
+		class_name = job.replace('_', ' ').title().replace(' ', '')
+		job = eval('jobs.%s.%s()' % (job, class_name))
+
+		if self.async:
+			self.run_redis(job, *arg, **kwargs)
+		else:
+			self.run_synchronously(job, *arg, **kwargs)
+
+	def run_synchronously(self, job, *arg, **kwargs):
+		job.run(*arg, **kwargs)
+
+	def run_redis(self, job, *arg, **kwargs):
+		result = self.queue.enqueue(job.run, *arg, **kwargs)
+
+# EOF

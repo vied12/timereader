@@ -18,5 +18,6 @@ SOURCE_CONTENT = "https://docs.google.com/spreadsheet/ccc?key=0AsZFwL3WjsakdFpOV
 # -- Readabality -------------------------
 READABILITY_CONSUMER_KEY     = ""
 READABILITY_CONSUMER_SECRET  = ""
+READABILITY_PARSER_TOKEN     = ""
 
 # EOF

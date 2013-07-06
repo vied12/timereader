@@ -21,6 +21,7 @@ from base64         import b64decode
 from pprint import pprint as pp
 from storage import Station, Article
 import readability
+from worker import Worker
 # import flask_s3
  
 class CustomFlask(Flask):
@@ -36,6 +37,7 @@ class CustomFlask(Flask):
  
 app = CustomFlask(__name__)
 app.config.from_pyfile("settings.cfg")
+worker = Worker(async=False)
 
 def get_referer():
 	if 'referer' in session:
@@ -129,7 +131,7 @@ def station_autocomplete(keywords):
 
 @app.route('/api/itineraire/<src>/<tgt>', methods=['get'])
 @app.route('/api/itineraire/<src>/<tgt>/thematics/<thematics>', methods=['get'])
-@app.route('/api/itineraire/<src>/<tgt>/user_content/<user_id>', methods=['get'])
+@app.route('/api/itineraire/<src>/<tgt>/user/<user_id>', methods=['get'])
 def get_content_from_itineraire(src, tgt, thematics=None, user_id=None):
 	itineraire = get_itineraire(src, tgt)
 	duration   = itineraire['delta']
@@ -161,14 +163,18 @@ def api_content(id):
 	return "false"
 
 @app.route('/api/readability/<username>/<password>', methods=['get'])
-def api_readability_get_token(username, password):
+def api_readability_register(username, password):
 	token = readability.xauth(
 		app.config['READABILITY_CONSUMER_KEY'], 
 		app.config['READABILITY_CONSUMER_SECRET'], 
 		username, 
 		password)
 	# oauth_token, oauth_secret = token
-	return dumps(token)
+	# FIXME: should be in SESSION
+	user_id = str(uuid.uuid4())
+	# Retrieve the user's articles and save them into the database with his user_id
+	worker.run('retrieve_readability', token, user_id)
+	return dumps({'user': user_id})
 
 # -----------------------------------------------------------------------------
 #

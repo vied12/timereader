@@ -15,6 +15,7 @@ from pymongo import MongoClient
 from flask import Flask
 from pprint import pprint as pp
 import bson
+import datetime
 
 app = Flask(__name__)
 app.config.from_pyfile("../settings.cfg")
@@ -35,6 +36,29 @@ class Station:
 
 class Article:
 
+	def __init__(self, title=None, date=None, content=None, summary=None, link=None, thematic=None, user=None, count_words=None):
+		self.title        = title
+		self.date         = date
+		self.content      = content
+		self.summary      = summary
+		self.link         = link
+		self.thematic     = thematic
+		self.user         = user
+		self.count_words  = count_words
+		self.created_date = datetime.datetime.now()
+
+	@classmethod
+	def get_collection(self):
+		client = MongoClient(app.config['MONGO_HOST'])
+		db     = client[app.config['MONGO_DB']]
+		return db['articles']
+
+	def save(self):
+		# TODO: 
+		# o  complete self.count_words
+		# o  check if unique (url - user_id)
+		Article.get_collection().insert(self.__dict__)
+
 	@classmethod
 	def get(self, limit=0, sort=True, **karg):
 		# support for thematics filter
@@ -49,8 +73,8 @@ class Article:
 			if 'thematic' in karg:
 				del karg['thematic']
 		if "id" in karg:
-			return get_collection("articles").find_one({"_id": bson.ObjectId(oid=str(karg['id']))})
-		articles = get_collection('articles')
+			return Article.get_collection().find_one({"_id": bson.ObjectId(oid=str(karg['id']))})
+		articles = Article.get_collection()
 		criteria = {k:karg[k] for k in karg if karg[k] != None}
 		if sort:
 			return articles.find(criteria, limit=limit).sort("count_words", 1)
@@ -58,8 +82,8 @@ class Article:
 			return articles.find(criteria, limit=limit)
 
 	@classmethod
-	def get_closest(self, count_words, limit=1, silent=True, **karg):
-		articles     = get_collection('articles')
+	def get_closest(self, count_words, limit=1, silent=False, **karg):
+		articles     = Article.get_collection()
 		words        = count_words
 		karg['sort'] = False
 		# below
@@ -78,6 +102,7 @@ class Article:
 		results = sorted(results, key=lambda k: k['delta'])
 		return results[:limit]
 
+# TEST
 if __name__ == "__main__":
 	pp(list(Article.get_closest(400, limit=10,)))
 	# pp([_['delta'] for _ in list(Article.get_closest(400, limit=10,))])
