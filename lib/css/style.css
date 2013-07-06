@@ -212,7 +212,7 @@ div#main header{
 	width: 100%;
 }
 
-div#main header  a.configBtn{
+div#main header a.configBtn{
 	display: block;
 	width: 87.5%; /* 560 / 640 */
 	background-color: #F2F2F2;
@@ -223,7 +223,7 @@ div#main header  a.configBtn{
 	margin: 0;
 	text-decoration: none;
 	text-align: left;
-	border-top: solid 20px #ccc;
+	/*border-top: solid 20px #ccc;*/
 	
 	background: url("../img/settings_grey.png") 95% 5px no-repeat #F2F2F2;
 	background-size: 25px;
@@ -343,6 +343,13 @@ div#main div.gradSlider ul li:nth-child(2){
 	font-size: 20px;
 }
 
+div#main section img.logoForm{
+	height: 55px;
+	float: right;
+	margin-right: 9%;
+	margin-top: 5px;
+}
+
 /* slider */
 div.sliderContainer {
   width: 85.9375%; /* 550 / 640 */
@@ -392,8 +399,8 @@ div#results ul{
 
 
 div#detailsResults{
-	border-top: solid 20px #ccc;
-	border-bottom: solid 10px rgba(204,204,204,0.7);
+	/*border-top: solid 20px #ccc;
+	border-bottom: solid 10px rgba(204,204,204,0.7);*/
     padding: 0;
     margin: 0;
     background: #fff;
@@ -450,7 +457,7 @@ div#results div#detailsResults ul li{
 
 div#results ul#listResults{
 	position: relative;
-	top: 270px;
+	top: 250px;
 	z-index: 100;
 }
 
@@ -487,8 +494,8 @@ div#results ul#listResults li img{
 /***********/
 /* READER */
 div#reader header{
-	border-top: solid 20px #ccc;
-	border-bottom: solid 10px rgba(204,204,204,0.7);
+	/*border-top: solid 20px #ccc;
+	border-bottom: solid 10px rgba(204,204,204,0.7);*/
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -503,6 +510,18 @@ div#reader header div.size, div#reader header div.montrajet{
 	background-color: #fff;
 	height: 20px;
 	color: #ccc;
+}
+
+div#reader header div.montrajet img{
+	width: 20px;
+	position: absolute;
+	left: -30%;	
+}
+
+div#reader header div.montrajet svg#svgstart{
+	width: 20px;
+	position: absolute;
+	right: 15px;	
 }
 
 div#reader header div.size a{
@@ -543,6 +562,7 @@ div#reader div#content{
 div#reader div#content h1{
 	font-size: 46px;
 	padding: 5px 6.25%; /* 40 / 640 */
+	font-family: 'Amaranth', sans-serif;
 }
 
 div#reader div#content div.metaArticle{
@@ -590,11 +610,11 @@ div#reader div#content div#contentArticle{
 
 div#reader div#visu{
     position: fixed;
-    top: 60px;
+    top: 30px;
     right: 5px;
     width: 30px;
     height: auto;
-    z-index: 900;
+    z-index: 1100;
     text-align: left;
     overflow: hidden;
 }
@@ -603,7 +623,7 @@ div#reader div#ligne{
     width: 10px;
     background: #F0F0F0;
     position: fixed;
-    top: 60px;
+    top: 30px;
     right: 20px;
     height: auto;
     z-index: 1000;
@@ -615,7 +635,7 @@ div#reader div#avancement{
     width: 10px;
     background: #DCDCDC;
     position: fixed;
-    top: 60px;
+    top: 30px;
     right: 20px;
     height: 0;
     z-index: 1000;
