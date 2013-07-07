@@ -55,8 +55,9 @@ class Article:
 
 	def save(self):
 		# TODO: 
-		# o  complete self.count_words
 		# o  check if unique (url - user_id)
+		if not self.count_words or self.count_words == 0:
+			self.count_words = len(self.content.split())
 		Article.get_collection().insert(self.__dict__)
 
 	@classmethod

@@ -18,8 +18,11 @@ from time import mktime
 from datetime import datetime
 import requests
 import feedparser
+from worker import Worker
+
 
 CSV_SEPARATOR = ","
+worker = Worker(async=False)
 
 class RetrieveCommonArticles(Job):
 
@@ -29,8 +32,8 @@ class RetrieveCommonArticles(Job):
 			articles = []
 			if source['type'] == 'rss':
 				articles += self.__scrape_rss(source)
-			for article in articles:
-				self.__save_article(article)
+			if source['type'] == 'rss/full':
+				articles += self.__scrape_rss(source, full=True)
 
 	def __get_source(self, target):
 		sources = []
@@ -45,29 +48,27 @@ class RetrieveCommonArticles(Job):
 			sources.append(source)
 		return sources		
 
-	def __scrape_rss(self, source):
+	def __scrape_rss(self, source, full=False):
 		""" scape a rss source, return a list of article """
 		result = []
 		document = feedparser.parse(source['target'])
 		for article in document['entries']:
 			try:
-				entry = Article(
-					title    = article['title'],
-					date     = datetime.fromtimestamp(mktime(article['published_parsed'])),
-					content  = article['content'][0]['value'],
-					summary  = article['summary'],
-					link     = article['link'],
-					thematic = source['thematic'])
-				result.append(entry)
+				if full:
+					entry = Article(
+						title    = article['title'],
+						date     = datetime.fromtimestamp(mktime(article['published_parsed'])),
+						content  = article['content'][0]['value'],
+						summary  = article['summary'],
+						link     = article['link'],
+						thematic = source['thematic'])
+					entry.save()
+				else:
+					worker.run('retrieve_page', article['link'], thematic=source['thematic'])
 			except KeyError as e:
 				# TODO: Logs
 				# print e, article
 				pass
 		return result
-
-	def __save_article(self, article):
-		""" save an article if it doesn't exist """
-		article.count_words = len(article.content.split())
-		article.save()
 
 # EOF

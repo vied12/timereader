@@ -189,10 +189,9 @@ def index():
 @app.route('/reset-content')
 def reset_content():
 	from content_maker import ContentMaker
-	articles_collection = get_collection('articles')
-	cm = ContentMaker(articles_collection, app.config['SOURCE_CONTENT'])
+	articles_collection = Article.get_collection()
 	articles_collection.remove()
-	cm.start()
+	worker.run('retrieve_common_articles', app.config['SOURCE_CONTENT'])
 	return "ok"
 
 # -----------------------------------------------------------------------------
