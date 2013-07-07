@@ -82,7 +82,7 @@ class Article:
 			return articles.find(criteria, limit=limit)
 
 	@classmethod
-	def get_closest(self, count_words, limit=1, silent=False, **karg):
+	def get_closest(self, count_words, limit=1, silent=True, **karg):
 		articles     = Article.get_collection()
 		words        = count_words
 		karg['sort'] = False

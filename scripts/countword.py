@@ -19,11 +19,10 @@ collection =  db["articles"]
 
 
 for art in collection.find():
-
-	d     = pq(art['content'].encode('utf-8'))
-	count = len(d.text().split())
-
-	art['count_words'] = count
-	collection.save(art)
+	if not 'count_words' in art or not art['count_words'] or art['count_words'] == 0:
+		d     = pq(art['content'].encode('utf-8'))
+		count = len(d.text().split())
+		art['count_words'] = count
+		collection.save(art)
 
 # EOF

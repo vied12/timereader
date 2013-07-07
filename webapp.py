@@ -67,7 +67,7 @@ def get_itineraire(src, tgt):
 	data = res.json()
 	# on error
 	if not data["response_type"] == "ITINERARY_FOUND":
-		return res.text
+		raise Exception(res.text)
 	# fill response
 	for journey in data['journeys']:
 		for section in journey['sections']:
