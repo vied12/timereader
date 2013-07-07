@@ -146,12 +146,15 @@ def get_content_from_itineraire(src, tgt, thematics=None, user_id=None):
 	return dumps(itineraire)
 
 @app.route('/api/duration/<duration>', methods=['get'])
-def get_content_from_duration(duration):
+@app.route('/api/duration/<duration>/thematics/<thematics>', methods=['get'])
+@app.route('/api/duration/<duration>/user/<user_id>', methods=['get'])
+def get_content_from_duration(duration, thematics=None, user_id=None):
 	words    = how_many_words(int(duration))
+	thematics  = thematics.split(',') if thematics else None
 	articles = {
-		"one"   : Article.get_closest(count_words=words,   limit=3), # FIXME
-		"two"   : Article.get_closest(count_words=words/2, limit=2),
-		"three" : Article.get_closest(count_words=words/3, limit=3),
+		"one"   : Article.get_closest(count_words=words,   limit=3, thematics=thematics, user=user_id), # FIXME
+		"two"   : Article.get_closest(count_words=words/2, limit=2, thematics=thematics, user=user_id),
+		"three" : Article.get_closest(count_words=words/3, limit=3, thematics=thematics, user=user_id),
 	}
 	return dumps(articles)
 
