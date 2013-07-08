@@ -11,7 +11,6 @@
 # Last mod : 07-Jul-2013
 # -----------------------------------------------------------------------------
 from job import Job
-import readability
 from storage import Article
 from flask import Flask
 import requests

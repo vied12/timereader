@@ -11,12 +11,9 @@
 # Last mod : 06-Jul-2013
 # -----------------------------------------------------------------------------
 from job import Job
-import readability
-from storage import Article
-from flask import Flask
-import requests
 from worker import Worker
-
+import readability
+from flask import Flask
 
 app = Flask(__name__)
 app.config.from_envvar('TIMEREADER_SETTINGS')
