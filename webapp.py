@@ -156,7 +156,7 @@ def get_content_from_duration(duration, thematics=None, user_id=None):
 		"two"   : Article.get_closest(count_words=words/2, limit=2, thematics=thematics, user=user_id),
 		"three" : Article.get_closest(count_words=words/3, limit=3, thematics=thematics, user=user_id),
 	}
-	return dumps({'articles': articles})
+	return dumps({'articles': articles, 'delta': duration})
 
 @app.route('/api/content/<id>')
 def api_content(id):
