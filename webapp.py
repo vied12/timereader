@@ -36,7 +36,7 @@ class CustomFlask(Flask):
  
 app = CustomFlask(__name__)
 app.config.from_pyfile("settings.cfg")
-worker = Worker(async=False)
+worker = Worker(async=app.config['QUEUE_MODE_ASYNC'])
 
 def get_referer():
 	if 'referer' in session:

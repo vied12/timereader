@@ -4,10 +4,14 @@ DEBUG          = True
 LIB_DIR        = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'lib')
 SECRET_KEY     = "sS7NtyJsD2PjE"
 
+# -- Queue -------------------------------
+REDIS_URL        = os.environ['REDISTOGO_URL'] if 'REDISTOGO_URL' in os.environ else "redis://localhost:6379"
+QUEUE_MODE_ASYNC = not DEBUG
+
 # -- Storage -----------------------------
-if 'MONGOLAB_URI' in os.environ:
-	MONGO_HOST = os.environ['MONGOLAB_URI']
-	MONGO_DB   = os.environ['MONGOLAB_URI'].split('/')[-1]
+if 'REDISCLOUD_URL' in os.environ:
+	MONGO_HOST = os.environ['REDISCLOUD_URL']
+	MONGO_DB   = os.environ['REDISCLOUD_URL'].split('/')[-1]
 else:
 	MONGO_HOST = 'localhost'
 	MONGO_DB   = 'libreway'
