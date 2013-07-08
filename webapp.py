@@ -22,7 +22,6 @@ from pprint import pprint as pp
 from storage import Station, Article
 import readability
 from worker import Worker
-# import flask_s3
  
 class CustomFlask(Flask):
 	jinja_options = Flask.jinja_options.copy()

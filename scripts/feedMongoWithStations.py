@@ -12,13 +12,11 @@ collection =  db["stations"]
 collection.remove()
 
 with open("data/stations.csv") as f:
-	# stop_id,stop_code,stop_name,stop_desc,latitude,longitude,location_type,parent_station
 	for line in f.readlines()[1:]:
 		data = line.split('#')
 		res = {
-		# "stop_id":data[0],
-		"lat":data[1],
-		"lon":data[2],
+		"lat":data[2],
+		"lon":data[1],
 		"name":data[3],
 		"description":data[4],
 		"type":data[5].strip("\r\n"),
@@ -30,12 +28,16 @@ with open('data/transilien-stops.txt') as f:
 		line = line.strip('\n').split(',')
 		name = line[1].strip('"').lower().capitalize()
 		lat, lng =  (line[3], line[4])
-		# print name, lat ,lng
 		collection.insert({
 			"lat":lat,
 			"lon":lng,
 			"name":name,
 			"type":"transilien",
-			# "type":data[5].strip("\r\n"),
 		})
 
+# remove copy
+for station in collection.find():
+	occur = collection.find({'name':station['name']})
+	if occur.count()>1:
+		for row in list(occur)[1:]:
+			collection.remove(row)
