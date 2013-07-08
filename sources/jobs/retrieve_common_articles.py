@@ -22,7 +22,7 @@ from worker import Worker
 
 
 CSV_SEPARATOR = ","
-worker = Worker(async=False)
+worker = Worker(async=True)
 
 class RetrieveCommonArticles(Job):
 
@@ -61,10 +61,11 @@ class RetrieveCommonArticles(Job):
 						content  = article['content'][0]['value'],
 						summary  = article['summary'],
 						link     = article['link'],
-						thematic = source['thematic'])
+						thematic = source['thematic'],
+						theme    = 'common_rss')
 					entry.save()
 				else:
-					worker.run('retrieve_page', article['link'], thematic=source['thematic'])
+					worker.run('retrieve_page', article['link'], thematic=source['thematic'], source='common_rss')
 			except KeyError as e:
 				# TODO: Logs
 				# print e, article

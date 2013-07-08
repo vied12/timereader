@@ -21,7 +21,7 @@ app.config.from_pyfile("../../settings.cfg")
 
 class RetrievePage(Job):
 
-	def run(self, url, thematic=None, user_id=None):
+	def run(self, url, thematic=None, user_id=None, source=None):
 		if not (url.startswith("http://") or url.startswith("https://")):
 			url = "http://%s" % url
 		# parse the web page
@@ -39,6 +39,7 @@ class RetrievePage(Job):
 		article.count_words = parsed['word_count']
 		article.user        = user_id
 		article.thematic    = thematic
+		article.theme       = source
 		article.save()
 
 # EOF

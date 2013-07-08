@@ -36,7 +36,7 @@ class Station:
 
 class Article:
 
-	def __init__(self, title=None, date=None, content=None, summary=None, link=None, thematic=None, user=None, count_words=None):
+	def __init__(self, title=None, date=None, content=None, summary=None, link=None, thematic=None, user=None, count_words=None, theme=None):
 		self.title        = title
 		self.date         = date
 		self.content      = content
@@ -45,6 +45,7 @@ class Article:
 		self.thematic     = thematic
 		self.user         = user
 		self.count_words  = count_words
+		self.theme        = theme
 		self.created_date = datetime.datetime.now()
 
 	@classmethod
