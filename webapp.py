@@ -35,7 +35,10 @@ class CustomFlask(Flask):
 	))
  
 app = CustomFlask(__name__)
-app.config.from_pyfile("settings.cfg")
+if 'PROD' in os.environ:
+	app.config.from_pyfile("settings.prod.cfg")
+else:
+	app.config.from_pyfile("settings.cfg")
 worker = Worker(async=app.config['QUEUE_MODE_ASYNC'])
 
 def get_referer():
