@@ -15,7 +15,6 @@
 		
         <!-- Bootstrap -->
 		<link href="%%url_for('static', filename='css/bootstrap.min.css')%%" rel="stylesheet" media="screen">
-        <!--<link href="%%url_for('static', filename='css/bootstrap-responsive.min.css')%%" rel="stylesheet">-->
         <link href="%%url_for('static', filename='css/style.css')%%" rel="stylesheet">
 		
 		<!-- Fonts -->
@@ -70,26 +69,41 @@
             <!-- settings -->
             <div id="settings" class="page">
                 <div id="netSettings">
+					<header>
+						<a class="configBtn" href="#" onclick="goToPage('main')" data-bghover="%%url_for('static', filename='img/settings_grey.png')%%">
+							Gérer mon contenu et mes comptes
+						</a>
+					</header>
                     <h2>Synchronisez Time Reader avec vos applications</h2>
                     <ul>
-                        <li><img src="%%url_for('static', filename='img/BoutonDelicious.png')%%" alt=""></li>
-                        <li><img src="%%url_for('static', filename='img/BoutonEvernote.png')%%" alt=""></li>
-                        <li><img src="%%url_for('static', filename='img/BoutonPocket.png')%%" alt=""></li>
-                        <li><img src="%%url_for('static', filename='img/BoutonSoundcloud.png')%%" alt=""></li>
+                        <li>
+							<a class="evernote" href="#">Evernote</a>
+							<div id="subEvernote" class="sub">Disponible bientôt...</div>
+						</li>
+                        <li>
+							<a class="readability" href="#">Readability</a>
+							<div id="subReadability" class="sub">
+								<input type="text" id="readabUser" placeholder="Votre nom d'utilisateur..." />
+								<br />
+								<input type="password" id="readabPass" placeholder="Votre mot de passe..." />
+								<br />
+								<input type="button" id="readabButton" value="Ok" onclick="connectToReadability();" />
+								<br />
+								*Ils ne seront jamais stockés sur nos serveurs
+							</div>
+						</li>
+                        <li>
+							<a class="soundcloud" href="#">Soundcloud</a>
+							<div id="subSoundcloud" class="sub">Disponible bientôt...</div>
+						</li>
                     </ul>
                 </div>
                 <div id="intSettings">
                     <h2>Indiquez vos centres d'intéret</h2>
-                    <ul>
-                        <li>Sport<input type="checkbox" value=""></li>
-                        <li>Actus<input type="checkbox" value=""></li>
-                        <li>Culture<input type="checkbox" value=""></li>
-                        <li>Politique<input type="checkbox" value=""></li>
-                        <li>Sciences<input type="checkbox" value=""></li>
-                        <li>Musique<input type="checkbox" value=""></li>
+                    <ul>                       
                     </ul>
                 </div>
-                <a class="btn btn-large btn-block btn-primary" onclick="goToPage('main');">Sauvegarder</a>
+				<a href="#" class="saveBtn" onclick="saveSettings();">Sauvegarder</a>
             </div>
             <!-- /settings -->
                 
@@ -160,7 +174,7 @@
 					</div>
 					<div class="montrajet">
 						<img height="10" src="%%url_for('static', filename='img/red_arrow.png')%%" alt="arrow" />
-						Mon trajet
+						<a href="#" onclick="goToPage('results');">Mon trajet</a>
 						<svg id="svgstart" xmlns="http://www.w3.org/2000/svg" version="1.1">
 							<circle id="circle-start" cx="10" cy="10" r="6" stroke-width="6" stroke="#4D4D4D" fill="#E6E6E6" />
 						</svg>
@@ -182,9 +196,9 @@
         <script id="template-results" type="text/x-handlebars-template">
             {{#each results}}
             <li data-id="{{@index}}" data-type="text">
-                <img src="%%url_for('static', filename='img/pictolivre.png')%%" />
+                <img src="%%url_for('static', filename='img/themes/')%%picto-{{thematic}}.png" />
                 <h3>{{title}}</h3>
-                <span>{{source}}</span> 
+                <span>{{source}} {{thematic}}</span> 
                 <div class="spacer"></div>
             </li>
             {{/each}}
@@ -192,7 +206,7 @@
         
         <script id="template-res-audio" type="text/x-handlebars-template">
             <li data-id="5" data-type="audio">
-                <img src="%%url_for('static', filename='img/pictoson.png')%%" />
+                <img src="%%url_for('static', filename='img/themes/picto-son.png')%%" />
                 <h3>Chronique de Chris Esquerre</h3>
                 <span>Radio France</span> 
                 <div class="spacer"></div>
@@ -257,6 +271,12 @@
 				</a>
 			</div>
         </script>
+		
+		<script id="template-theme-checkbox" type="text/x-handlebars-template">
+			{{#each results}}
+				<li><input type="checkbox" id="theme-{{slug}}" name="{{slug}}" value="{{slug}}" {{#if checked}}checked{{/if}}><label for="theme-{{slug}}">{{name}}</label></li>
+			{{/each}}
+		</script>
         
         <!-- /templates -->
 

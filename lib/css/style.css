@@ -158,44 +158,120 @@ div#home a.startBtn{
 
 /*************/
 /* SETTINGS */
+div#settings{
+	background-color: #ccc;
+}
+
 div#settings h2{
     font-size: 20px;
+	color: #333;
+	padding-top: 15px;
+}
+
+div#settings header a.configBtn{
+	display: block;
+	width: 87.5%; /* 560 / 640 */
+	background-color: #F2F2F2;
+	color: #666;
+	font-size: 18px;
+	padding: 10px 6.25%; /* 40 / 640 */
+	margin: 0;
+	text-decoration: none;
+	text-align: left;
+	
+	background: url("../img/settings_red.png") 95% 5px no-repeat #F2F2F2;
+	background-size: 25px;
+}
+div#settings a.saveBtn{
+	display: block;
+	/*position: absolute;*/
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-color: #EB4E65;	
+	color: #fff;
+	font-size: 24px;
+	height: 20px;
+	padding: 10px 0;
+	margin: 0;
+	text-decoration: none;
+	font-family: 'Open Sans', sans-serif;
 }
 
 div#netSettings ul, div#intSettings ul{
     padding: 0;
     margin: 0;
     list-style-type: none;
+	text-align: left;
 }
 
-div#netSettings ul li{
-    width: 49%;
-    display: inline-block;
-    margin-bottom: 4px;
-    background: white;
-}
-div#netSettings ul li img{
-    max-width: 100%;
-    cursor: pointer;
-}
-    
-div#intSettings ul li{
-    width: 39%;
-    display: inline-block;
-    margin-bottom: 4px;    
-    text-align: left;
-    background: white;
-    padding: 10px 5%;
-}
-
-div#intSettings ul li input{
-    float: right;
-    margin-right: 10px;
+div#netSettings input{
+	width: 69%; /* 360 / 500 */
+	margin-bottom: 5px;
+	border: none;
+	background-color: #F2F2F2;
+	border: solid 1px #F2F2F2;
+	padding: 5px 1%;
 }
 
 div#intSettings{
-    margin-top: 20px;
-    margin-bottom: 20px;
+	margin-bottom: 30px;
+}
+
+div#netSettings ul li {
+    width: 100%;
+    display: block;
+}
+
+div#netSettings ul li a{
+    width:80%;
+	padding-left: 20%;
+    display: block;
+    margin-bottom: 4px;
+    background: white;
+	height: 35px;
+	padding-top:15px;
+	font-size: 24px;
+	color: #4d4d4d;
+}
+div#netSettings ul li a:hover{
+	text-decoration: none;
+}
+
+div#netSettings ul li div.sub{
+	display: none;
+	padding: 15px 0;
+	text-align: center;
+}
+
+div#netSettings ul li a.evernote{
+	background: #fff url("../img/source_evernote.png") no-repeat 10% 10px;
+	background-size: 35px 35px;
+}
+div#netSettings ul li a.readability{
+	background: #fff url("../img/source_readability.png") no-repeat 10% 10px;
+	background-size: 35px 35px;
+}
+div#netSettings ul li a.soundcloud{
+	background: #fff url("../img/source_soundcloud.png") no-repeat 10% 10px;
+	background-size: 35px 35px;
+}
+    
+div#intSettings ul li{
+    width: 80%;
+    display: block;
+    margin-bottom: 4px;    
+    text-align: left;
+    background: white;
+    padding: 10px 10%;
+	font-size: 24px;
+}
+
+div#intSettings ul li input{
+    /*float: left;
+    margin-right: 10px;*/
+	margin-right: 10%;
 }
 
 /******************/
@@ -510,12 +586,13 @@ div#reader header div.size, div#reader header div.montrajet{
 	background-color: #fff;
 	height: 20px;
 	color: #ccc;
+	position: relative;
 }
 
 div#reader header div.montrajet img{
 	width: 20px;
 	position: absolute;
-	left: -30%;	
+	left: 5%;	
 }
 
 div#reader header div.montrajet svg#svgstart{
