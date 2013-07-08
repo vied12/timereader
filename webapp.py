@@ -125,7 +125,7 @@ def station_autocomplete(keywords):
 	for station in stations:
 		res.append({
 			"name" : station['name'],
-			"uri"  : "coord:%s:%s" % (station['lat'], station['lon'])
+			"uri"  : "coord:%s:%s" % (station['lon'], station['lat'])
 		})
 	return json.dumps(res)
 
