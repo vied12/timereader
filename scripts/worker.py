@@ -17,7 +17,7 @@ from rq import Worker, Queue, Connection
 from flask import Flask
 
 app = Flask(__name__)
-app.config.from_pyfile("../settings.cfg")
+app.config.from_envvar('TIMEREADER_SETTINGS')
 
 listen = ['high', 'default', 'low']
 conn   = redis.from_url(app.config['REDIS_URL'])

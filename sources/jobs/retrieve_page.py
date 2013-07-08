@@ -17,7 +17,7 @@ from flask import Flask
 import requests
 
 app = Flask(__name__)
-app.config.from_pyfile("../../settings.cfg")
+app.config.from_envvar('TIMEREADER_SETTINGS')
 
 class RetrievePage(Job):
 

@@ -19,7 +19,7 @@ from worker import Worker
 
 
 app = Flask(__name__)
-app.config.from_pyfile("../../settings.cfg")
+app.config.from_envvar('TIMEREADER_SETTINGS')
 worker = Worker(async=False)
 
 class RetrieveReadability(Job):

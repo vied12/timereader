@@ -18,7 +18,7 @@ import bson
 import datetime
 
 app = Flask(__name__)
-app.config.from_pyfile("../settings.cfg")
+app.config.from_envvar('TIMEREADER_SETTINGS')
 
 def get_collection(collection):
 	client = MongoClient(app.config['MONGO_HOST'])
