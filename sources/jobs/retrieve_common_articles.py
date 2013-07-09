@@ -62,7 +62,7 @@ class RetrieveCommonArticles(Job):
 						summary  = article['summary'],
 						link     = article['link'],
 						thematic = source['thematic'],
-						theme    = 'common_rss')
+						type     = 'common_rss')
 					entry.save()
 				else:
 					worker.run('retrieve_page', article['link'], thematic=source['thematic'], source='common_rss')

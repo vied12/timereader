@@ -38,7 +38,7 @@ class RetrievePage(Job):
 		article.count_words = parsed['word_count']
 		article.user        = user_id
 		article.thematic    = thematic
-		article.theme       = source
+		article.type        = source
 		article.save()
 
 # EOF
