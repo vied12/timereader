@@ -22,7 +22,7 @@ from worker import Worker
 
 
 CSV_SEPARATOR = ","
-worker = Worker(async=True)
+worker = Worker(async=False)
 
 class RetrieveCommonArticles(Job):
 
