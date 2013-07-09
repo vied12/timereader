@@ -27,6 +27,6 @@ class RetrieveReadability(Job):
 			app.config['READABILITY_CONSUMER_SECRET'], token=token)
 		for bookmark in rdd.get_bookmarks():
 			url = bookmark.article.url
-			worker.run('retrieve_page', url, user_id=user_id, source='readability')
+			worker.run('retrieve_page', url, user_id=user_id, source='readability', thematic="readability") # FIXME: thematic sould be specified
 
 # EOF

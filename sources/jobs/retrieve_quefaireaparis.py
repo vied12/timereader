@@ -39,6 +39,7 @@ class RetrieveQuefaireaparis(Job):
 			article.date        = datetime.datetime.strptime(result['created'], '%Y-%m-%dT%H:%M:%S.%fZ')
 			article.content     = result['description']
 			article.summary     = result['small_description']
+			article.thematic    = "quefaireaparis" # FIXME
 			article.type        = "quefaireaparis"
 			# special fields
 			article.occurences  = result['occurences']
