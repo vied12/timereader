@@ -68,8 +68,9 @@ class RetrieveCommonArticles(Job):
 					worker.run('retrieve_page', article['link'], thematic=source['thematic'], source='common_rss')
 			except KeyError as e:
 				# TODO: Logs
+				print e
 				# print e, article
-				pass
+				# pass
 		return result
 
 # EOF
