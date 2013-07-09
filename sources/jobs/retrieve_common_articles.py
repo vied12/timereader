@@ -46,7 +46,8 @@ class RetrieveCommonArticles(Job):
 			for i, cell in enumerate(cells):
 				source[header[i]] = cell
 			sources.append(source)
-		return sources		
+		print 'sources: ', sources
+		return sources	
 
 	def __scrape_rss(self, source, full=False):
 		""" scape a rss source, return a list of article """
