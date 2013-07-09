@@ -191,7 +191,6 @@ def index():
 # FIXME: needs authentication
 @app.route('/reset-content')
 def reset_content():
-	from content_maker import ContentMaker
 	articles_collection = Article.get_collection()
 	articles_collection.remove()
 	worker.run('retrieve_common_articles', app.config['SOURCE_CONTENT'])
