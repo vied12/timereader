@@ -46,8 +46,7 @@ class RetrieveCommonArticles(Job):
 			for i, cell in enumerate(cells):
 				source[header[i]] = cell
 			sources.append(source)
-		print 'sources: ', sources
-		return sources	
+		return sources		
 
 	def __scrape_rss(self, source, full=False):
 		""" scape a rss source, return a list of article """
@@ -69,9 +68,8 @@ class RetrieveCommonArticles(Job):
 					worker.run('retrieve_page', article['link'], thematic=source['thematic'], source='common_rss')
 			except KeyError as e:
 				# TODO: Logs
-				print e
 				# print e, article
-				# pass
+				pass
 		return result
 
 # EOF
