@@ -132,6 +132,7 @@ def station_autocomplete(keywords):
 @app.route('/api/itineraire/<src>/<tgt>', methods=['get'])
 @app.route('/api/itineraire/<src>/<tgt>/thematics/<thematics>', methods=['get'])
 @app.route('/api/itineraire/<src>/<tgt>/user/<user_id>', methods=['get'])
+@app.route('/api/itineraire/<src>/<tgt>/thematics/<thematics>/user/<user_id>', methods=['get'])
 def get_content_from_itineraire(src, tgt, thematics=None, user_id=None):
 	itineraire = get_itineraire(src, tgt)
 	duration   = itineraire['delta']
@@ -148,6 +149,7 @@ def get_content_from_itineraire(src, tgt, thematics=None, user_id=None):
 @app.route('/api/duration/<duration>', methods=['get'])
 @app.route('/api/duration/<duration>/thematics/<thematics>', methods=['get'])
 @app.route('/api/duration/<duration>/user/<user_id>', methods=['get'])
+@app.route('/api/duration/<duration>/thematics/<thematics>/user/<user_id>', methods=['get'])
 def get_content_from_duration(duration, thematics=None, user_id=None):
 	words      = how_many_words(int(duration))
 	thematics  = thematics.split(',') if thematics else None
