@@ -44,6 +44,6 @@ class RetrieveQuefaireaparis(Job):
 			article.occurences  = result['occurences']
 			article.thematics   = [_['rubrique'] for _ in result['rubriques']]
 			article.location    = dict(lat=result['lat'], lon=result['lon'])
-			# article.save()
+			article.save()
 
 # EOF
