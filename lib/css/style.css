@@ -216,6 +216,10 @@ div#netSettings ul, div#intSettings ul{
 	text-align: left;
 }
 
+div#intSettings ul{
+	padding-bottom: 40px;
+}
+
 div#netSettings input{
 	width: 69%; /* 360 / 500 */
 	margin-bottom: 5px;
@@ -227,6 +231,7 @@ div#netSettings input{
 
 div#intSettings{
 	margin-bottom: 30px;
+	background-color: #ccc;
 }
 
 div#netSettings ul li {
@@ -275,7 +280,7 @@ div#intSettings ul li{
     text-align: left;
     background: white;
     padding: 10px 10%;
-	font-size: 24px;
+	font-size: 20px;
 }
 
 div#intSettings ul li input{
@@ -544,7 +549,7 @@ div#results div#detailsResults ul li{
 
 div#results ul#listResults{
 	position: relative;
-	top: 250px;
+	top: 220px;
 	z-index: 100;
 }
 
@@ -574,10 +579,17 @@ div#results ul#listResults li span{
 
 div#results ul#listResults li img{
     float: right;
-    height: 60px;
+    height: 30px;
     display: block;
 }
 
+div#detailsResults img.logoResults{
+	float: right;
+	height: 60px;
+	display: block;
+	margin-right: 7%;
+}
+	
 /***********/
 /* READER */
 div#reader header{
@@ -748,10 +760,10 @@ div#reader div#visu ul li{
     height: 20px;
 }
 
-div#content .txt15_140{
+/*div#content .txt15_140{
     font-size: 16px;
     line-height: 20px;
-}
+}*/
 
 
 /*****************/

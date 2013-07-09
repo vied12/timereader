@@ -167,10 +167,10 @@
             <div id="reader" class="page">
 				<header>
 					<div class="size">
-						<a href="#">-</a>
+						<a href="#" onclick="contentSize(-1);">-</a>
 						<span>A</span>
 						<span class="big">A</span>
-						<a href="#">+</a>
+						<a href="#" onclick="contentSize(1);">+</a>
 					</div>
 					<div class="montrajet">
 						<img height="10" src="%%url_for('static', filename='img/red_arrow.png')%%" alt="arrow" />
@@ -198,7 +198,7 @@
             <li data-id="{{@index}}" data-type="text">
                 <img src="%%url_for('static', filename='img/themes/')%%picto-{{thematic}}.png" />
                 <h3>{{title}}</h3>
-                <span>{{source}} {{thematic}}</span> 
+                <span>{{#if domain}}{{domain}} - {{/if}}{{thematic}}</span> 
                 <div class="spacer"></div>
             </li>
             {{/each}}
@@ -215,10 +215,11 @@
         
         <script id="template-detailsresults" type="text/x-handlebars-template">
 			<h2>Mon trajet</h2>
+			<img class="logoResults" src="%%url_for('static', filename='img/logo_stations.png')%%" alt="stations"/>
 			<ul>
 				<li>Départ {{origin}}</li>
 				<li>Arrivée {{destination}}</li>
-				<li>Lignes</li>
+				<li>{{lignes}} ({{nbStations}} stations)</li>
 			</ul>
             
 			<div class="botDetailsRes">
@@ -226,6 +227,20 @@
 				<div>{{duree}}<br /><span>min</span></div>				
 			</div>
         </script>
+		
+        <script id="template-detailsresults2" type="text/x-handlebars-template">
+			<h2>Mon trajet</h2>
+			<ul>
+				<li>&nbsp;</li>
+				<li>&nbsp;</li>
+				<li>&nbsp;</li>
+			</ul>
+            
+			<div class="botDetailsRes">
+				Selectionnez un article
+				<div>{{duree}}<br /><span>min</span></div>				
+			</div>
+        </script>		
         
         <script id="template-cerclestation" type="text/x-handlebars-template">
             <li>
@@ -239,12 +254,12 @@
             <h1>{{title}}</h1>
 			<div class="metaArticle">
 				<div class="text">
-					Le Monde{{source}}
+					{{source}}
 					<br />
-					12 juin 2013{{date}}
+					{{date}}
 				</div>
 				<div class="time">
-					30{{duree}}<br /><span>min</span>
+					{{duree}}<br /><span>min</span>
 				</div>				
 			</div>
             <div id="contentArticle">
