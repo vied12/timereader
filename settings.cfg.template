@@ -9,9 +9,9 @@ REDIS_URL        = os.environ['REDISTOGO_URL'] if 'REDISTOGO_URL' in os.environ 
 QUEUE_MODE_ASYNC = not DEBUG
 
 # -- Storage -----------------------------
-if 'REDISCLOUD_URL' in os.environ:
-	MONGO_HOST = os.environ['REDISCLOUD_URL']
-	MONGO_DB   = os.environ['REDISCLOUD_URL'].split('/')[-1]
+if 'MONGOLAB_URI' in os.environ:
+	MONGO_HOST = os.environ['MONGOLAB_URI']
+	MONGO_DB   = os.environ['MONGOLAB_URI'].split('/')[-1]
 else:
 	MONGO_HOST = 'localhost'
 	MONGO_DB   = 'libreway'
