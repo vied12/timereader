@@ -265,8 +265,6 @@
             <div id="contentArticle">
                 {{{content}}}
             </div>
-			<div class="endArticle">
-			</div>
         </script>
 
         <script id="template-audio" type="text/x-handlebars-template">
@@ -277,15 +275,22 @@
 			<div class="contentAudio">
 				<audio src="{{file}}" preload="auto" controls></audio>
 			</div>
-			<div class="endArticle">
-				<a class="btn btn-primary btn-large">
-					<i class="icon-plus-sign icon-white"></i>&nbsp;Plus de contenu
-				</a>
-				<a class="btn btn-primary btn-large">
-					<i class="icon-share icon-white"></i>&nbsp;Partager sur ma ligne
-				</a>
-			</div>
         </script>
+		
+		<script id="template-end-article" type="text/x-handlebars-template">
+			<div class="botArticle">
+				
+			</div>
+			<div id="end" class="endArticle">
+				<a href="#end" class="btnAdd" onclick="addContent(5);">
+					5 minutes
+				</a>
+				<a href="#end" class="btnShare" onclick="alert('Bientôt disponible...');">
+					Partager
+				</a>
+				<div class="spacer"></div>
+			</div>		
+		</script>
 		
 		<script id="template-theme-checkbox" type="text/x-handlebars-template">
 			{{#each results}}

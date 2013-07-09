@@ -765,6 +765,37 @@ div#reader div#visu ul li{
     line-height: 20px;
 }*/
 
+/* end */
+div#reader div.endArticle{
+	position: relative;
+	width: 89.0625%; /* 570 / 640 */
+	background-color: #eb4e65;
+	color: #fff;
+	padding: 10px 5.46875%; /* 35 / 640 */
+	height: 40px;
+	z-index: 9000;
+}
+div#reader div.endArticle a{
+	text-align: center;
+	width: 50%;
+	float: left;
+	color: #fff;
+	height: 30px;
+	padding-top: 10px;
+}
+
+div#reader div.endArticle a.btnAdd{
+	background: url("../img/end-plus.png") no-repeat 10.9375% 0;
+	background-size: 40px auto;
+}
+div#reader div.endArticle a.btnShare{
+	background: url("../img/end-share.png") no-repeat 10.9375% 0;
+	background-size: 40px auto;
+}
+
+div#reader div.endArticle a:hover{
+	
+}
 
 /*****************/
 /* AUDIO PLAYER */
