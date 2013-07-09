@@ -79,7 +79,7 @@ div.page {
 div.page h2{
 	font-size: 30px;
 	color: #EB4E65;
-	padding: 35px 0;
+	padding: 20px 0;
 	width: 100%;
 	font-weight: normal;
 }
@@ -113,6 +113,16 @@ div#homeTmp div.txt{
 	background-color: rgba(255,255,255,0.4); 
 	padding: 20px;
 	text-align: left;
+	line-height: 22px;
+}
+
+div#homeTmp div.txt p{
+	margin-bottom: 10px;
+}
+
+div#homeTmp div.txt ul li {
+	margin-bottom: 10px;
+	display: block;
 }
 
 /* home */
@@ -307,6 +317,7 @@ div#main header a.configBtn{
 
 div#main section{
 	width: 100%;	
+	padding-bottom: 100px;/*à tester*/
 }
 
 div#main section div.form{
@@ -348,7 +359,7 @@ div#main section div.separator{
 	height: 1px;
 	background-color: #EB4E65;
 	width: 85.9375%; /* 550 / 640 */
-	margin: 85px auto 40px auto;
+	margin: 40px auto 20px auto;
 }
 
 div#main section div.separator:before{
@@ -364,13 +375,13 @@ div#main section div.separator:before{
 }
 
 div#main div.mainBot{
-	position: absolute;
+	position: fixed;/* absolute */
 	bottom: 0;
 	left: 0;
 	width: 100%;
 	background-color: #EB4E65;
 	font-size: 24px;
-	height: 50px;
+	height: 40px;
 	margin: 0;
 }
 
