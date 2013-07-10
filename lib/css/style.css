@@ -1106,7 +1106,7 @@ background: #333;
 @media all and (min-width: 720px){
 	div#reader div#content div#contentArticle{
 		font-size: 14px;
-		line-height: 18px;
+		line-height: 22px;
 	}
 }
 
