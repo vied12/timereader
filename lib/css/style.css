@@ -708,6 +708,11 @@ div#reader div#content div#contentArticle{
 	width: 84.375%; /* 540 / 640 */
 }
 
+div#reader div#content div#contentArticle img.endLogo{
+	display: block;
+	margin: 40px 0;
+}
+
 div#reader div#visu{
     position: fixed;
     top: 30px;
