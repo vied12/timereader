@@ -11,15 +11,19 @@
 # Last mod : 06-Jul-2013
 # -----------------------------------------------------------------------------
 import jobs
+from flask import Flask
+
+app = Flask(__name__)
+app.config.from_envvar('TIMEREADER_SETTINGS')
 
 class Worker:
 
 	def __init__(self, async=False):
 		self.async = async
 		if self.async:
-			from redis import Redis
+			import redis
 			from rq import Queue
-			self.queue = Queue(connection=Redis())
+			self.queue = Queue(connection=redis.from_url(app.config['REDIS_URL']))
 
 	def run(self, job, *arg, **kwargs):
 		__import__('jobs.'+job)
