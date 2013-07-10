@@ -286,8 +286,8 @@
 				
 			</div>
 			<div id="end" class="endArticle">
-				<a href="#end" class="btnAdd" onclick="addContent(5);">
-					5 minutes
+				<a href="#end" class="btnAdd" onclick="addContent(3);">
+					3 minutes
 				</a>
 				<a href="#end" class="btnShare" onclick="alert('Bientôt disponible...');">
 					Partager
@@ -298,7 +298,7 @@
 		
 		<script id="template-theme-checkbox" type="text/x-handlebars-template">
 			{{#each results}}
-				<li><input type="checkbox" id="theme-{{slug}}" name="{{slug}}" value="{{slug}}" {{#if checked}}checked{{/if}}><label for="theme-{{slug}}">{{name}}</label></li>
+				<li><input type="checkbox" id="theme-{{slug}}" name="{{slug}}" value="{{slug}}" {{#if checked}}checked{{/if}}><label for="theme-{{slug}}">{{{name}}}</label></li>
 			{{/each}}
 		</script>
         
