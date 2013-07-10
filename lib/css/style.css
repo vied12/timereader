@@ -663,6 +663,7 @@ div#reader div#content h1{
 	font-size: 46px;
 	padding: 5px 6.25%; /* 40 / 640 */
 	font-family: 'Amaranth', sans-serif;
+	line-height: 55px;
 }
 
 div#reader div#content div.metaArticle{
@@ -1102,11 +1103,14 @@ background: #333;
 /******************/
 /* media queries */
 
-@media all and (min-width: 960px){
-    /*body{
-        width: 640px;
-        margin: 0 auto;
-    }*/
+@media all and (min-width: 720px){
+	div#reader div#content div#contentArticle{
+		font-size: 14px;
+		line-height: 18px;
+	}
+}
+
+@media all and (min-width: 1024px){
     div#main input{
     }
 	
