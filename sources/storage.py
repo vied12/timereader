@@ -58,10 +58,11 @@ class Article:
 		if not self.count_words or self.count_words == 0:
 			self.count_words = len(self.content.split())
 		# check if article already exists
+		previous_article = None
 		if self.link:
-			previous_article = Article.get_collection().find(dict(user=self.user, link=self.link)).next()
-		else:
-			previous_article = None
+			res = Article.get_collection().find(dict(user=self.user, link=self.link))
+			if res.count() > 0:
+				previous_article = res.next()
 		# save the article
 		if not previous_article:
 			Article.get_collection().insert(self.__dict__)
