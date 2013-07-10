@@ -1108,6 +1108,14 @@ background: #333;
 		font-size: 14px;
 		line-height: 22px;
 	}
+	
+	div.page h2{
+		padding: 40px 0;
+	}
+	
+	div#main section div.separator{
+		margin: 80px auto 60px auto;
+	}
 }
 
 @media all and (min-width: 1024px){
