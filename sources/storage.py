@@ -55,11 +55,18 @@ class Article:
 		return db['articles']
 
 	def save(self):
-		# TODO: 
-		# o  check if unique (url - user_id)
 		if not self.count_words or self.count_words == 0:
 			self.count_words = len(self.content.split())
-		Article.get_collection().insert(self.__dict__)
+		# check if article already exists
+		if self.link:
+			previous_article = Article.get_collection().find(dict(user=self.user, link=self.link)).next()
+		else:
+			previous_article = None
+		# save the article
+		if not previous_article:
+			Article.get_collection().insert(self.__dict__)
+		else:
+			Article.get_collection().save(dict(previous_article.items() + self.__dict__.items()))
 
 	@classmethod
 	def get(self, limit=0, sort=True, **karg):
