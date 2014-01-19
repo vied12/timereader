@@ -5,9 +5,10 @@ CHANGELOG
 
 * Framework
 	* folders refactored
-		* `lib` > `assets`
-		* `lib/img` > `static/img`
-		* `sources/vendors` > `lib`
+		* `lib/` > `assets/`
+		* `lib/img/` > `static/img/`
+		* `sources/vendors/` > `lib/`
+		* all the webapp related files > `webapp/`
 
 	* assets manager  
 		We don't use anymore preprocessor but flask-assets.  
