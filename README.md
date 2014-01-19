@@ -21,42 +21,19 @@ Profitez de vos déplacement en bus et en métro pour lire confortablement  :
 
 Dans le métro ou dans le bus, vous accédez d'un simple geste toutes les informations relatives à votre trajet (localisation, nombre de stations parcourues, temps de parcours, changements de lignes etc.). 
 
-## The application
-
-This application run with:
-* Python 2.7
-* Flask 0.9
-* Mongodb
-
 ## Installation
 
 ### Dependances
 
-First, you need to install dependances. We will use `pip` to do that.
-
-Tips: Prefere to use `virtualenv` to isolate application dependances from your system.
-
-Now, how to do that with debian|ubuntu:
-
-Install pip and basic dependances (gcc, python lib) to build others dependances
-
 	$ sudo apt-get install build-essential python-pip python-dev
 
-Install virtualenv
+and install virtualenv
 
 	$ sudo pip install virtualenv
 
-Create a virtualenv
+### Create a virtualenv and download dependances
 
-	$ virtualenv --no-site-packages --distribute venv
-
-Add the virtualenv to your python path with
-	
-	$ source .env
-
-Download and install python dependances
-
-	$ pip install -r requirements.txt
+	$ make install
 
 #### No Python dependances
 
@@ -65,16 +42,6 @@ Download and install python dependances
 
 ### Launch
 
-Add the virtualenv to your python path with:
-	
-	$ source .env
-
-Generate all static files:
-
-	$ ./webapp collectstatic
-
-Tips: use [Autoenv](https://github.com/kennethreitz/autoenv/), it will load for you the virtualenv when you `cd` the folder.
-
-Then just start the webapp:
-	
-	$ ./webapp
+```
+$ make run
+```
