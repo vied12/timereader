@@ -3,6 +3,7 @@
 WEBAPP     = $(wildcard **/webapp.py)
 
 run:
+	mongod &
 	. `pwd`/.env ; python $(WEBAPP)
 
 install:
@@ -14,3 +15,4 @@ clear:
 	rm -rf webapp/static/gen
 
 # EOF
+
