@@ -15,4 +15,3 @@ clear:
 	rm -rf webapp/static/gen
 
 # EOF
-
