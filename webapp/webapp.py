@@ -11,109 +11,34 @@
 # Last mod : 19-Jan-2014
 # -----------------------------------------------------------------------------
 
-from flask            import *
+# from flask            import 
 from bson.json_util   import dumps
 from storage          import Station, Article
 from worker           import Worker
 from flask.ext.assets import Environment, YAMLLoader
 import readability
-import json, uuid, requests, datetime
+import json
+import uuid
+import requests
+import datetime
+import os
+import flask
+import utils
 
-class CustomFlask(Flask):
-	jinja_options = Flask.jinja_options.copy()
-	jinja_options.update(dict(
-		block_start_string    ='[%',
-		block_end_string      ='%]',
-		variable_start_string ='[[',
-		variable_end_string   =']]',
-		comment_start_string  ='[#',
-		comment_end_string    ='#]',
-	))
+PWD = os.path.dirname(os.path.abspath(__file__))
 
+# create an instance of flask with a custom config (different template tags)
+app = utils.Flask(__name__)
 # load config file
-app = CustomFlask(__name__)
 app.config.from_envvar('TIMEREADER_SETTINGS')
 
 # process assets
-assets = Environment(app)
-bundles = YAMLLoader("assets.yaml").load_bundles()
+assets  = Environment(app)
+bundles = YAMLLoader(os.path.join(PWD, "assets.yaml")).load_bundles()
 assets.register(bundles)
 
 # create a job queue
 worker = Worker(async=app.config['QUEUE_MODE_ASYNC'])
-
-def get_referer():
-	if 'referer' in session:
-		referer = session['referer']
-	else:
-		referer = str(uuid.uuid4())
-		session['referer'] = referer
-	return referer
-
-def how_many_words(duration):
-	return (duration/60) * 300
-
-def get_itineraire(src, tgt):
-	response = {
-		"origin"         : None,
-		"destination"    : None,
-		"begin_date_time": None,
-		"end_date_time"  : None,
-		"sections"       : [],
-		"delta"          : None,
-		"articles"       : []
-	}
-
-	dt = datetime.datetime.now().strftime("%Y%m%dT%H%M")
-	res = requests.get("http://api.navitia.io/v0/paris/journeys.json?origin={origin}&destination={destination}&datetime={datetime}&depth=0"\
-		.format(origin=src, destination=tgt, datetime=dt))
-	data = res.json()
-	# on error
-	if not data["response_type"] == "ITINERARY_FOUND":
-		raise Exception(res.text)
-	# fill response
-	for journey in data['journeys']:
-		for section in journey['sections']:
-			if section['type'] == "PUBLIC_TRANSPORT" and section['pt_display_informations']['physical_mode'] == "Metro":
-				# we found a journeys which contains a metro section
-				# we save the global informations about travel ONCE
-				if not response['origin']:
-					response['origin'] = section['origin']['name']
-					# destination will be filled later
-					response["delta"]           = journey['duration']
-					response["begin_date_time"] = section['begin_date_time']
-					response["end_date_time"]   = section['end_date_time']
-				# we save all sections
-				stations = []
-				for station in section['stop_date_times']:
-					if len(stations) > 0:
-						delta = datetime.datetime.strptime(station['departure_date_time'], '%Y%m%dT%H%M%f') - datetime.datetime.strptime(stations[-1]['arrival_date_time'], '%Y%m%dT%H%M%f')
-						delta = delta.total_seconds()
-					elif response['sections']:
-						# delta of correspondance
-						delta = datetime.datetime.strptime(station['departure_date_time'], '%Y%m%dT%H%M%f') - datetime.datetime.strptime(response['sections'][-1]['stations'][-1]['arrival_date_time'], '%Y%m%dT%H%M%f')
-						delta = delta.total_seconds()
-					else:
-						delta = 0
-					stations.append({
-						"name"                : station['stop_point']['name'],
-						"departure_date_time" : station['departure_date_time'],
-						"arrival_date_time"   : station['arrival_date_time'],
-						"timedelta"           : delta
-					})
-				response['sections'].append({
-					"stations" : stations,
-					"line"     : section['pt_display_informations']['code'],
-					"color"    : "#"+section['pt_display_informations']['color'],
-					"origin"          : section['origin']['name'],
-					"destination"     : section['destination']['name'],
-					"begin_date_time" : section['begin_date_time'],
-					"end_date_time"   : section['end_date_time'],
-				})
-				response['destination'] = section['destination']['name']
-		if response['origin']:
-			break
-	return response
 
 # -----------------------------------------------------------------------------
 #
@@ -122,7 +47,6 @@ def get_itineraire(src, tgt):
 # -----------------------------------------------------------------------------
 @app.route('/api/stations/autocomplete/<keywords>', methods=['get'])
 def station_autocomplete(keywords):
-	# TODO
 	res = []
 	stations = Station.get(keywords)
 	for station in stations:
@@ -137,9 +61,9 @@ def station_autocomplete(keywords):
 @app.route('/api/itineraire/<src>/<tgt>/user/<user_id>', methods=['get'])
 @app.route('/api/itineraire/<src>/<tgt>/thematics/<thematics>/user/<user_id>', methods=['get'])
 def get_content_from_itineraire(src, tgt, thematics=None, user_id=None):
-	itineraire = get_itineraire(src, tgt)
+	itineraire = utils.get_itineraire(src, tgt)
 	duration   = itineraire['delta']
-	words      = how_many_words(duration)
+	words      = utils.how_many_words(duration)
 	thematics  = thematics.split(',') if thematics else None
 	articles   = {
 		"one"   : Article.get_closest(count_words=words,   limit=5, thematics=thematics, user=user_id), # FIXME
@@ -154,7 +78,7 @@ def get_content_from_itineraire(src, tgt, thematics=None, user_id=None):
 @app.route('/api/duration/<duration>/user/<user_id>', methods=['get'])
 @app.route('/api/duration/<duration>/thematics/<thematics>/user/<user_id>', methods=['get'])
 def get_content_from_duration(duration, thematics=None, user_id=None):
-	words      = how_many_words(int(duration))
+	words      = utils.how_many_words(int(duration))
 	thematics  = thematics.split(',') if thematics else None
 	articles   = {
 		"one"   : Article.get_closest(count_words=words,   limit=5, thematics=thematics, user=user_id), # FIXME
@@ -175,7 +99,7 @@ def api_readability_register(username, password):
 	token = readability.xauth(
 		app.config['READABILITY_CONSUMER_KEY'], 
 		app.config['READABILITY_CONSUMER_SECRET'], 
-		username, 
+		username,
 		password)
 	# oauth_token, oauth_secret = token
 	# FIXME: should be in SESSION
@@ -191,7 +115,7 @@ def api_readability_register(username, password):
 # -----------------------------------------------------------------------------
 @app.route('/')
 def index():
-	return render_template('index.html')
+	return flask.render_template('index.html')
 
 # FIXME: needs authentication
 @app.route('/reset-content')
@@ -203,7 +127,7 @@ def reset_content():
 
 # -----------------------------------------------------------------------------
 #
-# Utils
+# Triggers
 #
 # -----------------------------------------------------------------------------
 @app.after_request
@@ -217,6 +141,6 @@ def after_request(response):
 #
 # -----------------------------------------------------------------------------
 if __name__ == '__main__':
-	app.run(host='0.0.0.0', extra_files=("assets.yaml",))
+	app.run(host='0.0.0.0', extra_files=(os.path.join(PWD, "assets.yaml"),))
 
 # EOF
