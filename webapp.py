@@ -7,36 +7,39 @@
 # -----------------------------------------------------------------------------
 # License : GNU Lesser General Public License
 # -----------------------------------------------------------------------------
-# Creation : 
-# Last mod : 
+# Creation : 23-May-2013
+# Last mod : 19-Jan-2014
 # -----------------------------------------------------------------------------
 
-from flask import Flask, render_template, request, send_file, render_template_string, \
-	send_from_directory, Response, abort, session, redirect, url_for, make_response, jsonify
-import os, json, uuid, requests, datetime, bson, operator
-
-from bson.json_util import dumps
-from werkzeug       import secure_filename
-from base64         import b64decode
-from pprint import pprint as pp
-from storage import Station, Article
+from flask            import *
+from bson.json_util   import dumps
+from storage          import Station, Article
+from worker           import Worker
+from flask.ext.assets import Environment, YAMLLoader
 import readability
-from worker import Worker
- 
+import json, uuid, requests, datetime
+
 class CustomFlask(Flask):
 	jinja_options = Flask.jinja_options.copy()
 	jinja_options.update(dict(
-		block_start_string    ='<%',
-		block_end_string      ='%>',
-		variable_start_string ='%%',
-		variable_end_string   ='%%',
-		comment_start_string  ='<#',
-		comment_end_string    ='#>',
+		block_start_string    ='[%',
+		block_end_string      ='%]',
+		variable_start_string ='[[',
+		variable_end_string   =']]',
+		comment_start_string  ='[#',
+		comment_end_string    ='#]',
 	))
- 
+
+# load config file
 app = CustomFlask(__name__)
 app.config.from_envvar('TIMEREADER_SETTINGS')
 
+# process assets
+assets = Environment(app)
+bundles = YAMLLoader("assets.yaml").load_bundles()
+assets.register(bundles)
+
+# create a job queue
 worker = Worker(async=app.config['QUEUE_MODE_ASYNC'])
 
 def get_referer():
@@ -214,17 +217,6 @@ def after_request(response):
 #
 # -----------------------------------------------------------------------------
 if __name__ == '__main__':
-	import preprocessing.preprocessing as preprocessing
-	import sys
-	if len(sys.argv) > 1 and sys.argv[1] == "collectstatic":
-		preprocessing._collect_static(app)
-		if 'USE_S3' in app.config:
-			flask_s3.create_all(app)
-	else:
-		# render ccss, coffeescript and shpaml in 'templates' and 'static' dirs
-		preprocessing.preprocess(app, request) 
-		# set FileSystemCache instead of Memcache for development
-		# cache = werkzeug.contrib.cache.FileSystemCache(os.path.join(app.root_path, "cache"))
-		# run application
-		app.run(host='0.0.0.0')
+	app.run(host='0.0.0.0', extra_files=("assets.yaml",))
+
 # EOF

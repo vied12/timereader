@@ -1,0 +1,22 @@
+--- 
+css_all: 
+  output: gen/style.css
+  contents:
+    - "../assets/css/*.css"
+    - contents: "../assets/ccss/*.ccss"
+      filters: clevercss
+
+js_all: 
+  output: gen/scripts.js
+  contents: 
+    - "../assets/js/vendor/jquery-1.10.1.min.js"
+    - "../assets/js/vendor/bootstrap.min.js"
+    - "../assets/js/vendor/simple-slider.min.js"
+    - "../assets/js/vendor/handlebars.js"
+    - "../assets/js/vendor/underscore-min.js"
+    - "../assets/js/vendor/modernizr.js"
+    - "../assets/js/main.js"
+    - "../assets/js/vendor/audioplayer.min.js"
+
+    # - contents: "../assets/coffee/*.coffee"
+    #   filters: coffeescript
