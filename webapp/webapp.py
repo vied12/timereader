@@ -11,7 +11,6 @@
 # Last mod : 19-Jan-2014
 # -----------------------------------------------------------------------------
 
-# from flask            import 
 from bson.json_util   import dumps
 from storage          import Station, Article
 from worker           import Worker
@@ -19,8 +18,6 @@ from flask.ext.assets import Environment, YAMLLoader
 import readability
 import json
 import uuid
-import requests
-import datetime
 import os
 import flask
 import utils
@@ -28,7 +25,7 @@ import utils
 PWD = os.path.dirname(os.path.abspath(__file__))
 
 # create an instance of flask with a custom config (different template tags)
-app = utils.Flask(__name__)
+app = utils.CustomFlask(__name__)
 # load config file
 app.config.from_envvar('TIMEREADER_SETTINGS')
 
