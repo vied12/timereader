@@ -2,7 +2,6 @@
 import os
 
 DEBUG          = True
-LIB_DIR        = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'lib')
 SECRET_KEY     = "sS7NtyJsD2PjE"
 
 # -- Queue -------------------------------
