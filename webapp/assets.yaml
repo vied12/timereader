@@ -10,13 +10,11 @@ js_all:
   output: gen/scripts.js
   contents: 
     - "../assets/js/vendor/jquery-1.10.1.min.js"
+    - "../assets/js/vendor/angular.min.js"
     - "../assets/js/vendor/bootstrap.min.js"
-    - "../assets/js/vendor/simple-slider.min.js"
-    - "../assets/js/vendor/handlebars.js"
+    # - "../assets/js/vendor/simple-slider.min.js"
     - "../assets/js/vendor/underscore-min.js"
-    - "../assets/js/vendor/modernizr.js"
-    - "../assets/js/vendor/audioplayer.min.js"
-    - "../assets/js/main.js"
+    # - "../assets/js/vendor/modernizr.js"
 
     # - contents: "../assets/coffee/*.coffee"
     #   filters: coffeescript

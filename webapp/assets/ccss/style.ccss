@@ -1,0 +1,45 @@
+
+.logo:
+    width:70%
+    margin:2% 0 4% 0
+
+.bg-primary:
+    text-align: center
+    background: url("../img/photofull.jpg")
+    background-position:right 73%;
+    background-size: 100% auto
+.bg-secondary:
+    background-color:#E6E6E6
+    //text-align: center
+    padding: 20px
+    ul, li:
+        text-align: left
+
+footer:
+    box-shadow: 5px 5px 5px black
+    font-size   : 90%
+    clear       : both
+    .links:
+        background: #EB4E65
+        ul, li:
+            margin  : 0
+            padding : 0
+            display : block
+            float   : left
+            a:
+                text-transform     : uppercase
+                text-decoration    : none
+                font-size          : 80%
+                display            : inline-block
+                padding            : 0 30px
+                height             : 70px
+                line-height        : 70px
+                border-left        : 1px #F7F4EF solid
+                color              : white
+                &:hover:
+                    background: #EC84A5
+            .last a:
+                border-right: 1px #F7F4EF solid
+    .legals:
+        background-color: white
+        padding: 10px
