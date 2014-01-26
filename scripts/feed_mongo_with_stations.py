@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # Encoding: utf-8
-import json
 from pymongo import MongoClient
 from flask import Flask
+
 app = Flask(__name__)
 app.config.from_envvar('TIMEREADER_SETTINGS')
 
-client = MongoClient(app.config['MONGO_HOST'])
-db     = client[app.config['MONGO_DB']]
+client     = MongoClient(app.config['MONGO_HOST'])
+db         = client[app.config['MONGO_DB']]
 collection =  db["stations"]
 collection.remove()
 
@@ -41,3 +41,5 @@ for station in collection.find():
 	if occur.count()>1:
 		for row in list(occur)[1:]:
 			collection.remove(row)
+
+# EOF

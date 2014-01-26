@@ -15,6 +15,7 @@ from bson.json_util   import dumps
 from storage          import Station, Article
 from worker           import Worker
 from flask.ext.assets import Environment, YAMLLoader
+import journey
 import readability
 import json
 import uuid
@@ -58,7 +59,7 @@ def station_autocomplete(keywords):
 @app.route('/api/itineraire/<src>/<tgt>/user/<user_id>', methods=['get'])
 @app.route('/api/itineraire/<src>/<tgt>/thematics/<thematics>/user/<user_id>', methods=['get'])
 def get_content_from_itineraire(src, tgt, thematics=None, user_id=None):
-	itineraire = utils.get_itineraire(src, tgt)
+	itineraire = journey.get_itineraire(src, tgt)
 	duration   = itineraire['delta']
 	words      = utils.how_many_words(duration)
 	thematics  = thematics.split(',') if thematics else None

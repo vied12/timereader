@@ -1,7 +1,7 @@
 *.pyc
-/venv
+venv
 fabfile.py
 dump
 settings.cfg
-static/.webassets-cache/
-static/gen/
+webapp/static/.webassets-cache
+webapp/static/gen

@@ -10,11 +10,9 @@
 # Creation : 08-Jul-2013
 # Last mod : 08-Jul-2013
 # -----------------------------------------------------------------------------
-import os
-
-import redis
-from rq import Worker, Queue, Connection
+from rq    import Worker, Queue, Connection
 from flask import Flask
+import redis
 
 app = Flask(__name__)
 app.config.from_envvar('TIMEREADER_SETTINGS')

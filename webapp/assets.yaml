@@ -15,8 +15,8 @@ js_all:
     - "../assets/js/vendor/handlebars.js"
     - "../assets/js/vendor/underscore-min.js"
     - "../assets/js/vendor/modernizr.js"
-    - "../assets/js/main.js"
     - "../assets/js/vendor/audioplayer.min.js"
+    - "../assets/js/main.js"
 
     # - contents: "../assets/coffee/*.coffee"
     #   filters: coffeescript

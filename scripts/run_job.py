@@ -10,7 +10,6 @@
 # Creation : 08-Jul-2013
 # Last mod : 08-Jul-2013
 # -----------------------------------------------------------------------------
-
 from worker import Worker
 import sys
 
