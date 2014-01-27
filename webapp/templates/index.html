@@ -1,21 +1,19 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>Time Reader</title>
+<html ng-app>
+		<head>
+				<meta charset="utf-8">
+				<title>Time Reader</title>
 		
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 		<meta name="description" content="Time Reader est une liseuse sur mobile, qui propose des contenus personnalisés et adaptés à vos temps de trajets.">
-
 		<link rel="apple-touch-icon" href="[[url_for('static', filename='img/apple.png')]]" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black" />  
-		
-		<meta name="og:description" content="Time Reader est une liseuse sur mobile, qui propose des contenus personnalisés et adaptés à vos temps de trajets.">
 		<meta property="og:title" content="Time Reader">
 		<meta property="og:type" content="website">
 		<meta property="og:url" content="http://www.timereader.fr">
 		<meta property="og:image" content="">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
 		<!-- Style  (see assets.yaml) -->
 		[% assets "css_all" %]
@@ -28,299 +26,58 @@
 		<link href='http://fonts.googleapis.com/css?family=Lekton:400,700,400italic' rel='stylesheet' type='text/css'>
 		<link href='[[ url_for('static', filename='fonts/stylesheet.css') ]]' rel='stylesheet' type='text/css'>
 		
-    </head>
-    <body>
-        <div id="container">
+		</head>
 
-            <!-- home tmp -->
-            <div id="homeTmp" class="page">
-				<div class="cont">
-					<img src="[[url_for('static', filename='img/LogoROUGETimereaderFond.png')]]" class="logo" alt="logo" />
-                
-					<div class="txt">
-						<p>Time Reader est un prototype de web app qui a remporté <a href="http://www.amiando.com/PVVHBPK.html">#OpenDataLab</a>, un hackathon organisé avec la RAPT en mai 2013. </p>
-		
-						<p>Time Reader est une liseuse sur mobile, qui propose des contenus personnalisés et adaptés à vos temps de trajets. </p>
+	<body>
 
-						<p>Pourquoi utiliser Time Reader ? Time Reader calcule précisément la durée de votre trajets pour vous proposez des contenus qui correspondent votre temps de parcours. </p>
+		<div class="bg-primary">
+			<div>
+				<img src="[[url_for('static', filename='img/logo.png')]]" class="logo" alt="logo" />
+			</div>
+		</div>
+		<div class="bg-secondary">
+			<div class="container" ng-controller="ConfigCtrl as config">
+				<div class="">
+					<h2>How much time do you got ?</h2>
+					<span class="glyphicon glyphicon-time"></span> <span>{{ config.time }} min</span>
+					<input type="text" ng-model="config.time" data-slider="true" data-slider-theme="volume" data-slider-range="5,30" data-slider-step="1">
+					<button type="button" class="btn btn-primary btn-lg read" openReader>Get me something nice to read</button>
+				</div>
 
-						<p>Profitez de vos déplacement en bus et en métro pour lire confortablement :</p>
-
-						<ul>
-						   <li>Vos bookmarks et podcasts sauvegardés dans Evernote, Pocket, Readability, Delicious ou Soundcloud</li>
-						   <li>Des suggestions personnalisés d'articles et de podcasts, en fonction de vos centres d'intérêts (Culture, actualité, économie, sport, nouvelles technos, culture général... ).</li>
-						   <li>Les articles partagés par les usagers de vos lignes de transport. </li>
-						</ul>
-
-						<p>Dans le métro ou dans le bus, vous accédez d'un simple geste toutes les informations relatives à votre trajet (localisation, nombre de stations parcourues, temps de parcours, changements de lignes etc.).</p>
-										
-						<p><strong>Merci d'accéder à Timereader.fr sur un mobile ou de redimensionner votre fenêtre pour accéder au prototype.</strong></p>		
+			</div><!-- /.container -->
+		</div>
+		<div class="bg-secondary hidden">
+			<div class="container" ng-controller="ConfigCtrl as config">
+				<div class="">
+					<div class="article">
+						<div class="title">Title</div>
+						<div class="body">body body body body body body body body body body</div>
 					</div>
 				</div>
-                    
-            </div>
-            <!-- /home -->				
-		
-            <!-- home -->
-            <div id="home" class="page">			
-				<div id="intro">
-					<h1><img src="[[url_for('static', filename='img/logo.png')]]" alt="logo" /></h1>
-                	<div>Des contenus personnalisés et adaptés à votre temps de trajet.</div>
-                </div>				
-                <a href="#" class="startBtn" onclick="goToPage('main');">Get started</a>
-            </div>
-            <!-- /home -->
-                
-            <!-- settings -->
-            <div id="settings" class="page">
-                <div id="netSettings">
-					<header>
-						<a class="configBtn" href="#" onclick="goToPage('main')" data-bghover="[[url_for('static', filename='img/settings_grey.png')]]">
-							Gérer mon contenu et mes comptes
-						</a>
-					</header>
-                    <h2>Synchronisez Time Reader avec vos applications</h2>
-                    <ul>
-                        <li>
-							<a class="readability" href="#">Readability</a>
-							<div id="subReadability" class="sub">
-								<input type="text" id="readabUser" placeholder="Votre nom d'utilisateur..." />
-								<br />
-								<input type="password" id="readabPass" placeholder="Votre mot de passe..." />
-								<br />
-								<input type="button" id="readabButton" value="Ok" onclick="connectToReadability();" />
-								<br />
-								*Ils ne seront jamais stockés sur nos serveurs
-							</div>
-						</li>					
-                        <li>
-							<a class="evernote" href="#">Evernote</a>
-							<div id="subEvernote" class="sub">Disponible bientôt...</div>
-						</li>
-                        <li>
-							<a class="soundcloud" href="#">Soundcloud</a>
-							<div id="subSoundcloud" class="sub">Disponible bientôt...</div>
-						</li>
-                    </ul>
-                </div>
-                <div id="intSettings">
-                    <h2>Indiquez vos centres d'intéret</h2>
-                    <ul>                       
-                    </ul>
-                </div>
-				<a href="#" class="saveBtn" onclick="saveSettings();">Sauvegarder</a>
-            </div>
-            <!-- /settings -->
-                
-            <!-- main search -->
-            <div id="main" class="page">
-                <header>
-                    <a class="configBtn" href="#" onclick="goToPage('settings')" data-bghover="[[url_for('static', filename='img/settings_red.png')]]">
-						Gérer mon contenu et mes comptes
-                    </a>
-                </header>
-				<section>					
-					<h2>Entrez un trajet</h2>
-					<img class="logoForm" src="[[url_for('static', filename='img/logo_stations.png')]]" alt="stations"/>
-					<div class="form">											
-						<label>Départ</label>
-						<input type="text" id="start" placeholder="Station de départ..." autocomplete="off" onfocus="selectedInput = 1;">					
-						<label>Arrivée</label>
-						<input type="text" id="end" placeholder="Station d'arrivée..." autocomplete="off" onfocus="selectedInput = 2;">
-						<label class="long">Heure de départ</label>
-						<input class="short" id="hour" placeholder="" autocomplete="off" type="number" name="hour" min="0" max="24">
-						<input class="short" id="minute" placeholder="" autocomplete="off" type="number" name="minute" min="0" max="59" >
-						<img src="[[url_for('static', filename='img/trajet_cal.png')]]" alt="cal" style="height: 30px; vertical-align: top;"/>
-						<input type="hidden" id="startcoord" value="">
-						<input type="hidden" id="endcoord" value="">
-						<div id="searchAlert" class="hidden">
-							<button type="button" class="close" data-dismiss="alert">&times;</button>
-							<strong>Attention!</strong> Merci de bien spécifier les stations.
-						</div> 						
-					</div>									
-					
-					<div class="separator">&nbsp;</div>
-					
-					<div class="sliderContainer">
-						<input type="text" class="span2" value="5" id="timeSlider">
-					</div>
-					<div class="gradSlider">
-						<ul>
-							<li>1min</li>
-							<li id="selected">1min</li>
-							<li>120min</li>
-						</ul>
-					</div>
-				</section>
-				
-				<div class="mainBot">
-					<a href="#" onclick="startSearch();">
-						OK
-					</a>
-				</div>				
-            </div>
-            <!-- /main -->
-                
-            <!-- search result -->
-            <div id="results" class="page">
-                <div id="detailsResults"></div>
-                <ul id="listResults"></ul>
-            </div>
-            <!-- /search result -->
-                
-            <!-- reader -->
-            <div id="reader" class="page">
-				<header>
-					<div class="size">
-						<a href="#">-</a>
-						<span>A</span>
-						<span class="big">A</span>
-						<a href="#">+</a>
-					</div>
-					<div class="montrajet">
-						<img height="10" src="[[url_for('static', filename='img/red_arrow.png')]]" alt="arrow" />
-						<a href="#" onclick="goToPage('results');">Mon trajet</a>
-						<svg id="svgstart" xmlns="http://www.w3.org/2000/svg" version="1.1">
-							<circle id="circle-start" cx="10" cy="10" r="6" stroke-width="6" stroke="#4D4D4D" fill="#E6E6E6" />
-						</svg>
-					</div>
-					<div class="spacer"></div>
-				</header>
-                <div id="content"></div>
-                <div id="visu">
-                    <ul></ul>
-                </div>
-                <div id="ligne">&nbsp;</div>
-				<div id="avancement">&nbsp;</div>
-            </div>
-            <!-- /reader -->               
 
-        </div>
+			</div><!-- /.container -->
+		</div>
 
-        <!-- templates -->
-        <script id="template-results" type="text/x-handlebars-template">
-            {{#each results}}
-            <li data-id="{{@index}}" data-type="text">
-                <img src="[[url_for('static', filename='img/themes/')]]picto-{{thematic}}.png" />
-                <h3>{{title}}</h3>
-                <span>{{#if domain}}{{domain}} - {{/if}}{{thematic}}</span> 
-                <div class="spacer"></div>
-            </li>
-            {{/each}}
-        </script>
-        
-        <script id="template-res-audio" type="text/x-handlebars-template">
-            <li data-id="5" data-type="audio">
-                <img src="[[url_for('static', filename='img/themes/picto-son.png')]]" />
-                <h3>Chronique de Chris Esquerre</h3>
-                <span>Radio France</span> 
-                <div class="spacer"></div>
-            </li>
-        </script>        
-        
-        <script id="template-detailsresults" type="text/x-handlebars-template">
-			<h2>Mon trajet</h2>
-			<img class="logoResults" src="[[url_for('static', filename='img/logo_stations.png')]]" alt="stations"/>
-			<ul>
-				<li>Départ {{origin}}</li>
-				<li>Arrivée {{destination}}</li>
-				<li>{{lignes}} ({{nbStations}} stations)</li>
-			</ul>
-            
-			<div class="botDetailsRes">
-				Selectionnez un article
-				<div>{{duree}}<br /><span>min</span></div>				
-			</div>
-        </script>
-		
-        <script id="template-detailsresults2" type="text/x-handlebars-template">
-			<h2>Mon trajet</h2>
-			<ul>
-				<li>&nbsp;</li>
-				<li>&nbsp;</li>
-				<li>&nbsp;</li>
-			</ul>
-            
-			<div class="botDetailsRes">
-				Selectionnez un article
-				<div>{{duree}}<br /><span>min</span></div>				
-			</div>
-        </script>		
-        
-        <script id="template-cerclestation" type="text/x-handlebars-template">
-            <li>
-                <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-                    <circle id="circle-{{id}}" cx="10" cy="10" r="10" fill="#{{couleur}}" />
-                </svg>
-            </li>
-        </script>
-
-        <script id="template-article" type="text/x-handlebars-template">
-            <h1>{{title}}</h1>
-			<div class="metaArticle">
-				<div class="text">
-					{{source}}
-					<br />
-					{{date}}
+		<footer>
+				<div class="links">
+						<div class="container">
+								<ul class="list-inline">
+										<li><a ng-href="/about" href="/page/about">About</a></li>
+										<li><a href="mailto:"> Contact</a></li>
+										<li class="last"><a href="https://github.com/vied12/timereader" target="_blank">Github</a></li>
+										<li class="last hidden"><a>Facebook</a></li>
+								</ul>
+						</div>
 				</div>
-				<div class="time">
-					{{duree}}<br /><span>min</span>
-				</div>				
-			</div>
-            <div id="contentArticle">
-                {{{content}}}
-            </div>
-        </script>
+				<div class="legals">
+						<div class="container">
+								Software under GNU GPLv3
+						</div>
+				</div>
+		</footer>
 
-        <script id="template-audio" type="text/x-handlebars-template">
-            <h1>{{title}}</h1>
-            <div id="contentArticle">
-                {{{content}}}								
-            </div>
-			<div class="contentAudio">
-				<audio src="{{file}}" preload="auto" controls></audio>
-			</div>
-        </script>
-		
-		<script id="template-end-article" type="text/x-handlebars-template">
-			<div class="botArticle">
-				
-			</div>
-			<div id="end" class="endArticle">
-				<a href="#end" class="btnAdd" onclick="addContent(3);">
-					3 minutes
-				</a>
-				<a href="#end" class="btnShare" onclick="alert('Bientôt disponible...');">
-					Partager
-				</a>
-				<div class="spacer"></div>
-			</div>		
-		</script>
-		
-		<script id="template-theme-checkbox" type="text/x-handlebars-template">
-			{{#each results}}
-				<li><input type="checkbox" id="theme-{{slug}}" name="{{slug}}" value="{{slug}}" {{#if checked}}checked{{/if}}><label for="theme-{{slug}}">{{{name}}}</label></li>
-			{{/each}}
-		</script>
-        
-        <!-- /templates -->
-
-        <!-- scripts (see assets.yaml) -->
-        [% assets "js_all" %]
-			<script type="text/javascript" src="[[ ASSET_URL ]]"></script>
+		[% assets "js_all" %]
+			<script src="[[ ASSET_URL ]]"></script>
 		[% endassets %]
-		
-		<script>
-		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-		  ga('create', 'UA-41251703-1', 'timereader.fr');
-		  ga('send', 'pageview');
-
-		</script>
-		
-		<!-- /scripts -->
-    </body>
+	</body>
 </html>
