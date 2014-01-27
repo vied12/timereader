@@ -3,12 +3,14 @@
 .bg-primary:
     text-align            : center
     background            : url("../img/photofull.jpg")
-    background-position   : right 350px
-    background-size       : 100%
+    background-position   : center bottom
+    background-size       : cover
     background-attachment : fixed
-    height: 200px
+    height                : 20%
+    max-height            : 200px
     .logo:
-        margin:2% 0 4% 0
+        width     : 80%
+        max-height:100%
 
 .bg-secondary:
     background-color :#E6E6E6
