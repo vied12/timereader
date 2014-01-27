@@ -1,22 +1,26 @@
-
-.logo:
-    width:70%
-    margin:2% 0 4% 0
+// Style for TimeReader
 
 .bg-primary:
-    text-align: center
-    background: url("../img/photofull.jpg")
-    background-position:right 73%;
-    background-size: 100% auto
-.bg-secondary:
-    background-color:#E6E6E6
-    //text-align: center
-    padding: 20px
-    ul, li:
-        text-align: left
+    text-align            : center
+    background            : url("../img/photofull.jpg")
+    background-position   : right 350px
+    background-size       : 100%
+    background-attachment : fixed
+    height: 200px
+    .logo:
+        margin:2% 0 4% 0
 
+.bg-secondary:
+    background-color :#E6E6E6
+    box-shadow       : 0 -1px 20px black
+    padding-bottom   : 20px
+    text-align       : center
+    .slider-volume:
+        margin: 0px auto 20px auto !important
+    .read:
+        margin-top : 20px
 footer:
-    box-shadow: 5px 5px 5px black
+    box-shadow  : 5px 5px 5px black
     font-size   : 90%
     clear       : both
     .links:
@@ -41,5 +45,6 @@ footer:
             .last a:
                 border-right: 1px #F7F4EF solid
     .legals:
-        background-color: white
-        padding: 10px
+        background-color : white
+        padding          : 10px
+        box-shadow       : 0px 1px 9px black

@@ -2,8 +2,10 @@
 css_all: 
   output: gen/style.css
   contents:
-    - "../assets/css/*.css"
-    - contents: "../assets/ccss/*.ccss"
+    - "../assets/css/bootstrap.min.css"
+    - "../assets/css/simple-slider-volume.css"
+    - contents:
+      - "../assets/ccss/style.ccss"
       filters: clevercss
 
 js_all: 
@@ -12,9 +14,9 @@ js_all:
     - "../assets/js/vendor/jquery-1.10.1.min.js"
     - "../assets/js/vendor/angular.min.js"
     - "../assets/js/vendor/bootstrap.min.js"
-    # - "../assets/js/vendor/simple-slider.min.js"
-    - "../assets/js/vendor/underscore-min.js"
-    # - "../assets/js/vendor/modernizr.js"
 
-    # - contents: "../assets/coffee/*.coffee"
-    #   filters: coffeescript
+    - contents:
+      - "../assets/coffee/simple-slider.coffee"
+      - "../assets/coffee/app.coffee"
+      - "../assets/coffee/directives/open-reader.coffee"
+      filters: coffeescript
