@@ -1,28 +1,35 @@
 // Style for TimeReader
 
 .bg-primary:
+    position              : relative
+    z-index               : 2
     text-align            : center
     background            : url("../img/photofull.jpg")
     background-position   : center bottom
     background-size       : cover
     background-attachment : fixed
     height                : 20%
+    box-shadow            : 0 -1px 20px black
     max-height            : 200px
     .logo:
         width     : 80%
-        max-height:100%
+        max-width : 640px
 
 .bg-secondary:
-    background-color :#E6E6E6
+    background-color : #E6E6E6
+    position         : relative
     box-shadow       : 0 -1px 20px black
-    padding-bottom   : 20px
     text-align       : center
+    padding-bottom   : 20px
+    top:0px
+    transition-property: top
+    transition-duration: .55s
     .slider-volume:
         margin: 0px auto 20px auto !important
-    .read:
-        margin-top : 20px
+    &.on-top:
+        top: -200px
+
 footer:
-    box-shadow  : 5px 5px 5px black
     font-size   : 90%
     clear       : both
     .links:
@@ -50,3 +57,5 @@ footer:
         background-color : white
         padding          : 10px
         box-shadow       : 0px 1px 9px black
+
+// EOF

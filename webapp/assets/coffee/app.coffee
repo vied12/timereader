@@ -10,9 +10,10 @@
 # Last mod : 27-Jan-2014
 # -----------------------------------------------------------------------------
 
-angular.module('timeReader', [])
+angular.module('timereader', [])
     .controller 'ConfigCtrl',
-      class ConfigCtrl
-        time : 10
+      	class ConfigCtrl
+        	time : 10
+        	loadReader: ->
 
 # EOF

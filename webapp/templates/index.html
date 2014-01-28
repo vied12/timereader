@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app="timereader">
 		<head>
 				<meta charset="utf-8">
 				<title>Time Reader</title>
@@ -35,14 +35,12 @@
 				<img src="[[url_for('static', filename='img/logo.png')]]" class="logo" alt="logo" />
 			</div>
 		</div>
-		<div class="bg-secondary">
+		<div class="bg-secondary" openable>
 			<div class="container" ng-controller="ConfigCtrl as config">
-				<div class="">
-					<h2>How much time do you got ?</h2>
-					<span class="glyphicon glyphicon-time"></span> <span>{{ config.time }} min</span>
-					<input type="text" ng-model="config.time" data-slider="true" data-slider-theme="volume" data-slider-range="5,30" data-slider-step="1">
-					<button type="button" class="btn btn-primary btn-lg read" openReader>Get me something nice to read</button>
-				</div>
+				<h2>How much time do you got ?</h2>
+				<span class="glyphicon glyphicon-time"></span> <span>{{ config.time }} min</span>
+				<div><input type="text" ng-model="config.time" data-slider="true" data-slider-theme="volume" data-slider-range="5,30" data-slider-step="1"></div>
+				<button type="button" class="btn btn-primary btn-lg read" ng-click="config.loadReader(); openReader()">Get me something nice to read</button>
 
 			</div><!-- /.container -->
 		</div>

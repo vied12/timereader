@@ -10,15 +10,11 @@
 # Last mod : 27-Jan-2014
 # -----------------------------------------------------------------------------
 
-angular.module('timeReader')
-  .directive 'openReader', () ->
-    console.log coucou
-    (scope, elem, attrs) ->
-      console.log "coucou", scope, elem, attrs
-      # elem.bind 'keydown', (e) ->
-      #   if e.keyCode is 13
-      #     $timeout ->
-      #       scope.$apply attrs.enterKey
-      #     , +attrs.enterKeyDelay
+angular.module('timereader')
+    .directive "openable", ->
+        link: (scope, element, attrs)->
+            scope.openReader = ->
+                element.addClass("on-top")
+                return true
 
 # EOF
