@@ -35,6 +35,10 @@ assets  = Environment(app)
 bundles = YAMLLoader(os.path.join(PWD, "assets.yaml")).load_bundles()
 assets.register(bundles)
 
+#s3
+from flask_s3 import FlaskS3
+s3 = FlaskS3(app)
+
 # create a job queue
 worker = Worker(async=app.config['QUEUE_MODE_ASYNC'])
 

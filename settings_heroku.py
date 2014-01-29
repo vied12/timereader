@@ -1,8 +1,17 @@
 # Encoding: utf-8
 import os
 
-DEBUG      = os.environ.get('DEBUG', False)
+DEBUG      = os.environ.get('DEBUG', False) == "True"
 SECRET_KEY = os.environ.get('SECRET_KEY', "12345")
+
+# -- AWS   -------------------------------
+USE_S3                = True
+AWS_ACCESS_KEY_ID     = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+S3_BUCKET_NAME        = os.environ.get('S3_BUCKET_NAME')
+FLASK_ASSETS_USE_S3   = os.environ.get('FLASK_ASSETS_USE_S3', True)
+ASSETS_DEBUG          = False
+ASSETS_AUTO_BUILD     = False
 
 # -- Queue -------------------------------
 REDIS_URL        = os.environ['REDISTOGO_URL'] if 'REDISTOGO_URL' in os.environ else "redis://localhost:6379"
@@ -12,9 +21,6 @@ QUEUE_MODE_ASYNC = os.environ.get('QUEUE_MODE_ASYNC', False)
 if 'MONGOLAB_URI' in os.environ:
 	MONGO_HOST = os.environ['MONGOLAB_URI']
 	MONGO_DB   = os.environ['MONGOLAB_URI'].split('/')[-1]
-else:
-	MONGO_HOST = 'localhost'
-	MONGO_DB   = 'libreway'
 
 # -- Source Content ----------------------
 SOURCE_CONTENT = os.environ.get("SOURCE_CONTENT")

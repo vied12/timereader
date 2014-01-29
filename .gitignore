@@ -4,4 +4,3 @@ fabfile.py
 dump
 settings.cfg
 webapp/static/.webassets-cache
-webapp/static/gen
