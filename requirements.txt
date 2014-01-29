@@ -20,3 +20,4 @@ times==0.6.2
 webassets==0.8
 Werkzeug==0.9.4
 wsgiref==0.1.2
+gunicorn==18.0
