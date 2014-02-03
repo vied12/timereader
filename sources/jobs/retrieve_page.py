@@ -10,7 +10,7 @@
 # Creation : 07-Jul-2013
 # Last mod : 07-Jul-2013
 # -----------------------------------------------------------------------------
-from job import Job
+from . import Job
 from storage import Article
 from flask import Flask
 import requests

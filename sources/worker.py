@@ -8,15 +8,14 @@
 # License : GNU Lesser General Public License
 # -----------------------------------------------------------------------------
 # Creation : 06-Jul-2013
-# Last mod : 06-Jul-2013
+# Last mod : 03-Feb-2014
 # -----------------------------------------------------------------------------
-import jobs
 from flask import Flask
 
 app = Flask(__name__)
 app.config.from_envvar('TIMEREADER_SETTINGS')
 
-class Worker:
+class Worker(object):
 
 	def __init__(self, async=False):
 		self.async = async
@@ -27,10 +26,8 @@ class Worker:
 
 	def run(self, job, *arg, **kwargs):
 		__import__('jobs.'+job)
-		
 		class_name = job.replace('_', ' ').title().replace(' ', '')
 		job = eval('jobs.%s.%s()' % (job, class_name))
-
 		if self.async:
 			self.run_redis(job, *arg, **kwargs)
 		else:
@@ -40,6 +37,6 @@ class Worker:
 		job.run(*arg, **kwargs)
 
 	def run_redis(self, job, *arg, **kwargs):
-		result = self.queue.enqueue(job.run, *arg, **kwargs)
+		self.queue.enqueue(job.run, *arg, **kwargs)
 
 # EOF

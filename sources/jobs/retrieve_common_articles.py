@@ -11,7 +11,7 @@
 # Last mod : 06-Jul-2013
 # -----------------------------------------------------------------------------
 
-from job import Job
+from . import Job
 from storage import Article
 from flask import Flask
 from time import mktime

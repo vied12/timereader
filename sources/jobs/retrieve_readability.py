@@ -10,7 +10,7 @@
 # Creation : 06-Jul-2013
 # Last mod : 06-Jul-2013
 # -----------------------------------------------------------------------------
-from job import Job
+from . import Job
 from worker import Worker
 import readability
 from flask import Flask
