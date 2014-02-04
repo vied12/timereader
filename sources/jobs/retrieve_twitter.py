@@ -10,7 +10,7 @@
 # Creation : 03-Feb-2014
 # Last mod : 03-Feb-2014
 # -----------------------------------------------------------------------------
-from . import Job
+from . import Job, job
 from worker import Worker
 from flask import Flask
 
@@ -18,6 +18,7 @@ app = Flask(__name__)
 app.config.from_envvar('TIMEREADER_SETTINGS')
 worker = Worker(async=False)
 
+@job("RetrieveTwitter")
 class RetrieveTwitter(Job):
 	pass
 

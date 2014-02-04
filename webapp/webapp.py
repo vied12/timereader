@@ -12,12 +12,10 @@
 # -----------------------------------------------------------------------------
 
 from bson.json_util   import dumps
-from storage          import Station, Article
+from storage          import Article
 from worker           import Worker
 from flask.ext.assets import Environment, YAMLLoader
-import journey
 import readability
-import json
 import uuid
 import os
 import flask
@@ -47,34 +45,6 @@ worker = Worker(async=app.config['QUEUE_MODE_ASYNC'])
 # API
 #
 # -----------------------------------------------------------------------------
-@app.route('/api/stations/autocomplete/<keywords>', methods=['get'])
-def station_autocomplete(keywords):
-	res = []
-	stations = Station.get(keywords)
-	for station in stations:
-		res.append({
-			"name" : station['name'],
-			"uri"  : "coord:%s:%s" % (station['lon'], station['lat'])
-		})
-	return json.dumps(res)
-
-@app.route('/api/itineraire/<src>/<tgt>', methods=['get'])
-@app.route('/api/itineraire/<src>/<tgt>/thematics/<thematics>', methods=['get'])
-@app.route('/api/itineraire/<src>/<tgt>/user/<user_id>', methods=['get'])
-@app.route('/api/itineraire/<src>/<tgt>/thematics/<thematics>/user/<user_id>', methods=['get'])
-def get_content_from_itineraire(src, tgt, thematics=None, user_id=None):
-	itineraire = journey.get_itineraire(src, tgt)
-	duration   = itineraire['delta']
-	words      = utils.how_many_words(duration)
-	thematics  = thematics.split(',') if thematics else None
-	articles   = {
-		"one"   : Article.get_closest(count_words=words,   limit=5, thematics=thematics, user=user_id), # FIXME
-		"two"   : Article.get_closest(count_words=words/2, limit=2, thematics=thematics, user=user_id),
-		"three" : Article.get_closest(count_words=words/3, limit=3, thematics=thematics, user=user_id),
-	}
-	itineraire["articles"] = articles
-	return dumps(itineraire)
-
 @app.route('/api/duration/<duration>', methods=['get'])
 @app.route('/api/duration/<duration>/thematics/<thematics>', methods=['get'])
 @app.route('/api/duration/<duration>/user/<user_id>', methods=['get'])
@@ -108,7 +78,7 @@ def api_readability_register(username, password):
 	# FIXME: should be in SESSION
 	user_id = str(uuid.uuid4())
 	# Retrieve the user's articles and save them into the database with his user_id
-	worker.run('retrieve_readability', token, user_id)
+	worker.run('jobs.retrieve_readability', token, user_id)
 	return dumps({'user': user_id})
 
 # -----------------------------------------------------------------------------
@@ -129,7 +99,7 @@ def all_articles():
 def reset_content():
 	articles_collection = Article.get_collection()
 	articles_collection.remove()
-	worker.run('retrieve_common_articles', app.config['SOURCE_CONTENT'])
+	worker.run('jobs.retrieve_common_articles', app.config['SOURCE_CONTENT'])
 	return "ok"
 
 # -----------------------------------------------------------------------------

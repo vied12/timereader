@@ -10,7 +10,7 @@
 # Creation : 07-Jul-2013
 # Last mod : 07-Jul-2013
 # -----------------------------------------------------------------------------
-from . import Job
+from . import Job, job
 from storage import Article
 from flask import Flask
 import requests
@@ -18,6 +18,7 @@ import requests
 app = Flask(__name__)
 app.config.from_envvar('TIMEREADER_SETTINGS')
 
+@job("Retrieve a page using readability")
 class RetrievePage(Job):
 
 	def run(self, url, thematic=None, user_id=None, source=None):

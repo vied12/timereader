@@ -25,15 +25,6 @@ def get_collection(collection):
 	db     = client[app.config['MONGO_DB']]
 	return db[collection]
 
-class Station:
-
-	@classmethod
-	def get(self, name=None):
-		stations = get_collection('stations')
-		if not name:
-			return stations.find()
-		return stations.find({"name":{'$regex':"^%s" % name, "$options": "-i"}})
-
 class Article:
 
 	def __init__(self, title=None, date=None, content=None, summary=None, link=None, thematic=None, user=None, count_words=None, type=None):

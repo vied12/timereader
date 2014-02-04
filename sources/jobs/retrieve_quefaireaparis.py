@@ -10,7 +10,7 @@
 # Creation : 09-Jul-2013
 # Last mod : 09-Jul-2013
 # -----------------------------------------------------------------------------
-from . import Job
+from . import Job, job
 from storage import Article
 from flask import Flask
 import requests
@@ -19,6 +19,7 @@ import datetime
 app = Flask(__name__)
 app.config.from_envvar('TIMEREADER_SETTINGS')
 
+@job("RetrieveQuefaireaparis")
 class RetrieveQuefaireaparis(Job):
 
 	def run(self):

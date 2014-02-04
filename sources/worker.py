@@ -11,6 +11,7 @@
 # Last mod : 03-Feb-2014
 # -----------------------------------------------------------------------------
 from flask import Flask
+import jobs
 
 app = Flask(__name__)
 app.config.from_envvar('TIMEREADER_SETTINGS')
@@ -25,9 +26,7 @@ class Worker(object):
 			self.queue = Queue(connection=redis.from_url(app.config['REDIS_URL']))
 
 	def run(self, job, *arg, **kwargs):
-		__import__('jobs.'+job)
-		class_name = job.replace('_', ' ').title().replace(' ', '')
-		job = eval('jobs.%s.%s()' % (job, class_name))
+		job = jobs.perform_jobs_import(job)()
 		if self.async:
 			self.run_redis(job, *arg, **kwargs)
 		else:
