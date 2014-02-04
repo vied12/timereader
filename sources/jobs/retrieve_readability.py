@@ -10,7 +10,7 @@
 # Creation : 06-Jul-2013
 # Last mod : 06-Jul-2013
 # -----------------------------------------------------------------------------
-from . import Job
+from . import Job, job
 from worker import Worker
 import readability
 from flask import Flask
@@ -19,6 +19,7 @@ app = Flask(__name__)
 app.config.from_envvar('TIMEREADER_SETTINGS')
 worker = Worker(async=False)
 
+@job("RetrieveReadability")
 class RetrieveReadability(Job):
 
 	def run(self, token, user_id):

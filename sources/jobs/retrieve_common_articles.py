@@ -11,9 +11,8 @@
 # Last mod : 06-Jul-2013
 # -----------------------------------------------------------------------------
 
-from . import Job
+from . import Job, job
 from storage import Article
-from flask import Flask
 from time import mktime
 from datetime import datetime
 import requests
@@ -24,6 +23,7 @@ from worker import Worker
 CSV_SEPARATOR = ","
 worker = Worker(async=False)
 
+@job("Retrieve the Common Articles")
 class RetrieveCommonArticles(Job):
 
 	def run(self, target):
