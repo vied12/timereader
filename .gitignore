@@ -5,3 +5,4 @@ dump
 settings.cfg
 static/.webassets-cache/
 static/gen/
+webapp/static/.webassets-cache
