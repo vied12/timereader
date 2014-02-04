@@ -96,6 +96,7 @@ def api_content(id):
 		return article['content']
 	return "false"
 
+
 @app.route('/api/readability/<username>/<password>', methods=['get'])
 def api_readability_register(username, password):
 	token = readability.xauth(
@@ -118,6 +119,10 @@ def api_readability_register(username, password):
 @app.route('/')
 def index():
 	return flask.render_template('index.html')
+
+@app.route('/all-articles')
+def all_articles():
+	return flask.render_template('index.html',articles=Article.get_collection().find())
 
 # FIXME: needs authentication
 @app.route('/reset-content')

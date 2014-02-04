@@ -58,4 +58,37 @@ footer:
         padding          : 10px
         box-shadow       : 0px 1px 9px black
 
+.articles:
+    width       : 80%
+    text-align  : left
+
+article:
+    border-bottom   : 2px solid #eb4e65
+    padding-bottom  : 10px
+
+.scroller:
+    position:absolute
+    top     : 0
+    right   : 0
+    .scroller-inner:
+        text-align  : left
+        float       : right
+        width       : 186px
+        font-size   : 2px
+        font-size   : 1px
+        color       : #999
+    h1:
+        font-size     : 2px
+    h2,h3,blockquote p:
+        font-size     : 1px
+    img :
+        zoom : 0.1
+    p : 
+        margin : 0 0 1px
+    article:
+        border-bottom   : 1px solid #eb4e65
+        padding-bottom  : 2px        
+
+
+
 // EOF

@@ -42,6 +42,22 @@
 				<div><input type="text" ng-model="config.time" data-slider="true" data-slider-theme="volume" data-slider-range="5,30" data-slider-step="1"></div>
 				<button type="button" class="btn btn-primary btn-lg read" ng-click="config.loadReader(); openReader()">Get me something nice to read</button>
 
+				[% if articles %]
+				<div class="scroller">
+					<div class="scroller-inner">
+					</div>	
+				</div>				
+				<ul class="articles">
+					[% for article in articles %]
+						<li>
+							<article>
+								<h2>[[ article.title|safe ]]</h2>
+								[[ article.content|safe ]]</article></li>
+					[% endfor %]
+				</ul>
+				
+				[% endif %]
+
 			</div><!-- /.container -->
 		</div>
 		<div class="bg-secondary hidden">
@@ -77,5 +93,6 @@
 		[% assets "js_all" %]
 			<script src="[[ ASSET_URL ]]"></script>
 		[% endassets %]
+		<script src="/static/gen/script.js"></script>
 	</body>
 </html>
