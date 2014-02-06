@@ -67,13 +67,19 @@ article:
     padding-bottom  : 10px
 
 .scroller:
-    position:absolute
+    position : absolute
     top     : 0
     right   : 0
+    width   : 186px
+    overflow : hidden
+
     .scroller-inner:
+        position    : absolute
+        top : 0
+        left : 0
         text-align  : left
         float       : right
-        width       : 186px
+        width   : 186px
         font-size   : 2px
         font-size   : 1px
         color       : #999
@@ -85,9 +91,10 @@ article:
         zoom : 0.1
     p : 
         margin : 0 0 1px
-    article:
-        border-bottom   : 1px solid #eb4e65
-        padding-bottom  : 2px        
+    .articles:
+        article:
+            border-bottom   : 1px solid #eb4e65
+            padding-bottom  : 2px        
 
 
 

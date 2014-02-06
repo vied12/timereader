@@ -177,9 +177,14 @@ article {
   position: absolute;
   top: 0;
   right: 0;
+  width: 186px;
+  overflow: hidden;
 }
 
 .scroller .scroller-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
   text-align: left;
   float: right;
   width: 186px;
@@ -206,7 +211,7 @@ article {
   margin: 0 0 1px;
 }
 
-.scroller article {
+.scroller .articles article {
   border-bottom: 1px solid #eb4e65;
   padding-bottom: 2px;
 }

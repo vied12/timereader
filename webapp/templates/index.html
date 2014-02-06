@@ -46,16 +46,17 @@
 				<div class="scroller">
 					<div class="scroller-inner">
 					</div>	
-				</div>				
-				<ul class="articles">
-					[% for article in articles %]
-						<li>
-							<article>
-								<h2>[[ article.title|safe ]]</h2>
-								[[ article.content|safe ]]</article></li>
-					[% endfor %]
-				</ul>
-				
+				</div>		
+				<div class="reader">		
+					<ul class="articles">
+						[% for article in articles %]
+							<li>
+								<article>
+									<h2>[[ article.title|safe ]]</h2>
+									[[ article.content|safe ]]</article></li>
+						[% endfor %]
+					</ul>
+				</div>
 				[% endif %]
 
 			</div><!-- /.container -->
@@ -93,6 +94,5 @@
 		[% assets "js_all" %]
 			<script src="[[ ASSET_URL ]]"></script>
 		[% endassets %]
-		<script src="/static/gen/script.js"></script>
 	</body>
 </html>

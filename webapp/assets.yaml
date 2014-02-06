@@ -14,10 +14,10 @@ js_all:
     - "../assets/js/vendor/jquery-1.10.1.min.js"
     - "../assets/js/vendor/angular.min.js"
     - "../assets/js/vendor/bootstrap.min.js"
-    - "../assets/js/vendor/script.js"
 
     - contents:
-      - "../assets/coffee/simple-slider.coffee"
+#      - "../assets/coffee/simple-slider.coffee"
+      - "../assets/coffee/scroller.coffee"
       - "../assets/coffee/app.coffee"
       - "../assets/coffee/directives/open-reader.coffee"
       filters: coffeescript
