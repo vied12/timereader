@@ -54,6 +54,18 @@
   background: linear-gradient(top, #c5c5c5, #a2a2a2);
 }
 
+.lift{
+background: -moz-linear-gradient(top,  rgba(153,153,153,0.3) 0%, rgba(153,153,153,0.1) 48%, rgba(153,153,153,0.3) 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(153,153,153,0.3)), color-stop(48%,rgba(153,153,153,0.1)), color-stop(100%,rgba(153,153,153,0.3)));
+background: -webkit-linear-gradient(top,  rgba(153,153,153,0.3) 0%,rgba(153,153,153,0.1) 48%,rgba(153,153,153,0.3) 100%);
+background: -o-linear-gradient(top,  rgba(153,153,153,0.3) 0%,rgba(153,153,153,0.1) 48%,rgba(153,153,153,0.3) 100%);
+background: -ms-linear-gradient(top,  rgba(153,153,153,0.3) 0%,rgba(153,153,153,0.1) 48%,rgba(153,153,153,0.3) 100%);
+background: linear-gradient(to bottom,  rgba(153,153,153,0.3) 0%,rgba(153,153,153,0.1) 48%,rgba(153,153,153,0.3) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4d999999', endColorstr='#4d999999',GradientType=0 );
+
+}
+
+
 
 
 .bg-primary {
@@ -166,11 +178,11 @@ footer .legals {
 .articles {
   width: 80%;
   text-align: left;
+  list-style: none;
 }
 
 article {
-  border-bottom: 2px solid #eb4e65;
-  padding-bottom: 10px;
+  padding: 40px 0 30px;
 }
 
 .scroller {
@@ -181,7 +193,11 @@ article {
   overflow: hidden;
 }
 
-.scroller .scroller-inner {
+.scroller .wrapper {
+  position: relative;
+}
+
+.scroller .content {
   position: absolute;
   top: 0;
   left: 0;
@@ -193,6 +209,12 @@ article {
   color: #999999;
 }
 
+.scroller .lift {
+  position: absolute;
+  width: 186px;
+  z-index: 5;
+}
+
 .scroller h1 {
   font-size: 2px;
 }
@@ -201,6 +223,7 @@ article {
 .scroller h3,
 .scroller blockquote p {
   font-size: 1px;
+  margin-top: 0;
 }
 
 .scroller img {
@@ -211,7 +234,11 @@ article {
   margin: 0 0 1px;
 }
 
-.scroller .articles article {
-  border-bottom: 1px solid #eb4e65;
-  padding-bottom: 2px;
+.scroller article {
+  border-bottom: 1px solid #444444;
+  padding: 0 0 2px 10px;
+}
+
+.scroller article.active {
+  border-left: 5px solid #eb4e65;
 }
