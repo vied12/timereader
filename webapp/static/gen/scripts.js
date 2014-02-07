@@ -232,11 +232,17 @@ Scroller = (function() {
     this.getCurrentArticle = function(position) {
       return Scroller.prototype.getCurrentArticle.apply(_this, arguments);
     };
+    this.scrollTo = function(top) {
+      return Scroller.prototype.scrollTo.apply(_this, arguments);
+    };
     this.scroll = function(e) {
       return Scroller.prototype.scroll.apply(_this, arguments);
     };
     this.relayout = function(e) {
       return Scroller.prototype.relayout.apply(_this, arguments);
+    };
+    this.init = function() {
+      return Scroller.prototype.init.apply(_this, arguments);
     };
     this.CONFIG = {
       marginBottom: 10,
@@ -264,6 +270,17 @@ Scroller = (function() {
   Scroller.prototype.init = function() {
     this.uis.scroller.html(this.CONFIG.content);
     return this.scroll();
+    /*    
+    @uis.lift.draggable({ 
+      axis: "y" , 
+      containment: "parent" ,
+      scroll: true,
+      drag : (e, ui) =>
+        stop = ui.offset.top / $(window).height() * $(document).height() 
+        this.scrollTo(stop)
+    })
+    */
+
   };
 
   Scroller.prototype.relayout = function(e) {
@@ -275,10 +292,23 @@ Scroller = (function() {
   };
 
   Scroller.prototype.scroll = function(e) {
-    var currentArticle, currentArticleProgress, liftCentering, liftStop, readerArticle, scrollerArticle, scrollerArticles, scrollerTop, stop, stopDoc,
+    return this.scrollTo();
+  };
+
+  Scroller.prototype.scrollTo = function(top) {
+    var currentArticle, currentArticleProgress, liftCentering, liftStop, readerArticle, scrollerArticle, scrollerArticles, scrollerTop, stop,
       _this = this;
-    stop = $(window).scrollTop();
-    stopDoc = $(document).scrollTop();
+    if (top != null) {
+      stop = top;
+      console.log("stop", stop, "window", $(document).scrollTop());
+      $(window).scrollTop(stop);
+    } else {
+      stop = $(window).scrollTop();
+      liftCentering = $(window).height() * stop / $(document).height();
+      liftCentering = liftCentering - this.uis.lift.height() * stop / $(document).height();
+      liftStop = 0 + liftCentering;
+      this.uis.lift.css('top', liftStop + 'px');
+    }
     currentArticle = this.getCurrentArticle(stop);
     scrollerArticles = this.uis.scroller.find('article');
     scrollerArticle = $(scrollerArticles[currentArticle]);
@@ -286,13 +316,9 @@ Scroller = (function() {
       return $(el).removeClass('active');
     });
     scrollerArticle.addClass('active');
-    liftCentering = $(window).height() * stop / $(document).height();
-    liftCentering = liftCentering - this.uis.lift.height() * stop / $(document).height();
-    liftStop = 0 + liftCentering;
-    this.uis.lift.css('top', liftStop + 'px');
     readerArticle = $(this.uis.articlesRead[currentArticle]);
     currentArticleProgress = (stop - readerArticle.offset().top) * scrollerArticle.height() / readerArticle.height();
-    scrollerTop = scrollerArticle.position().top + currentArticleProgress - liftCentering;
+    scrollerTop = scrollerArticle.position().top + currentArticleProgress - liftCentering - (this.uis.lift.height() / 2 * stop / $(document).height());
     this.uis.scroller.css('top', -scrollerTop + 'px');
     if (stop > this.uis.topElement.height() || true) {
       this.uis.container.css('position', 'fixed');
@@ -310,7 +336,7 @@ Scroller = (function() {
     this.uis.articlesRead.each(function(i, el) {
       var article;
       article = $(el);
-      if (position > article.offset().top && position < (article.offset().top + article.height())) {
+      if (position > article.position().top && position < (article.position().top + article.height() - _this.uis.lift.height() / 2)) {
         currrent = i;
         _this.CONFIG.lastArticle = i;
         return false;
@@ -326,10 +352,14 @@ Scroller = (function() {
 Reader = (function() {
 
   function Reader(container) {
+    var _this = this;
     this.uis = {
       container: $(container),
       articles: $(".reader article")
     };
+    this.uis.articles.find('*').each(function(i, el) {
+      return $(el).css('fontSize', '');
+    });
     this.scroller = new Scroller(this.uis.articles.clone());
     $('.bg-secondary').hide();
     $('.bg-primary').hide();

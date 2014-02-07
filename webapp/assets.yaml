@@ -14,6 +14,7 @@ js_all:
     - "../assets/js/vendor/jquery-1.10.1.min.js"
     - "../assets/js/vendor/angular.min.js"
     - "../assets/js/vendor/bootstrap.min.js"
+    - "../assets/js/vendor/jquery-ui-1.10.4.custom.min.js"
 
     - contents:
 #      - "../assets/coffee/simple-slider.coffee"

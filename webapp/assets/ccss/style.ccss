@@ -58,6 +58,9 @@ footer:
         padding          : 10px
         box-shadow       : 0px 1px 9px black
 
+
+
+
 .articles:
     width       : 80%
     text-align  : left
@@ -69,9 +72,12 @@ article:
 .scroller:
     position : absolute
     top     : 0
-    right   : 0
-    width   : 186px
+    right   : 10px
+    width   : 155px
+    border-right : 1px solid #ccc
     overflow : hidden
+    padding-left : 10px
+    overflow : visible
     .wrapper:
         position : relative
     .content:
@@ -80,29 +86,52 @@ article:
         left : 0
         text-align  : left
         float       : right
-        width   : 186px
+        width   : 154px
         font-size   : 2px
         font-size   : 1px
         color       : #999
     .lift:
         position : absolute
-        width : 186px
+        width : 156px
         z-index : 5
+        //border-left:1px solid rgb(235, 78, 101)
         //background-color: "rgba(150,150,150,0.3)"
+        //background-color: "rgba(235, 78, 101,0.1)"
+        margin : 0 -1px
+        box-shadow: 2px 2px 8px #bbb
     h1:
         font-size     : 2px
     h2,h3,blockquote p:
         font-size     : 1px
         margin-top:0
+    h2,h3:
+        font-size:3px
+        margin-bottom:2px 
     img :
         zoom : 0.1
     p : 
         margin : 0 0 1px
-   
+    ul : 
+        padding-left:8px
     article:
-        border-bottom   : 1px solid #444
-        padding  : 0 0 2px 10px       
+        border-bottom   : 1px solid #ddd
+        padding  : 15px    
+        border-left : 1px solid #ddd   
+        background: #eee
+        transition: "0.6s ease 0s all"
+        -webkit-touch-callout   : none
+        -webkit-user-select     : none
+        -khtml-user-select      : none
+        -moz-user-select        : none
+        -ms-user-select         : none
+        user-select             : none
         &.active:
-            border-left : 5px solid #eb4e65
+            background: #fff
+            border-left : 1px solid #eb4e65
+            border-left : 1px solid #ccc
+
+    blockquote:
+        padding:0
+
 
 // EOF
