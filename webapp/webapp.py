@@ -8,7 +8,7 @@
 # License : GNU Lesser General Public License
 # -----------------------------------------------------------------------------
 # Creation : 23-May-2013
-# Last mod : 19-Jan-2014
+# Last mod : 08-Feb-2014
 # -----------------------------------------------------------------------------
 
 from bson.json_util   import dumps
