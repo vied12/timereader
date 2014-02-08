@@ -92,7 +92,7 @@ def index():
 
 @app.route('/all-articles')
 def all_articles():
-	return flask.render_template('index.html',articles=Article.get_collection().find())
+	return flask.render_template('index.html',articles=Article.get(limit=10))
 
 # FIXME: needs authentication
 @app.route('/reset-content')
