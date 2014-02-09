@@ -20,45 +20,61 @@ import datetime
 app = Flask(__name__)
 app.config.from_envvar('TIMEREADER_SETTINGS')
 
-def get_collection(collection):
-	client = MongoClient(app.config['MONGO_HOST'])
-	db     = client[app.config['MONGO_DB']]
-	return db[collection]
 
-class Article:
+class Model(object):
 
-	def __init__(self, title=None, date=None, content=None, summary=None, link=None, thematic=None, user=None, count_words=None, type=None):
-		self.title        = title
-		self.date         = date
-		self.content      = content
-		self.summary      = summary
-		self.link         = link
-		self.thematic     = thematic
-		self.user         = user
-		self.count_words  = count_words
-		self.type         = type
+	def __init__(self, **kwargs):
+		# default attributes
+		self._id         = None
 		self.created_date = datetime.datetime.now()
+		# add other attributes from kwargs
+		for key, value in kwargs.items():
+			setattr(self, key, value)
 
-	@classmethod
-	def get_collection(self):
-		client = MongoClient(app.config['MONGO_HOST'])
-		db     = client[app.config['MONGO_DB']]
-		return db['articles']
+	@property
+	def collection(self):
+		client   = MongoClient(app.config['MONGO_HOST'])
+		db       = client[app.config['MONGO_DB']]
+		# return the relative mongodb collection
+		collection = db[self.__class__.__name__.lower()]
+		return collection
+
+	def save(self):
+		# check if the model exists already
+		previous_model = None
+		# keep only existing attributes
+		attributes = filter(lambda _:_[1] != None, self.__dict__.items())
+		if self._id:
+			previous_model = self.collection.find(dict(_id=self._id))
+			self.collection.save(dict(previous_model.items() + attributes))
+		# save the model
+		else:
+			pp(attributes)
+			self.collection.insert(dict(attributes))
+
+# -----------------------------------------------------------------------------
+#
+#    ARTICLE
+#
+# -----------------------------------------------------------------------------
+class Article(Model):
+
+	def __init__(self, **kwargs):
+		super(Article, self).__init__(**kwargs)
+		self.title        = None
+		self.date         = None
+		self.content      = None
+		self.summary      = None
+		self.link         = None
+		self.thematic     = None
+		self.user         = None
+		self.count_words  = None
+		self.type         = None
 
 	def save(self):
 		if not self.count_words or self.count_words == 0:
 			self.count_words = len(self.content.split())
-		# check if article already exists
-		previous_article = None
-		if self.link:
-			res = Article.get_collection().find(dict(user=self.user, link=self.link))
-			if res.count() > 0:
-				previous_article = res.next()
-		# save the article
-		if not previous_article:
-			Article.get_collection().insert(self.__dict__)
-		else:
-			Article.get_collection().save(dict(previous_article.items() + self.__dict__.items()))
+		super(Article, self).save()
 
 	@classmethod
 	def get(self, limit=0, sort=True, **karg):
@@ -102,6 +118,19 @@ class Article:
 		# sorting
 		results = sorted(results, key=lambda k: k['delta'])
 		return results[:limit]
+
+# -----------------------------------------------------------------------------
+#
+#    USER
+#
+# -----------------------------------------------------------------------------
+class User(Model):
+
+	def __init__(self, **kwargs):
+		super(User, self).__init__(**kwargs)
+		self.username = None
+		self.password = None
+		self.email    = None
 
 # TEST
 if __name__ == "__main__":
