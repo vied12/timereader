@@ -37,6 +37,11 @@ class Catalogue:
 		}
 		return job_class
 
+def perform_jobs_import(val):
+	importlib.import_module(val)
+	module_name = val.split('.')[-1]
+	return Catalogue.JOBS[module_name]['class']
+
 # -----------------------------------------------------------------------------
 #
 # DECORATORS
@@ -48,10 +53,5 @@ def job(description):
 	def wrapper(_):
 		return Catalogue.RegisterJob( _.__module__.split('.')[-1], description, _ )
 	return wrapper
-
-def perform_jobs_import(val):
-	importlib.import_module(val)
-	module_name = val.split('.')[-1]
-	return Catalogue.JOBS[module_name]['class']
 
 # EOF

@@ -19,7 +19,6 @@ import requests
 import feedparser
 from worker import Worker
 
-
 CSV_SEPARATOR = ","
 worker = Worker(async=False)
 
