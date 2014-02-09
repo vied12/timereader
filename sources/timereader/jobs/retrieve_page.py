@@ -10,8 +10,8 @@
 # Creation : 07-Jul-2013
 # Last mod : 07-Jul-2013
 # -----------------------------------------------------------------------------
-from . import Job, job
-from storage import Article
+from timereader.jobs import Job, job
+from timereader import Article
 from flask import Flask
 import requests
 

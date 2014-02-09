@@ -25,7 +25,7 @@ class RetrieveQuefaireaparis(Job):
 	def run(self):
 		response = requests.get("https://api.paris.fr:3000/data/1.1/QueFaire/get_activities/?token={token}&created={created}&offset={offset}&limit={limit}"
 			.format(
-				token   = app.config['API_QUEFAIREAPARIS_TOKEN'],
+				token   = app.config['QUEFAIREAPARIS_TOKEN'],
 				created = "0",
 				offset  = "0",
 				limit   = "100"),

@@ -4,6 +4,7 @@ WEBAPP     = $(wildcard **/webapp.py)
 ENV        = `pwd`/.env
 
 run:
+	-rm -f **/*.pyc
 	mongod &
 	. $(ENV) ; python $(WEBAPP)
 

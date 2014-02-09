@@ -3,7 +3,7 @@ Time Reader
 
 A reading companion for traveling by subway. 
 
-Paris 2013 - Developed during the Open-data Hackathon for RATP. 
+Started in Paris, 2013 - Developed during the Open-data Hackathon for RATP.
 
 Demo: http://timereader.herokuapp.com
 

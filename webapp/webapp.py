@@ -12,8 +12,8 @@
 # -----------------------------------------------------------------------------
 
 from bson.json_util   import dumps
-from storage          import Article
-from worker           import Worker
+from timereader.storage import Article
+from timereader.worker  import Worker
 from flask.ext.assets import Environment, YAMLLoader
 import readability
 import uuid
@@ -65,7 +65,6 @@ def api_content(id):
 	if article:
 		return article['content']
 	return "false"
-
 
 @app.route('/api/readability/<username>/<password>', methods=['get'])
 def api_readability_register(username, password):

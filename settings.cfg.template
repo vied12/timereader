@@ -25,6 +25,12 @@ READABILITY_CONSUMER_SECRET  = ""
 READABILITY_PARSER_TOKEN     = ""
 
 # -- QUE FAIRE À PARIS -------------------
-API_QUEFAIREAPARIS_TOKEN = ""
+QUEFAIREAPARIS_TOKEN = ""
+
+# -- Twitter -----------------------------
+TWITTER_CONSUMER_KEY             = ""
+TWITTER_CONSUMER_SECRET          = ""
+TWITTER_TEST_ACCESS_TOKEN        = ""
+TWITTER_TEST_ACCESS_TOKEN_SECRET = ""
 
 # EOF
