@@ -29,6 +29,20 @@ class classproperty(property):
 	def __get__(self, cls, owner):
 		return self.fget.__get__(None, owner)()
 
+import itertools
+class Cursor(object):
+	def __init__(self, cursor, model):
+		self.cursor = cursor
+		self.model  = model
+	def __iter__(self):
+		for elt in self.cursor:
+			yield self.model(**elt)
+	def __getitem__(self,index):
+		try:
+			return self.model(**next(itertools.islice(self.cursor,index,index+1)))
+		except TypeError:
+			return list(itertools.islice(self.cursor,index.start,index.stop,index.step))
+
 class Model(object):
 	"""
 	Base Model for a storable entity
@@ -54,7 +68,7 @@ class Model(object):
 		return collection
 
 	@classmethod
-	def get(klass, limit=0, sort=None, **kwargs):
+	def _get(klass, limit=0, sort=None, **kwargs):
 		criteria = {k:kwargs[k] for k in kwargs if kwargs[k] != None}
 		cursor   = klass.collection.find(criteria, limit=limit)
 		# sort
@@ -63,8 +77,12 @@ class Model(object):
 				sort_id, sort_order = sort
 			else:
 				sort_id, sort_order = (sort, 1)
-			cursor.sort(sort_id, sort_order)
+			response = cursor.sort(sort_id, sort_order)
 		return cursor
+
+	@classmethod
+	def get(klass, limit=0, sort=None, **kwargs):
+		return Cursor(klass._get(limit, sort, **kwargs), klass)
 
 	def save(self):
 		# check if the model exists already
@@ -77,6 +95,9 @@ class Model(object):
 		# save the model
 		else:
 			self.collection.insert(dict(attributes))
+
+	def __str__(self):
+		return super(Model, self).__str__().replace(self.__class__.__name__, "Storage%s" % (self.__class__.__name__))
 
 # -----------------------------------------------------------------------------
 #
@@ -113,10 +134,10 @@ class Article(Model):
 		kwargs['sort'] = False
 		# below
 		kwargs['count_words'] = {"$lte": count_words}
-		closest_below = list(klass.get(limit=limit, **kwargs).sort("count_words", -1))
+		closest_below = list(klass._get(limit=limit, **kwargs).sort("count_words", -1))
 		# above
 		kwargs['count_words'] = {"$gt": count_words}
-		closest_above = list(klass.get(limit=limit, **kwargs).sort("count_words", 1))
+		closest_above = list(klass._get(limit=limit, **kwargs).sort("count_words", 1))
 		results       = closest_above + closest_below
 		# FIXME (old)
 		# add delta parameter
@@ -177,6 +198,8 @@ class TestArticle(unittest.TestCase):
 		assert len(list(self.obj.get(limit=5)))       == 5
 		assert len(list(self.obj.get(limit=0)))       == 10
 		assert len(list(self.obj.get(count_words=5))) == 1
+		for e in self.obj.get():
+			assert type(e) is Article
 
 	def test_get_closest(self):
 		for i in range(10):
