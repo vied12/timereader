@@ -11,7 +11,7 @@
 # Last mod : 06-Jul-2013
 # -----------------------------------------------------------------------------
 from . import Job, job
-from worker import Worker
+from timereader.worker import Worker
 import readability
 from flask import Flask
 

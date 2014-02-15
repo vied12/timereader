@@ -12,12 +12,12 @@
 # -----------------------------------------------------------------------------
 
 from . import Job, job
-from storage import Article
+from timereader import Article
 from time import mktime
 from datetime import datetime
 import requests
 import feedparser
-from worker import Worker
+from timereader.worker import Worker
 
 CSV_SEPARATOR = ","
 worker = Worker(async=False)

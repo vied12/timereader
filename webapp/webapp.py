@@ -12,7 +12,7 @@
 # -----------------------------------------------------------------------------
 
 from bson.json_util   import dumps
-from timereader.storage import Article
+from timereader import Article
 from timereader.worker  import Worker
 from flask.ext.assets import Environment, YAMLLoader
 import readability

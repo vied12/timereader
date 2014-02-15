@@ -34,7 +34,7 @@ class Twitter(Job):
 		timeline = api.GetHomeTimeline(count=200)
 		urls = [[u.expanded_url for u in status.urls] for status in timeline if status.urls]
 		for url in urls:
-			worker.run('retrieve_page', url[0], source='twitter')
+			worker.run('timereader.jobs.retrieve_page', url[0], source='twitter')
 
 # -----------------------------------------------------------------------------
 #

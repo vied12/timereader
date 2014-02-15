@@ -16,4 +16,7 @@ clear:
 	rm -rf webapp/static/.webassets-cache
 	rm -rf webapp/static/gen
 
+test:
+	. `pwd`/.env ; python -m unittest discover -s "timereader" -p '*.py' -v
+
 # EOF

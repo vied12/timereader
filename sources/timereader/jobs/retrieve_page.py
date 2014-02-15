@@ -30,13 +30,13 @@ class RetrievePage(Job):
 		parsed  = res.json()
 		# save the article
 		article = Article()
-		article.title       = parsed['title']
-		article.date        = parsed['date_published']
-		article.content     = parsed['content']
-		article.summary     = parsed['excerpt']
-		article.link        = parsed['url']
-		article.domain      = parsed['domain']
-		article.count_words = parsed['word_count']
+		article.title       = parsed.get('title')
+		article.date        = parsed.get('date_published')
+		article.content     = parsed.get('content')
+		article.summary     = parsed.get('excerpt')
+		article.link        = parsed.get('url')
+		article.domain      = parsed.get('domain')
+		article.count_words = parsed.get('word_count')
 		article.user        = user_id
 		article.thematic    = thematic
 		article.type        = source

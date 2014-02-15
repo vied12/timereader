@@ -11,7 +11,7 @@
 # Last mod : 09-Jul-2013
 # -----------------------------------------------------------------------------
 from . import Job, job
-from storage import Article
+from timereader import Article
 from flask import Flask
 import requests
 import datetime

@@ -1,2 +1,2 @@
 from worker import Worker
-from storage import Article, User
+from models import Article, User
