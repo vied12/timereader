@@ -8,7 +8,7 @@
 # License : GNU Lesser General Public License
 # -----------------------------------------------------------------------------
 # Creation : 12-Jun-2013
-# Last mod : 15-Feb-2014
+# Last mod : 16-Feb-2014
 # -----------------------------------------------------------------------------
 from storage import Storable
 import unittest
@@ -27,42 +27,46 @@ class Article(Storable):
 		self.content      = None
 		self.summary      = None
 		self.link         = None
-		self.thematics    = None
-		self.user         = None
-		self.count_words  = None
-		self.type         = None
+		self.origin       = None
+		self.META         = dict(
+			words_count   = None,
+			complexity    = None,
+			type          = None,
+			tags          = None,
+			sources       = None,
+		)
 		super(Article, self).__init__(**kwargs)
 
 	def save(self):
 		# count word
-		if self.content and (not self.count_words or self.count_words == 0):
-			self.count_words = len(self.content.split())
+		if self.content and (not self.META["words_count"] or self.META["words_count"] == 0):
+			self.META["words_count"] = len(self.content.split())
 		# save
 		super(Article, self).save()
 
 	@classmethod
-	def get(klass, limit=0, sort=("count_words", 1), **kwargs):
-		return super(Article, klass).get(limit=limit, sort=sort, **kwargs)
+	def get(klass, query={}, limit=0, sort=("META.words_count", 1), **kwargs):
+		return super(Article, klass).get(query=query, limit=limit, sort=sort, **kwargs)
 
 	@classmethod
-	def get_closest(klass, count_words, limit=1, silent=True, **kwargs):
+	def get_closest(klass, words_count, limit=1, **kwargs):
 		kwargs['sort'] = False
 		# below
-		kwargs['count_words'] = {"$lte": count_words}
-		closest_below = list(klass._get(limit=limit, **kwargs).sort("count_words", -1))
+		kwargs['META.words_count'] = {"$lte": words_count}
+		closest_below = list(klass._get(limit=limit, **kwargs).sort("META.words_count", -1))
 		# above
-		kwargs['count_words'] = {"$gt": count_words}
-		closest_above = list(klass._get(limit=limit, **kwargs).sort("count_words", 1))
+		kwargs['META.words_count'] = {"$gt": words_count}
+		closest_above = list(klass._get(limit=limit, **kwargs).sort("META.words_count", 1))
 		results       = closest_above + closest_below
 		# FIXME (old)
 		# add delta parameter
-		for i, result in enumerate(results):
-			result['delta'] = abs(count_words - result['count_words'])
-			if silent:
-				del result['content']
+		for result in results:
+			result['META']['delta'] = abs(words_count - result["META"]["words_count"])
+			# if silent:
+			# 	del result['content']
 		# sorting
 		results = map(lambda args: klass(**args), results)
-		results = sorted(results, key=lambda k: k.delta)
+		results = sorted(results, key=lambda k: k.META.get("delta"))
 		return results[:limit]
 
 # -----------------------------------------------------------------------------
@@ -96,33 +100,34 @@ class TestArticle(unittest.TestCase):
 	def test_save(self):
 		self.obj.content = "mot " * 3
 		self.obj.save()
-		assert self.obj.count_words
-		assert type(self.obj.count_words)  is int
+		assert self.obj.META["words_count"]
+		assert type(self.obj.META["words_count"])  is int
 		assert type(self.obj.created_date) is datetime.datetime
-		assert self.obj.count_words > 0
+		assert self.obj.META["words_count"] > 0
+		self.assertIsNotNone(self.obj._id)
+		self.assertIsNotNone(self.obj['_id'])
 
 	def test_get(self):
 		for i in range(10):
 			a = self.CustomArticle(content="mot " * i)
 			a.save()
 		assert self.obj.get()[9]
-		assert len(list(self.CustomArticle.get()))    == 10
-		assert len(list(self.obj.get()))              == 10
-		assert len(list(self.obj.get(limit=5)))       == 5
-		assert len(list(self.obj.get(limit=0)))       == 10
-		assert len(list(self.obj.get(count_words=5))) == 1
+		self.assertEqual(len(list(self.CustomArticle.get()))    , 10)
+		self.assertEqual(len(list(self.obj.get()))              , 10)
+		self.assertEqual(len(list(self.obj.get(limit=5)))       , 5)
+		self.assertEqual(len(list(self.obj.get(limit=0)))       , 10)
+		self.assertEqual(len(list(self.obj.get({"META.words_count":5}))) , 1)
 		for e in self.obj.get():
-			assert type(e) is Article
+			self.assertEqual(type(e), Article)
 
 	def test_get_closest(self):
 		for i in range(10):
 			a = self.CustomArticle(content="mot " * i)
 			a.save()
-		assert len(self.CustomArticle.get_closest(5, limit=2))      == 2, self.CustomArticle.get_closest(5)
-		assert self.CustomArticle.get_closest(5)[0].count_words     == 5
-		assert self.CustomArticle.get_closest(5)[0].count_words     == 5
-		assert self.CustomArticle.get_closest(10)[0].count_words    == 9
-		assert self.CustomArticle.get_closest(0)[0].count_words     == 1
+		self.assertEqual(len(self.CustomArticle.get_closest(5, limit=2))          , 2)
+		self.assertEqual(self.CustomArticle.get_closest(5)[0].META["words_count"] , 5)
+		self.assertEqual(self.CustomArticle.get_closest(10)[0].META["words_count"], 9)
+		self.assertEqual(self.CustomArticle.get_closest(0)[0].META["words_count"] , 1)
 
 class TestUser(unittest.TestCase):
 
@@ -139,16 +144,17 @@ class TestUser(unittest.TestCase):
 		self.obj.password = "123"
 		self.obj.email    = "aaa@bbb.com"
 		self.obj.save()
-		assert self.obj.username
-		assert self.obj.password
-		assert self.obj.email
-		assert type(self.obj.created_date) is datetime.datetime
+		self.assertIsNotNone(self.obj.username)
+		self.assertIsNotNone(self.obj.password)
+		self.assertIsNotNone(self.obj.email)
+		self.assertIsNotNone(self.obj._id)
+		self.assertEqual(type(self.obj.created_date), datetime.datetime)
 
 	def test_get(self):
 		for i in range(10):
-			a = self.CustomUser(username="mot " * i)
+			a = self.CustomUser(username="name%s" % i)
 			a.save()
-		assert len(list(self.CustomUser.get())) == 10
+		self.assertEqual(len(list(self.CustomUser.get())), 10)
 
 if __name__ == "__main__":
 	unittest.main()

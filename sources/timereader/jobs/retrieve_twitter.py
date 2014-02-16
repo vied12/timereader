@@ -24,7 +24,7 @@ worker = Worker(async=False)
 @job("Retrieve somes links on the Twitter timeline")
 class Twitter(Job):
 
-	def run(self, token_id, token_secret):
+	def run(self, token_id, token_secret, limit=50):
 		api = twitter.Api(
 			consumer_key        = app.config.get("TWITTER_CONSUMER_KEY"), 
 			consumer_secret     = app.config.get("TWITTER_CONSUMER_SECRET"), 
@@ -33,8 +33,10 @@ class Twitter(Job):
 		)
 		timeline = api.GetHomeTimeline(count=200)
 		urls = [[u.expanded_url for u in status.urls] for status in timeline if status.urls]
-		for url in urls:
-			worker.run('timereader.jobs.retrieve_page', url[0], source='twitter')
+		# flattern
+		urls = [url for sublist in urls for url in sublist]
+		for url in urls[:limit]:
+			worker.run('timereader.jobs.retrieve_page', url, source='twitter')
 
 # -----------------------------------------------------------------------------
 #
@@ -49,7 +51,9 @@ class TestTwitter(unittest.TestCase):
 		self.obj = Twitter()
 
 	def test_run(self):
-		self.obj.run(app.config.get("TWITTER_TEST_ACCESS_TOKEN"), app.config.get("TWITTER_TEST_ACCESS_TOKEN_SECRET"))
+		self.obj.run(
+			token_id     = app.config.get("TWITTER_TEST_ACCESS_TOKEN"),
+			token_secret = app.config.get("TWITTER_TEST_ACCESS_TOKEN_SECRET"))
 
 if __name__ == "__main__":
 	# unittest.main()

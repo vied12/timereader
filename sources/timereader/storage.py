@@ -8,12 +8,11 @@
 # License : GNU Lesser General Public License
 # -----------------------------------------------------------------------------
 # Creation : 12-Jun-2013
-# Last mod : 10-Feb-2014
+# Last mod : 16-Feb-2014
 # -----------------------------------------------------------------------------
 
 from pymongo import MongoClient
 from flask import Flask
-from pprint import pprint as pp
 import bson
 import datetime
 
@@ -58,6 +57,12 @@ class Storable(object):
 		for key, value in kwargs.items():
 			setattr(self, key, value)
 
+	def __getitem__(self, value):
+		return getattr(self, value)
+
+	def __setitem__(self, key, value):
+		return setattr(self, key, value)
+
 	@classproperty
 	@classmethod
 	def collection(klass):
@@ -68,8 +73,9 @@ class Storable(object):
 		return collection
 
 	@classmethod
-	def _get(klass, limit=0, sort=None, **kwargs):
-		criteria = {k:kwargs[k] for k in kwargs if kwargs[k] != None}
+	def _get(klass, query={}, limit=0, sort=None, **kwargs):
+		query = dict(query.items() +  kwargs.items())
+		criteria = {k:query[k] for k in query if query[k] != None}
 		cursor   = klass.collection.find(criteria, limit=limit)
 		# sort
 		if sort:
@@ -81,8 +87,8 @@ class Storable(object):
 		return cursor
 
 	@classmethod
-	def get(klass, limit=0, sort=None, **kwargs):
-		return Cursor(klass._get(limit, sort, **kwargs), klass)
+	def get(klass, query={}, limit=0, sort=None, **kwargs):
+		return Cursor(klass._get(query=query, limit=limit, sort=sort, **kwargs), klass)
 
 	def save(self):
 		# check if the model exists already
@@ -94,9 +100,12 @@ class Storable(object):
 			self.collection.save(dict(previous_model.items() + attributes))
 		# save the model
 		else:
-			self.collection.insert(dict(attributes))
+			attributes = dict(attributes)
+			self.collection.insert(attributes)
+			self.coucou ="bla"
+			self._id = attributes["_id"]
 
 	def __str__(self):
-		return super(Model, self).__str__().replace(self.__class__.__name__, "Storage%s" % (self.__class__.__name__))
+		return super(Storable, self).__str__().replace(self.__class__.__name__, "Storage%s" % (self.__class__.__name__))
 
 # EOF
