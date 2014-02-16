@@ -107,7 +107,7 @@ class Storable(object):
 		# keep only existing attributes
 		attributes = filter(lambda _:_[1] != None, self.__dict__.items())
 		if self._id:
-			previous_model = self.collection.find(dict(_id=self._id))
+			previous_model = self.collection.find(dict(_id=self._id))[0]
 			self.collection.save(dict(previous_model.items() + attributes))
 		# save the model
 		else:

@@ -82,6 +82,7 @@ class User(Storable):
 		self.email         = None
 		self.languages     = {}
 		self.main_language = None
+		self.articles      = []
 
 		super(User, self).__init__(**kwargs)
 
@@ -89,7 +90,7 @@ class User(Storable):
 		assert self.email
 		assert self.password
 		assert self.username
-		assert self.main_language in self.languages.keys()
+		assert not self.main_language or self.main_language in self.languages.keys()
 
 # -----------------------------------------------------------------------------
 #
@@ -158,6 +159,10 @@ class TestUser(unittest.TestCase):
 		self.assertIsNotNone(self.obj.email)
 		self.assertIsNotNone(self.obj._id)
 		self.assertEqual(type(self.obj.created_date), datetime.datetime)
+		self.obj.email = "pouet"
+		self.obj.save()
+		self.assertIsNotNone(self.obj._id)
+		self.assertEqual(self.obj.email, "pouet")
 		# test validation
 		user = self.CustomUser(username="coucou")
 		self.assertRaises(AssertionError, user.save)
