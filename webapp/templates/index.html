@@ -29,28 +29,6 @@
 		</head>
 
 	<body>
-		
-		[% if articles %]
-			<div class="container">
-				<div class="scroller">
-					<div class="wrapper"> 
-						<div class="lift"></div>
-						<div class="content"></div>
-					</div>	
-				</div>		
-
-				<div class="reader">		
-					<ul class="articles">
-						[% for article in articles %]
-							<li>
-								<article>
-									<h2>[[ article.title|safe ]]</h2>
-									[[ article.content|safe ]]</article></li>
-						[% endfor %]
-					</ul>
-				</div>			
-			</div>
-		[% endif %]
 
 		<div class="bg-primary">
 			<div>
@@ -63,10 +41,13 @@
 				<span class="glyphicon glyphicon-time"></span> <span>{{ config.time }} min</span>
 				<div><input type="text" ng-model="config.time" data-slider="true" data-slider-theme="volume" data-slider-range="5,30" data-slider-step="1"></div>
 				<button type="button" class="btn btn-primary btn-lg read" ng-click="config.loadReader(); openReader()">Get me something nice to read</button>
+
+				<button type="button" class="btn btn-danger btn-lg create-account" ng-click="">Create an account</button>
 			</div><!-- /.container -->
 		</div>
+
 		<div class="bg-secondary hidden">
-			<div class="container" ng-controller="ConfigCtrl as config">
+			<div class="container">
 				<div class="">
 					<div class="article">
 						<div class="title">Title</div>

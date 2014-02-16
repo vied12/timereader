@@ -77,10 +77,19 @@ class Article(Storable):
 class User(Storable):
 
 	def __init__(self, **kwargs):
-		self.username = None
-		self.password = None
-		self.email    = None
+		self.username      = None
+		self.password      = None
+		self.email         = None
+		self.languages     = {}
+		self.main_language = None
+
 		super(User, self).__init__(**kwargs)
+
+	def validate(self):
+		assert self.email
+		assert self.password
+		assert self.username
+		assert self.main_language in self.languages.keys()
 
 # -----------------------------------------------------------------------------
 #
@@ -149,12 +158,24 @@ class TestUser(unittest.TestCase):
 		self.assertIsNotNone(self.obj.email)
 		self.assertIsNotNone(self.obj._id)
 		self.assertEqual(type(self.obj.created_date), datetime.datetime)
+		# test validation
+		user = self.CustomUser(username="coucou")
+		self.assertRaises(AssertionError, user.save)
 
 	def test_get(self):
 		for i in range(10):
-			a = self.CustomUser(username="name%s" % i)
+			a = self.CustomUser(username="name%s" % i, password="1234", email="ddd@ff.com")
 			a.save()
 		self.assertEqual(len(list(self.CustomUser.get())), 10)
+
+	def test_get_one(self):
+		for i in range(10):
+			a = self.CustomUser(username="name%s" % i, password="1234", email="ddd@ff.com")
+			a.save()
+		user = self.CustomUser.get_one({"username" : "name1"})
+		self.assertEqual(type(user), User)
+		user = self.CustomUser.get_one({"username" : "unknown"})
+		self.assertIsNone(user)
 
 if __name__ == "__main__":
 	unittest.main()

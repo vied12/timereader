@@ -90,7 +90,18 @@ class Storable(object):
 	def get(klass, query={}, limit=0, sort=None, **kwargs):
 		return Cursor(klass._get(query=query, limit=limit, sort=sort, **kwargs), klass)
 
+	@classmethod
+	def get_one(klass, query={}, sort=None, **kwargs):
+		cursor = klass._get(query=query, limit=1, sort=sort, **kwargs)
+		response = None
+		if cursor.count() > 0:
+			user = cursor.next()
+			response = klass(**user)
+		return response
+
 	def save(self):
+		# validate data
+		self.validate()
 		# check if the model exists already
 		previous_model = None
 		# keep only existing attributes
@@ -104,6 +115,9 @@ class Storable(object):
 			self.collection.insert(attributes)
 			self.coucou ="bla"
 			self._id = attributes["_id"]
+
+	def validate(self):
+		pass
 
 	def __str__(self):
 		return super(Storable, self).__str__().replace(self.__class__.__name__, "Storage%s" % (self.__class__.__name__))

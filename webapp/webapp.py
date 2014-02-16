@@ -12,7 +12,7 @@
 # -----------------------------------------------------------------------------
 
 from bson.json_util   import dumps
-from timereader import Article
+from timereader import Article, User
 from timereader.worker  import Worker
 from flask.ext.assets import Environment, YAMLLoader
 import readability
@@ -79,6 +79,28 @@ def api_readability_register(username, password):
 	# Retrieve the user's articles and save them into the database with his user_id
 	worker.run('jobs.retrieve_readability', token, user_id)
 	return dumps({'user': user_id})
+
+@app.route('/api/user/create', methods=["POST"])
+def user_create():
+	user = User(**dict(flask.request.form.items()))
+	user.save()
+	return dumps({"status":"ok", "user": user.__dict__})
+
+@app.route('/api/user/auth', methods=["POST"])
+def user_auth():
+	username = flask.request.form.get("username")
+	password = flask.request.form.get("password")
+	user = User.get_one({"username" : username})
+	if user:
+		if user.password == password:
+			# auth
+			# TODO: put the user in session
+			res = {"status":"ok", "user": user.__dict__}
+		else:
+			res = {"status":"error", "msg":"wrong password"}
+	else:
+		res = {"status":"error", "msg":"user unknown"}
+	return dumps(res)
 
 # -----------------------------------------------------------------------------
 #

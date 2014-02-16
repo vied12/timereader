@@ -17,7 +17,7 @@ js_all:
     - "../assets/js/vendor/jquery-ui-1.10.4.custom.min.js"
 
     - contents:
-#      - "../assets/coffee/simple-slider.coffee"
+      - "../assets/coffee/simple-slider.coffee"
       - "../assets/coffee/scroller.coffee"
       - "../assets/coffee/app.coffee"
       - "../assets/coffee/directives/open-reader.coffee"
