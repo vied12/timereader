@@ -8,13 +8,14 @@
 # License : GNU Lesser General Public License
 # -----------------------------------------------------------------------------
 # Creation : 23-May-2013
-# Last mod : 08-Feb-2014
+# Last mod : 27-Feb-2014
 # -----------------------------------------------------------------------------
 
 from bson.json_util   import dumps
 from timereader import Article, User
 from timereader.worker  import Worker
 from flask.ext.assets import Environment, YAMLLoader
+from flask.ext import restful
 import readability
 import uuid
 import os
@@ -33,6 +34,9 @@ assets  = Environment(app)
 bundles = YAMLLoader(os.path.join(PWD, "assets.yaml")).load_bundles()
 assets.register(bundles)
 
+# api
+api = restful.Api(app, catch_all_404s=True)
+
 #s3
 from flask_s3 import FlaskS3
 s3 = FlaskS3(app)
@@ -45,62 +49,66 @@ worker = Worker(async=app.config['QUEUE_MODE_ASYNC'])
 # API
 #
 # -----------------------------------------------------------------------------
-@app.route('/api/duration/<duration>', methods=['get'])
-@app.route('/api/duration/<duration>/thematics/<thematics>', methods=['get'])
-@app.route('/api/duration/<duration>/user/<user_id>', methods=['get'])
-@app.route('/api/duration/<duration>/thematics/<thematics>/user/<user_id>', methods=['get'])
-def get_content_from_duration(duration, thematics=None, user_id=None):
-	words      = utils.how_many_words(int(duration))
-	thematics  = thematics.split(',') if thematics else None
-	articles   = {
-		"one"   : Article.get_closest(count_words=words,   limit=5, thematics=thematics, user=user_id), # FIXME
-		"two"   : Article.get_closest(count_words=words/2, limit=2, thematics=thematics, user=user_id),
-		"three" : Article.get_closest(count_words=words/3, limit=3, thematics=thematics, user=user_id),
-	}
-	return dumps({'articles': articles, 'delta': duration})
+import api as resources
+api.add_resource(resources.ArticleResource, '/article/<string:article_id>', endpoint = 'article')
+api.add_resource(resources.ArticlesResource, '/articles'                  , endpoint = 'articles')
+api.add_resource(resources.UserResource    , '/user/<string:username>'    , endpoint = 'user')
+# @app.route('/api/duration/<duration>', methods=['get'])
+# @app.route('/api/duration/<duration>/thematics/<thematics>', methods=['get'])
+# @app.route('/api/duration/<duration>/user/<user_id>', methods=['get'])
+# @app.route('/api/duration/<duration>/thematics/<thematics>/user/<user_id>', methods=['get'])
+# def get_content_from_duration(duration, thematics=None, user_id=None):
+# 	words      = utils.how_many_words(int(duration))
+# 	thematics  = thematics.split(',') if thematics else None
+# 	articles   = {
+# 		"one"   : Article.get_closest(count_words=words,   limit=5, thematics=thematics, user=user_id), # FIXME
+# 		"two"   : Article.get_closest(count_words=words/2, limit=2, thematics=thematics, user=user_id),
+# 		"three" : Article.get_closest(count_words=words/3, limit=3, thematics=thematics, user=user_id),
+# 	}
+# 	return dumps({'articles': articles, 'delta': duration})
 
-@app.route('/api/content/<id>')
-def api_content(id):
-	article  = Article.get(id=id)
-	if article:
-		return article['content']
-	return "false"
+# @app.route('/api/content/<id>')
+# def api_content(id):
+# 	article  = Article.get(id=id)
+# 	if article:
+# 		return article['content']
+# 	return "false"
 
-@app.route('/api/readability/<username>/<password>', methods=['get'])
-def api_readability_register(username, password):
-	token = readability.xauth(
-		app.config['READABILITY_CONSUMER_KEY'], 
-		app.config['READABILITY_CONSUMER_SECRET'], 
-		username,
-		password)
-	# oauth_token, oauth_secret = token
-	# FIXME: should be in SESSION
-	user_id = str(uuid.uuid4())
-	# Retrieve the user's articles and save them into the database with his user_id
-	worker.run('jobs.retrieve_readability', token, user_id)
-	return dumps({'user': user_id})
+# @app.route('/api/readability/<username>/<password>', methods=['get'])
+# def api_readability_register(username, password):
+# 	token = readability.xauth(
+# 		app.config['READABILITY_CONSUMER_KEY'], 
+# 		app.config['READABILITY_CONSUMER_SECRET'], 
+# 		username,
+# 		password)
+# 	# oauth_token, oauth_secret = token
+# 	# FIXME: should be in SESSION
+# 	user_id = str(uuid.uuid4())
+# 	# Retrieve the user's articles and save them into the database with his user_id
+# 	worker.run('jobs.retrieve_readability', token, user_id)
+# 	return dumps({'user': user_id})
 
-@app.route('/api/user/create', methods=["POST"])
-def user_create():
-	user = User(**dict(flask.request.form.items()))
-	user.save()
-	return dumps({"status":"ok", "user": user.__dict__})
+# @app.route('/api/user/create', methods=["POST"])
+# def user_create():
+# 	user = User(**dict(flask.request.form.items()))
+# 	user.save()
+# 	return dumps({"status":"ok", "user": user.__dict__})
 
-@app.route('/api/user/auth', methods=["POST"])
-def user_auth():
-	username = flask.request.form.get("username")
-	password = flask.request.form.get("password")
-	user = User.get_one({"username" : username})
-	if user:
-		if user.password == password:
-			# auth
-			# TODO: put the user in session
-			res = {"status":"ok", "user": user.__dict__}
-		else:
-			res = {"status":"error", "msg":"wrong password"}
-	else:
-		res = {"status":"error", "msg":"user unknown"}
-	return dumps(res)
+# @app.route('/api/user/auth', methods=["POST"])
+# def user_auth():
+# 	username = flask.request.form.get("username")
+# 	password = flask.request.form.get("password")
+# 	user = User.get_one({"username" : username})
+# 	if user:
+# 		if user.password == password:
+# 			# auth
+# 			# TODO: put the user in session
+# 			res = {"status":"ok", "user": user.__dict__}
+# 		else:
+# 			res = {"status":"error", "msg":"wrong password"}
+# 	else:
+# 		res = {"status":"error", "msg":"user unknown"}
+# 	return dumps(res)
 
 # -----------------------------------------------------------------------------
 #
