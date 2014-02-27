@@ -26,7 +26,7 @@ article_fields = {
 class ArticlesResource(Resource):
 
 	def get(self):
-		return [marshal(a.__dict__, article_fields) for a in Article.get()]
+		return [marshal(a, article_fields) for a in Article.get()[:10]]
 
 	def post(self):
 		pass
