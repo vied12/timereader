@@ -78,6 +78,7 @@ class UsersResource(Resource):
 		return marshal(user.__dict__, user_fields)
 
 class UserResource(Resource):
+	decorators = [auth.login_required]
 
 	def get(self, username):
 		user = User.get_one({"username":username})
