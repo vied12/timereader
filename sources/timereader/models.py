@@ -83,6 +83,7 @@ class User(Storable):
 		self.languages     = {}
 		self.main_language = None
 		self.articles      = []
+		self.services      = {}
 
 		super(User, self).__init__(**kwargs)
 

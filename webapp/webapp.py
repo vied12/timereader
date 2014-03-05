@@ -50,10 +50,11 @@ worker = Worker(async=app.config['QUEUE_MODE_ASYNC'])
 #
 # -----------------------------------------------------------------------------
 import api as resources
-api.add_resource(resources.ArticleResource , '/article/<string:article_id>', endpoint = 'article')
-api.add_resource(resources.ArticlesResource, '/articles'                  , endpoint = 'articles')
-api.add_resource(resources.UsersResource   , '/users'    ,                endpoint = 'users')
-api.add_resource(resources.UserResource    , '/user/<string:username>'    , endpoint = 'user')
+api.add_resource(resources.ArticleResource   , '/article/<string:article_id>', endpoint = 'article')
+api.add_resource(resources.ArticlesResource  , '/articles'                   , endpoint = 'articles')
+api.add_resource(resources.UsersResource     , '/users'                      , endpoint = 'users')
+api.add_resource(resources.UserResource      , '/user/<string:username>'     , endpoint = 'user')
+api.add_resource(resources.ReadabilityResouce, '/readability'                , endpoint = 'readability')
 # @app.route('/api/duration/<duration>', methods=['get'])
 # @app.route('/api/duration/<duration>/thematics/<thematics>', methods=['get'])
 # @app.route('/api/duration/<duration>/user/<user_id>', methods=['get'])
