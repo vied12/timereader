@@ -23,10 +23,10 @@ auth = HTTPBasicAuth()
 @auth.get_password
 def get_password(username):
 	user = User.get_one({"username" : username})
-	password = None
 	if user:
-		password = user.password
-	return password
+		return user.password
+	else:
+		return None
 
 article_fields = {
 	'title'       : fields.String,
