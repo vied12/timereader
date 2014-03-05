@@ -10,7 +10,7 @@
 # Creation : 27-Feb-2014
 # Last mod : 27-Feb-2014
 # -----------------------------------------------------------------------------
-from flask.ext.restful import Resource, fields, marshal
+from flask.ext.restful import Resource, fields, marshal, reqparse
 from timereader import Article, User
 from bson.objectid import ObjectId
 
@@ -48,6 +48,20 @@ user_fields = {
 	'languages'      : fields.String,
 	'main_language'  : fields.Raw,
 }
+
+class UsersResource(Resource):
+
+	def post(self):
+		parser = reqparse.RequestParser()
+		parser.add_argument('username', type=str, required=True)
+		parser.add_argument('password', type=str, required=True)
+		# TODO: check email
+		parser.add_argument('email', type=str, required=True)
+		args = parser.parse_args()
+		user = User(**args)
+		user.save()
+		return args
+
 class UserResource(Resource):
 
 	def get(self, username):
